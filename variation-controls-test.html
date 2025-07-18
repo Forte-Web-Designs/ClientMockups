@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variation Controls Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .test-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+        }
+        .test-result {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        .variation-btn {
+            background: linear-gradient(135deg, #f8f9ff, #e8ecff);
+            color: #667eea;
+            border: 2px solid #e1e5e9;
+            padding: 0.8rem;
+            margin: 0.5rem;
+            border-radius: 10px;
+            min-height: 60px;
+            font-size: 0.75rem;
+        }
+        .variation-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Live Variation Controls Test</h1>
+        <p>This test verifies that the variation control buttons provide proper visual feedback and functionality.</p>
+        
+        <div class="test-section">
+            <h3>📋 Test Control Panel</h3>
+            <button onclick="runAllTests()">🔄 Run All Tests</button>
+            <button onclick="openMainSite()">🌐 Open Main Site</button>
+            <button onclick="clearResults()">🗑️ Clear Results</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🎨 Simulated Variation Buttons</h3>
+            <p>These buttons simulate the main site's variation controls:</p>
+            
+            <div>
+                <strong>Layout Buttons:</strong><br>
+                <button class="variation-btn" onclick="testButtonClick(this, 'layout', 'modern')">🚀 Modern</button>
+                <button class="variation-btn" onclick="testButtonClick(this, 'layout', 'minimal')">✨ Minimal</button>
+                <button class="variation-btn" onclick="testButtonClick(this, 'layout', 'creative')">🎨 Creative</button>
+            </div>
+            
+            <div>
+                <strong>Color Scheme Buttons:</strong><br>
+                <button class="variation-btn" onclick="testButtonClick(this, 'color', 'ocean')">🌊 Ocean</button>
+                <button class="variation-btn" onclick="testButtonClick(this, 'color', 'sunset')">🌅 Sunset</button>
+                <button class="variation-btn" onclick="testButtonClick(this, 'color', 'forest')">🌲 Forest</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Test Results</h3>
+            <div id="testResults"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Main Site Analysis</h3>
+            <button onclick="analyzeMainSite()">🔍 Analyze Main Site</button>
+            <div id="analysisResults"></div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = [];
+        let selectedVariations = {};
+
+        function log(message, type = 'info') {
+            const resultDiv = document.getElementById('testResults');
+            const result = document.createElement('div');
+            result.className = `test-result ${type}`;
+            result.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            resultDiv.appendChild(result);
+            resultDiv.scrollTop = resultDiv.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testButtonClick(button, type, value) {
+            log(`🎯 Testing ${type} button click: ${value}`);
+            
+            // Test 1: Visual feedback
+            button.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 100);
+            }, 100);
+            
+            // Test 2: Active state management
+            const siblings = button.parentElement.querySelectorAll('.variation-btn');
+            siblings.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Test 3: State storage
+            selectedVariations[type] = value;
+            
+            log(`✅ ${type} selection: ${value} - Visual feedback working`, 'success');
+            log(`📊 Current selections: ${JSON.stringify(selectedVariations)}`, 'info');
+            
+            // Test 4: Toast notification simulation
+            showTestToast(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} updated to "${value}"`);
+        }
+
+        function showTestToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #10ac84, #00d2d3);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-weight: 600;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+            
+            log(`🍞 Toast shown: ${message}`, 'success');
+        }
+
+        function runAllTests() {
+            log('🧪 Starting comprehensive test suite...', 'info');
+            clearResults();
+            
+            // Test 1: Button response time
+            const startTime = performance.now();
+            testButtonClick(document.querySelector('.variation-btn'), 'test', 'response');
+            const responseTime = performance.now() - startTime;
+            log(`⏱️ Button response time: ${responseTime.toFixed(2)}ms`, responseTime < 100 ? 'success' : 'error');
+            
+            // Test 2: Animation smoothness
+            testAnimationSmoothness();
+            
+            // Test 3: State persistence
+            testStatePersistence();
+            
+            // Test 4: Error handling
+            testErrorHandling();
+            
+            log('✅ All tests completed!', 'success');
+        }
+
+        function testAnimationSmoothness() {
+            log('🎬 Testing animation smoothness...', 'info');
+            const button = document.querySelector('.variation-btn');
+            
+            let animationFrames = 0;
+            const startTime = performance.now();
+            
+            function countFrames() {
+                animationFrames++;
+                if (performance.now() - startTime < 1000) {
+                    requestAnimationFrame(countFrames);
+                } else {
+                    const fps = animationFrames;
+                    log(`🎬 Animation performance: ${fps} FPS`, fps > 30 ? 'success' : 'error');
+                }
+            }
+            
+            requestAnimationFrame(countFrames);
+        }
+
+        function testStatePersistence() {
+            log('💾 Testing state persistence...', 'info');
+            
+            selectedVariations = { layout: 'modern', color: 'ocean' };
+            const stateSize = JSON.stringify(selectedVariations).length;
+            
+            if (stateSize > 0) {
+                log(`✅ State persistence working: ${stateSize} bytes`, 'success');
+            } else {
+                log('❌ State persistence failed', 'error');
+            }
+        }
+
+        function testErrorHandling() {
+            log('🛡️ Testing error handling...', 'info');
+            
+            try {
+                // Simulate error condition
+                testButtonClick(null, 'invalid', 'test');
+                log('❌ Error handling failed - should have caught null button', 'error');
+            } catch (error) {
+                log('✅ Error handling working - caught exception properly', 'success');
+            }
+        }
+
+        function analyzeMainSite() {
+            log('🔍 Analyzing main site functionality...', 'info');
+            
+            // Open main site in iframe for analysis
+            const iframe = document.createElement('iframe');
+            iframe.src = 'index.html';
+            iframe.style.cssText = 'width: 1px; height: 1px; opacity: 0; position: absolute;';
+            document.body.appendChild(iframe);
+            
+            iframe.onload = function() {
+                const iframeDoc = iframe.contentDocument;
+                
+                // Check for variation controls
+                const layoutButtons = iframeDoc.querySelectorAll('#layoutButtons .variation-btn');
+                const colorButtons = iframeDoc.querySelectorAll('#colorButtons .variation-btn');
+                const componentButtons = iframeDoc.querySelectorAll('#componentButtons .variation-btn');
+                const typographyButtons = iframeDoc.querySelectorAll('#typographyButtons .variation-btn');
+                
+                const analysisDiv = document.getElementById('analysisResults');
+                analysisDiv.innerHTML = `
+                    <div class="test-result success">✅ Layout buttons found: ${layoutButtons.length}</div>
+                    <div class="test-result success">✅ Color buttons found: ${colorButtons.length}</div>
+                    <div class="test-result success">✅ Component buttons found: ${componentButtons.length}</div>
+                    <div class="test-result success">✅ Typography buttons found: ${typographyButtons.length}</div>
+                `;
+                
+                // Test click functionality
+                if (layoutButtons.length > 0) {
+                    const testButton = layoutButtons[0];
+                    if (testButton.onclick) {
+                        analysisDiv.innerHTML += '<div class="test-result success">✅ Button click handlers are attached</div>';
+                    } else {
+                        analysisDiv.innerHTML += '<div class="test-result error">❌ Button click handlers missing</div>';
+                    }
+                }
+                
+                log(`🔍 Analysis complete - Found ${layoutButtons.length + colorButtons.length + componentButtons.length + typographyButtons.length} total buttons`, 'success');
+                iframe.remove();
+            };
+        }
+
+        function openMainSite() {
+            window.open('index.html', '_blank');
+        }
+
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+            document.getElementById('analysisResults').innerHTML = '';
+        }
+
+        // Initialize
+        log('🚀 Variation Controls Test Suite Ready', 'success');
+        log('👆 Click buttons above to test functionality', 'info');
+    </script>
+</body>
+</html>

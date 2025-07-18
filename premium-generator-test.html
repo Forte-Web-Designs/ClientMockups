@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Premium Website Generator Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        
+        .test-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .test-btn {
+            background: linear-gradient(135deg, #10ac84, #00d2d3);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 172, 132, 0.4);
+        }
+        
+        .results {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .preview-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 12px;
+            margin-top: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background: rgba(16, 172, 132, 0.2);
+            border: 1px solid rgba(16, 172, 132, 0.5);
+            color: #10ac84;
+        }
+        
+        .status.error {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.5);
+            color: #e74c3c;
+        }
+        
+        .status.info {
+            background: rgba(52, 152, 219, 0.2);
+            border: 1px solid rgba(52, 152, 219, 0.5);
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Premium Website Generator Test</h1>
+            <p>Testing the enhanced Relume/Lovable-inspired premium website generator</p>
+        </div>
+        
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>🏠 Premium Plumbing Site</h3>
+                <p>Generate a premium plumbing website with modern Relume-style design</p>
+                <button class="test-btn" onclick="testPremiumGeneration('plumbing')">Generate Premium Plumbing</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>⚡ Premium Electrical Site</h3>
+                <p>Create an electrical services website with premium design patterns</p>
+                <button class="test-btn" onclick="testPremiumGeneration('electrical')">Generate Premium Electrical</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>🌿 Premium Landscaping Site</h3>
+                <p>Build a landscaping website with premium visual elements</p>
+                <button class="test-btn" onclick="testPremiumGeneration('landscaping')">Generate Premium Landscaping</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>🔄 Custom Variations Test</h3>
+                <p>Test the custom variations with premium design options</p>
+                <button class="test-btn" onclick="testCustomVariations()">Test Custom Variations</button>
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <h3>🔍 Test Results</h3>
+            <div id="statusContainer">
+                <div class="status info">Ready to test premium website generation...</div>
+            </div>
+            <iframe id="previewFrame" class="preview-frame" style="display: none;"></iframe>
+        </div>
+    </div>
+
+    <script src="assets/js/generator.js"></script>
+    <script>
+        function log(message, type = 'info') {
+            const statusContainer = document.getElementById('statusContainer');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            statusContainer.appendChild(statusDiv);
+            statusContainer.scrollTop = statusContainer.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testPremiumGeneration(serviceType) {
+            log(`🚀 Testing premium ${serviceType} website generation...`, 'info');
+            
+            try {
+                // Check if generator is available
+                if (!window.WebsiteGenerator) {
+                    throw new Error('WebsiteGenerator class not found');
+                }
+                
+                const generator = new WebsiteGenerator();
+                log('✅ Generator initialized successfully', 'success');
+                
+                // Create test form data
+                const formData = {
+                    serviceType: serviceType,
+                    companyName: `Premium ${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} Pro`,
+                    phoneNumber: '(555) 123-4567',
+                    cityName: 'San Francisco',
+                    yearsExp: '15'
+                };
+                
+                log(`📋 Test data: ${JSON.stringify(formData)}`, 'info');
+                
+                // Generate website
+                const html = generator.generateMockup(formData);
+                log('✅ Premium website generated successfully!', 'success');
+                log(`📄 Generated HTML size: ${html.length} characters`, 'info');
+                
+                // Preview the result
+                const previewFrame = document.getElementById('previewFrame');
+                previewFrame.style.display = 'block';
+                previewFrame.srcdoc = html;
+                
+                log('🎨 Premium website loaded in preview', 'success');
+                
+                // Test generation stats
+                if (generator.getGenerationStats) {
+                    const stats = generator.getGenerationStats();
+                    log(`📊 Generation stats: ${stats.totalPossibleCombinations} total combinations possible`, 'info');
+                }
+                
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+                console.error('Generation error:', error);
+            }
+        }
+        
+        function testCustomVariations() {
+            log('🔄 Testing custom variations with premium features...', 'info');
+            
+            try {
+                const generator = new WebsiteGenerator();
+                
+                // Test with custom variations
+                const customVariations = {
+                    layout: 'modern',
+                    colorScheme: 'ocean',
+                    components: 'premium-grid',
+                    typography: 'Modern'
+                };
+                
+                const formData = {
+                    serviceType: 'plumbing',
+                    companyName: 'Elite Premium Plumbing',
+                    phoneNumber: '(555) 987-6543',
+                    cityName: 'Los Angeles',
+                    yearsExp: '20'
+                };
+                
+                log(`🎨 Custom variations: ${JSON.stringify(customVariations)}`, 'info');
+                
+                // Generate with custom variations
+                let html;
+                if (generator.generateCustomMockup) {
+                    html = generator.generateCustomMockup(formData, customVariations);
+                    log('✅ Custom variation website generated!', 'success');
+                } else {
+                    html = generator.generateMockup(formData);
+                    log('✅ Standard website generated (custom method not available)', 'success');
+                }
+                
+                // Preview the result
+                const previewFrame = document.getElementById('previewFrame');
+                previewFrame.style.display = 'block';
+                previewFrame.srcdoc = html;
+                
+                log('🎨 Custom variation website loaded in preview', 'success');
+                
+            } catch (error) {
+                log(`❌ Custom variations error: ${error.message}`, 'error');
+                console.error('Custom variations error:', error);
+            }
+        }
+        
+        // Auto-run basic test on load
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🎯 Premium Website Generator Test initialized', 'success');
+            log('💎 Enhanced with Relume/Lovable-inspired design patterns', 'info');
+            log('✨ Ready to test premium generation features', 'info');
+        });
+    </script>
+</body>
+</html>
