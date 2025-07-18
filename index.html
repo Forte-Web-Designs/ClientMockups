@@ -182,6 +182,10 @@
             gap: 0.5rem;
             position: relative;
             overflow: hidden;
+            min-height: 60px;
+            touch-action: manipulation; /* Optimize for touch */
+            user-select: none; /* Prevent text selection on mobile */
+            -webkit-touch-callout: none; /* Disable iOS callout */
         }
 
         .industry-btn:hover {
@@ -376,6 +380,10 @@
             flex-direction: column;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             backdrop-filter: blur(8px);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent; /* Remove iOS tap highlight */
         }
 
         .variation-btn .icon {
@@ -564,26 +572,177 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Responsive Design */
+        /* Enhanced Mobile-First Responsive Design */
         @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .pitch-intro {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .pitch-intro h2 {
+                font-size: 1.8rem;
+            }
+            
+            .pitch-intro p {
+                font-size: 1rem;
+            }
+            
+            .quick-form {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
             .form-row {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
             
             .industry-grid {
                 grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .industry-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .generate-btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                width: 100%;
+            }
+            
+            .variation-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .variation-options {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 0.3rem;
+            }
+            
+            .variation-btn {
+                padding: 0.6rem 0.4rem;
+                font-size: 0.7rem;
+                min-height: 60px;
+            }
+            
+            .variation-btn .icon {
+                font-size: 1.2rem;
+                margin-bottom: 0.3rem;
             }
             
             .preview-container {
                 flex-direction: column;
+                gap: 1rem;
             }
             
             .mobile-preview {
                 max-width: none;
+                order: -1; /* Show mobile preview first on mobile */
+            }
+            
+            .desktop-preview {
+                display: none; /* Hide desktop preview on mobile by default */
+            }
+            
+            .view-controls {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .view-btn {
+                flex: 1;
+                min-width: 100px;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .preview-section {
+                padding: 1rem;
+            }
+            
+            .preview-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .preview-header h3 {
+                font-size: 1.5rem;
+            }
+            
+            .download-btn {
+                width: 100%;
+                padding: 1rem;
+            }
+            
+            .variation-controls {
+                padding: 1rem;
+            }
+            
+            .variation-controls h4 {
+                font-size: 1.1rem;
+            }
+            
+            .regenerate-btn {
+                font-size: 0.9rem;
+                padding: 1rem;
+            }
+            
+            .auto-fill-btn {
+                width: 100%;
+                padding: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.5rem;
+            }
+            
+            .header {
+                margin-bottom: 2rem;
             }
             
             .header h1 {
-                font-size: 2.5rem;
+                font-size: 1.8rem;
+            }
+            
+            .pitch-intro, .quick-form {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .industry-btn {
+                padding: 0.7rem;
+                font-size: 0.85rem;
+            }
+            
+            .variation-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .mobile-frame {
+                padding: 15px;
+            }
+            
+            .preview-frame {
+                height: 500px;
             }
         }
 
@@ -783,6 +942,121 @@
                 components: null,
                 typography: null
             };
+
+            // Mobile Detection and Optimization
+            const isMobile = window.innerWidth <= 768;
+            const isSmallMobile = window.innerWidth <= 480;
+            
+            function optimizeForMobile() {
+                console.log(`📱 Device detected: ${isMobile ? 'Mobile' : 'Desktop'} (${window.innerWidth}px)`);
+                
+                if (isMobile) {
+                    // Hide desktop preview by default on mobile
+                    const desktopPreview = document.getElementById('desktopPreview');
+                    const mobilePreview = document.getElementById('mobilePreview');
+                    
+                    if (desktopPreview && mobilePreview) {
+                        desktopPreview.style.display = 'none';
+                        mobilePreview.style.display = 'block';
+                    }
+                    
+                    // Update view controls for mobile
+                    const viewControls = document.querySelector('.view-controls');
+                    if (viewControls) {
+                        viewControls.innerHTML = `
+                            <button class="view-btn active" data-view="mobile">📱 Mobile View</button>
+                            <button class="view-btn" data-view="desktop">🖥️ Desktop View</button>
+                        `;
+                        
+                        // Re-attach event listeners for new buttons
+                        setupViewControls();
+                    }
+                    
+                    // Optimize form layout for mobile
+                    const formRows = document.querySelectorAll('.form-row');
+                    formRows.forEach(row => {
+                        row.style.gridTemplateColumns = '1fr';
+                    });
+                    
+                    // Optimize variation controls for mobile
+                    const variationSections = document.querySelectorAll('.variation-section');
+                    variationSections.forEach(section => {
+                        const options = section.querySelector('.variation-options');
+                        if (options) {
+                            if (isSmallMobile) {
+                                options.style.gridTemplateColumns = 'repeat(2, 1fr)';
+                            } else {
+                                options.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                            }
+                        }
+                    });
+                    
+                    // Show mobile-optimized intro text
+                    const pitchIntro = document.querySelector('.pitch-intro p');
+                    if (pitchIntro) {
+                        pitchIntro.innerHTML = 'Generate professional websites instantly for any industry. <strong>52,800+</strong> unique combinations available with premium mobile-responsive designs.';
+                    }
+                    
+                    console.log('✅ Mobile optimizations applied');
+                } else {
+                    console.log('🖥️ Desktop interface maintained');
+                }
+            }
+            
+            function setupViewControls() {
+                const viewButtons = document.querySelectorAll('.view-btn');
+                viewButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        viewButtons.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        const view = this.dataset.view;
+                        const desktopPreview = document.getElementById('desktopPreview');
+                        const mobilePreview = document.getElementById('mobilePreview');
+                        
+                        switch(view) {
+                            case 'desktop':
+                                if (desktopPreview && mobilePreview) {
+                                    desktopPreview.style.display = 'block';
+                                    mobilePreview.style.display = isMobile ? 'block' : 'none';
+                                }
+                                break;
+                            case 'mobile':
+                                if (desktopPreview && mobilePreview) {
+                                    desktopPreview.style.display = 'none';
+                                    mobilePreview.style.display = 'block';
+                                }
+                                break;
+                            case 'both':
+                            default:
+                                if (desktopPreview && mobilePreview) {
+                                    desktopPreview.style.display = isMobile ? 'none' : 'block';
+                                    mobilePreview.style.display = 'block';
+                                }
+                                break;
+                        }
+                        
+                        // Show feedback for mobile users
+                        if (isMobile) {
+                            const viewName = view === 'desktop' ? 'Desktop' : 'Mobile';
+                            showToast(`📱 Switched to ${viewName} view`, 'info');
+                        }
+                    });
+                });
+            }
+            
+            // Apply mobile optimizations on load
+            optimizeForMobile();
+            
+            // Re-optimize on window resize
+            window.addEventListener('resize', function() {
+                const wasOptimized = isMobile;
+                const nowMobile = window.innerWidth <= 768;
+                
+                if (wasOptimized !== nowMobile) {
+                    location.reload(); // Refresh for complete optimization
+                }
+            });
 
             // Auto-fill demo data
             autoFillBtn.addEventListener('click', function() {
@@ -1374,33 +1648,8 @@
                 previewSection.scrollIntoView({ behavior: 'smooth' });
             }
 
-            // View controls
-            viewButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    viewButtons.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const view = this.dataset.view;
-                    const desktopPreview = document.getElementById('desktopPreview');
-                    const mobilePreview = document.getElementById('mobilePreview');
-                    
-                    switch(view) {
-                        case 'desktop':
-                            desktopPreview.style.display = 'block';
-                            mobilePreview.style.display = 'none';
-                            break;
-                        case 'mobile':
-                            desktopPreview.style.display = 'none';
-                            mobilePreview.style.display = 'block';
-                            break;
-                        case 'both':
-                        default:
-                            desktopPreview.style.display = 'block';
-                            mobilePreview.style.display = 'block';
-                            break;
-                    }
-                });
-            });
+            // View controls (will be replaced by mobile optimization)
+            setupViewControls();
 
             // Download functionality
             downloadBtn.addEventListener('click', function() {

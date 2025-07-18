@@ -341,6 +341,73 @@ class WebsiteGenerator {
             background: linear-gradient(135deg, var(--secondary), var(--primary)) !important;
         }
         
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+            padding: 1.5rem;
+            margin: 0;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .mobile-menu a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
         /* Premium Hero Section */
         .hero {
             ${this.getHeroLayoutCSS(variant.layout, {...variant.colors, industry: variant.serviceType})}
@@ -682,16 +749,53 @@ class WebsiteGenerator {
         
         /* Premium Responsive Design */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
             .nav-links {
                 display: none;
             }
             
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
             .hero {
-                padding: 120px 0 80px;
+                padding: 100px 0 60px;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
             }
             
             .hero-content {
                 text-align: center;
+                max-width: 100%;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
             }
             
             .services-grid {
@@ -699,14 +803,72 @@ class WebsiteGenerator {
                 gap: 1.5rem;
             }
             
+            .service-card {
+                padding: 1.5rem;
+            }
+            
+            .service-card h3 {
+                font-size: 1.3rem;
+            }
+            
             .contact-info {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .contact-item {
+                padding: 1.5rem;
             }
             
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                text-align: center;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 80px 0 40px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .service-card {
+                padding: 1rem;
+            }
+            
+            .contact-item {
+                padding: 1rem;
+            }
+            
+            .section {
+                padding: 40px 0;
+            }
+            
+            .section h2 {
+                font-size: 1.7rem;
             }
         }
         
@@ -742,7 +904,16 @@ class WebsiteGenerator {
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="tel:${variant.phoneNumber}" class="nav-cta">📞 Call Now</a></li>
             </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="#home" onclick="closeMobileMenu()">🏠 Home</a></li>
+                <li><a href="#services" onclick="closeMobileMenu()">⚙️ Services</a></li>
+                <li><a href="#contact" onclick="closeMobileMenu()">📞 Contact</a></li>
+                <li><a href="tel:${variant.phoneNumber}" onclick="closeMobileMenu()">📲 Call ${variant.phoneNumber}</a></li>
+            </ul>
+        </div>
     </header>
 
     <section class="hero" id="home">
@@ -821,6 +992,37 @@ class WebsiteGenerator {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    this.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+                });
+            }
+            
+            // Close mobile menu function (global)
+            window.closeMobileMenu = function() {
+                if (mobileMenu) {
+                    mobileMenu.classList.remove('active');
+                    if (mobileMenuBtn) {
+                        mobileMenuBtn.textContent = '☰';
+                    }
+                }
+            };
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (mobileMenu && mobileMenuBtn && 
+                    !mobileMenu.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target) &&
+                    mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+            });
+            
             // Premium smooth scrolling
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
