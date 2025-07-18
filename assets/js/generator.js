@@ -1,30 +1,19 @@
-// Enhanced Website Generator with 20+ Unique Variations
-// Forte Studio Professional Website Generator
-
+// Forte Studio Website Generator - Enhanced with 20+ Unique Variations
 class WebsiteGenerator {
     constructor() {
-        console.log('🎨 Initializing Enhanced Website Generator...');
-        this.initializeVariationSystem();
-        this.generationStats = {
-            totalGenerated: 0,
-            uniqueVariants: new Set(),
-            sessionStartTime: Date.now()
-        };
-        console.log(`✅ Generator ready with ${this.getTotalCombinations().toLocaleString()} possible unique combinations!`);
+        console.log('🚀 WebsiteGenerator initializing...');
+        this.setupVariations();
+        console.log('✅ WebsiteGenerator ready with 20+ unique variations!');
     }
 
-    initializeVariationSystem() {
-        // Layout types for maximum variety
-        this.layoutTypes = [
-            'hero-split', 'centered', 'traditional', 'asymmetric', 'fullwidth', 'stacked',
-            'boxed', 'wide', 'minimal', 'magazine', 'portfolio', 'corporate',
-            'creative', 'modern', 'classic', 'bold', 'elegant', 'tech',
-            'artistic', 'industrial', 'luxury', 'startup'
+    setupVariations() {
+        this.layouts = [
+            'hero-split', 'centered', 'asymmetric', 'fullwidth', 'minimal', 'corporate',
+            'creative', 'modern', 'classic', 'elegant', 'tech', 'artistic', 'luxury',
+            'industrial', 'magazine', 'portfolio', 'boxed', 'wide', 'stacked', 'bold'
         ];
 
-        // Color schemes with gradients and solid backgrounds
         this.colorSchemes = [
-            // Gradient backgrounds
             { name: 'ocean', primary: '#667eea', secondary: '#764ba2', bg: 'linear-gradient(135deg, #667eea, #764ba2)', type: 'gradient' },
             { name: 'sunset', primary: '#ff6b6b', secondary: '#ee5a24', bg: 'linear-gradient(135deg, #ff6b6b, #ee5a24)', type: 'gradient' },
             { name: 'forest', primary: '#10ac84', secondary: '#00d2d3', bg: 'linear-gradient(135deg, #10ac84, #00d2d3)', type: 'gradient' },
@@ -35,8 +24,6 @@ class WebsiteGenerator {
             { name: 'amber', primary: '#fdcb6e', secondary: '#e17055', bg: 'linear-gradient(135deg, #fdcb6e, #e17055)', type: 'gradient' },
             { name: 'rose', primary: '#fd79a8', secondary: '#e84393', bg: 'linear-gradient(135deg, #fd79a8, #e84393)', type: 'gradient' },
             { name: 'cyan', primary: '#00cec9', secondary: '#55a3ff', bg: 'linear-gradient(135deg, #00cec9, #55a3ff)', type: 'gradient' },
-            
-            // Solid backgrounds
             { name: 'slate', primary: '#2d3748', secondary: '#4a5568', bg: '#f7fafc', type: 'solid' },
             { name: 'navy', primary: '#1a202c', secondary: '#2d3748', bg: '#edf2f7', type: 'solid' },
             { name: 'teal', primary: '#285e61', secondary: '#2c7a7b', bg: '#e6fffa', type: 'solid' },
@@ -49,16 +36,14 @@ class WebsiteGenerator {
             { name: 'stone', primary: '#57534e', secondary: '#78716c', bg: '#fafaf9', type: 'solid' }
         ];
 
-        // Component styles for variety
-        this.componentStyles = [
-            'carousel', 'grid-tiles', 'accordion', 'masonry', 'slider', 'tabs',
-            'cards-flip', 'timeline', 'feature-boxes', 'service-list', 'testimonial-slider',
-            'portfolio-grid', 'pricing-table', 'team-showcase', 'gallery-lightbox',
-            'contact-form', 'stats-counter', 'progress-bars', 'icon-boxes', 'video-hero'
+        this.components = [
+            'grid-tiles', 'masonry', 'carousel', 'feature-boxes', 'service-list',
+            'portfolio-grid', 'icon-boxes', 'accordion', 'tabs', 'cards-flip',
+            'timeline', 'testimonial-slider', 'pricing-table', 'team-showcase',
+            'gallery-lightbox', 'contact-form', 'stats-counter', 'progress-bars'
         ];
 
-        // Typography combinations
-        this.typography = [
+        this.fonts = [
             { heading: 'Poppins', body: 'Open Sans' },
             { heading: 'Montserrat', body: 'Lato' },
             { heading: 'Playfair Display', body: 'Source Sans Pro' },
@@ -67,69 +52,117 @@ class WebsiteGenerator {
             { heading: 'Inter', body: 'Inter' }
         ];
 
-        // Industry-specific content
-        this.industryContent = {
+        this.industries = {
             plumbing: {
-                services: ['Emergency Repairs', 'Drain Cleaning', 'Water Heater Installation', 'Pipe Replacement', 'Leak Detection'],
-                taglines: ['Fast & Reliable Plumbing', 'Your Trusted Plumber', '24/7 Emergency Service', 'Quality Workmanship Guaranteed'],
-                icons: ['🔧', '🚰', '🔨', '⚡', '🏠']
+                services: ['Emergency Repairs', 'Drain Cleaning', 'Water Heater Installation', 'Pipe Replacement', 'Leak Detection', 'Bathroom Plumbing'],
+                taglines: ['Fast & Reliable Plumbing', 'Your Trusted Plumber', '24/7 Emergency Service', 'Quality Workmanship Guaranteed', 'Licensed & Insured Professionals'],
+                icons: ['🔧', '🚰', '🔨', '⚡', '🏠', '🚿'],
+                heroIcon: '🔧',
+                primaryColor: '#2196F3',
+                secondaryColor: '#1976D2',
+                backgroundPattern: 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)',
+                specialtyFeatures: ['24/7 Emergency Service', 'Licensed & Insured', 'Free Estimates', 'Warranty Included']
             },
             hvac: {
-                services: ['AC Installation', 'Heating Repair', 'Duct Cleaning', 'System Maintenance', 'Energy Efficiency'],
-                taglines: ['Comfort All Year Round', 'Expert HVAC Solutions', 'Indoor Air Quality Specialists', 'Energy Efficient Systems'],
-                icons: ['🌡️', '❄️', '🔥', '💨', '🏠']
+                services: ['AC Installation', 'Heating Repair', 'Duct Cleaning', 'System Maintenance', 'Energy Efficiency', 'Smart Thermostats'],
+                taglines: ['Comfort All Year Round', 'Expert HVAC Solutions', 'Indoor Air Quality Specialists', 'Energy Efficient Systems', 'Climate Control Experts'],
+                icons: ['🌡️', '❄️', '🔥', '💨', '🏠', '⚙️'],
+                heroIcon: '🌡️',
+                primaryColor: '#4CAF50',
+                secondaryColor: '#2E7D32',
+                backgroundPattern: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)',
+                specialtyFeatures: ['Energy Efficient', 'Smart Home Integration', 'Preventive Maintenance', 'Emergency Repairs']
             },
             electrical: {
-                services: ['Wiring Installation', 'Panel Upgrades', 'Outlet Repair', 'Lighting Solutions', 'Safety Inspections'],
-                taglines: ['Powering Your Home Safely', 'Licensed Electrical Experts', '24/7 Emergency Electrical', 'Safe & Reliable Service'],
-                icons: ['⚡', '💡', '🔌', '⭐', '🏠']
+                services: ['Wiring Installation', 'Panel Upgrades', 'Outlet Repair', 'Lighting Solutions', 'Safety Inspections', 'Smart Home Setup'],
+                taglines: ['Powering Your Home Safely', 'Licensed Electrical Experts', '24/7 Emergency Electrical', 'Safe & Reliable Service', 'Modern Electrical Solutions'],
+                icons: ['⚡', '💡', '🔌', '⭐', '🏠', '🔧'],
+                heroIcon: '⚡',
+                primaryColor: '#FF9800',
+                secondaryColor: '#F57C00',
+                backgroundPattern: 'linear-gradient(135deg, #FF9800 0%, #F57C00 100%)',
+                specialtyFeatures: ['Licensed Electricians', 'Code Compliant', '24/7 Emergency', 'Safety First']
             },
             landscaping: {
-                services: ['Lawn Care', 'Garden Design', 'Tree Services', 'Irrigation Systems', 'Hardscaping'],
-                taglines: ['Beautiful Outdoor Spaces', 'Transform Your Landscape', 'Professional Lawn Care', 'Year-Round Maintenance'],
-                icons: ['🌿', '🌱', '🌳', '🏡', '✨']
+                services: ['Lawn Care', 'Garden Design', 'Tree Services', 'Irrigation Systems', 'Hardscaping', 'Seasonal Cleanup'],
+                taglines: ['Beautiful Outdoor Spaces', 'Transform Your Landscape', 'Professional Lawn Care', 'Year-Round Maintenance', 'Nature-Inspired Design'],
+                icons: ['🌿', '🌱', '🌳', '🏡', '✨', '🌸'],
+                heroIcon: '🌿',
+                primaryColor: '#8BC34A',
+                secondaryColor: '#689F38',
+                backgroundPattern: 'linear-gradient(135deg, #8BC34A 0%, #689F38 100%)',
+                specialtyFeatures: ['Eco-Friendly Practices', 'Custom Designs', 'Seasonal Maintenance', 'Water-Wise Solutions']
             },
             contractor: {
-                services: ['Home Renovations', 'Kitchen Remodeling', 'Bathroom Updates', 'Flooring Installation', 'Custom Builds'],
-                taglines: ['Building Dreams Together', 'Quality Construction Services', 'Your Vision, Our Expertise', 'Trusted General Contractors'],
-                icons: ['🏗️', '🔨', '🏠', '⭐', '🎯']
+                services: ['Home Renovations', 'Kitchen Remodeling', 'Bathroom Updates', 'Flooring Installation', 'Custom Builds', 'Additions'],
+                taglines: ['Building Dreams Together', 'Quality Construction Services', 'Your Vision, Our Expertise', 'Trusted General Contractors', 'Excellence in Construction'],
+                icons: ['🏗️', '🔨', '🏠', '⭐', '🎯', '📐'],
+                heroIcon: '🏗️',
+                primaryColor: '#9C27B0',
+                secondaryColor: '#7B1FA2',
+                backgroundPattern: 'linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)',
+                specialtyFeatures: ['Licensed & Bonded', 'Full-Service Construction', 'Project Management', 'Quality Guarantee']
             },
             roofing: {
-                services: ['Roof Replacement', 'Leak Repairs', 'Gutter Installation', 'Storm Damage', 'Inspections'],
-                taglines: ['Protecting Your Investment', 'Quality Roofing Solutions', 'Weather-Proof Your Home', 'Expert Roof Services'],
-                icons: ['🏠', '☂️', '🔨', '⚡', '✅']
+                services: ['Roof Replacement', 'Leak Repairs', 'Gutter Installation', 'Storm Damage', 'Inspections', 'Emergency Services'],
+                taglines: ['Protecting Your Investment', 'Quality Roofing Solutions', 'Weather-Proof Your Home', 'Expert Roof Services', 'Storm Damage Specialists'],
+                icons: ['🏠', '☂️', '🔨', '⚡', '✅', '🛡️'],
+                heroIcon: '🏠',
+                primaryColor: '#795548',
+                secondaryColor: '#5D4037',
+                backgroundPattern: 'linear-gradient(135deg, #795548 0%, #5D4037 100%)',
+                specialtyFeatures: ['Insurance Claims Assistance', 'Emergency Response', 'Warranty Included', 'Local Trusted']
             },
             flooring: {
-                services: ['Hardwood Installation', 'Carpet Replacement', 'Tile Work', 'Vinyl Flooring', 'Floor Refinishing'],
-                taglines: ['Beautiful Floors for Life', 'Step Up Your Style', 'Flooring Specialists', 'Quality Installation Guaranteed'],
-                icons: ['🪵', '🏠', '✨', '🔨', '⭐']
+                services: ['Hardwood Installation', 'Carpet Replacement', 'Tile Work', 'Vinyl Flooring', 'Floor Refinishing', 'Luxury Vinyl'],
+                taglines: ['Beautiful Floors for Life', 'Step Up Your Style', 'Flooring Specialists', 'Quality Installation Guaranteed', 'Transform Your Space'],
+                icons: ['🪵', '🏠', '✨', '🔨', '⭐', '📐'],
+                heroIcon: '🪵',
+                primaryColor: '#8D6E63',
+                secondaryColor: '#6D4C41',
+                backgroundPattern: 'linear-gradient(135deg, #8D6E63 0%, #6D4C41 100%)',
+                specialtyFeatures: ['Professional Installation', 'Quality Materials', 'Design Consultation', 'Lifetime Warranty']
             },
             painting: {
-                services: ['Interior Painting', 'Exterior Painting', 'Cabinet Refinishing', 'Color Consultation', 'Pressure Washing'],
-                taglines: ['Bringing Color to Life', 'Professional Painting Services', 'Transform Your Space', 'Quality Paint Solutions'],
-                icons: ['🎨', '🏠', '✨', '🖌️', '⭐']
+                services: ['Interior Painting', 'Exterior Painting', 'Cabinet Refinishing', 'Color Consultation', 'Pressure Washing', 'Deck Staining'],
+                taglines: ['Bringing Color to Life', 'Professional Painting Services', 'Transform Your Space', 'Quality Paint Solutions', 'Expert Color Consultation'],
+                icons: ['🎨', '🏠', '✨', '🖌️', '⭐', '🌈'],
+                heroIcon: '🎨',
+                primaryColor: '#E91E63',
+                secondaryColor: '#C2185B',
+                backgroundPattern: 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)',
+                specialtyFeatures: ['Premium Paints', 'Color Consultation', 'Clean & Professional', 'Satisfaction Guaranteed']
             }
         };
     }
 
     generateMockup(formData) {
-        console.log('🎨 Generating unique website with advanced variation system...');
+        console.log('🎨 Generating unique website...');
         
-        // Create unique variant configuration
-        const uniqueVariant = this.createUniqueVariant(formData);
+        // Create truly unique variant
+        const variant = this.createUniqueVariant(formData);
         
-        // Track generation statistics
-        this.generationStats.totalGenerated++;
-        this.generationStats.uniqueVariants.add(uniqueVariant.uniqueId);
+        // Generate HTML
+        const html = this.buildHTML(variant);
         
-        // Generate the HTML
-        const html = this.generateUniqueHTML(uniqueVariant);
-        
-        const stats = this.getGenerationStats();
-        console.log(`✅ Generated unique website #${stats.totalGenerated}: Layout=${uniqueVariant.layout}, Colors=${uniqueVariant.colorScheme.name}, Components=${uniqueVariant.components}`);
-        console.log(`📊 Uniqueness: ${stats.uniqueVariants}/${stats.totalPossibleCombinations} (${stats.uniquenessPercentage}% of total possibilities)`);
+        console.log(`✅ Generated: ${variant.layout} layout, ${variant.colors.name} colors, ${variant.componentStyle} components`);
         
         return html;
+    }
+
+    createUniqueVariant(formData) {
+        const timestamp = Date.now() + Math.random() * 1000;
+        
+        return {
+            ...formData,
+            layout: this.getRandomItem(this.layouts),
+            colors: this.getRandomItem(this.colorSchemes),
+            componentStyle: this.getRandomItem(this.components),
+            font: this.getRandomItem(this.fonts),
+            industry: this.industries[formData.serviceType] || this.industries.contractor,
+            uniqueId: `variant-${timestamp}`,
+            timestamp: new Date().toISOString()
+        };
     }
 
     generateCustomMockup(formData, customVariations) {
@@ -138,67 +171,33 @@ class WebsiteGenerator {
         // Create custom variant configuration
         const customVariant = this.createCustomVariant(formData, customVariations);
         
-        // Track generation statistics
-        this.generationStats.totalGenerated++;
-        this.generationStats.uniqueVariants.add(customVariant.uniqueId);
-        
         // Generate the HTML
-        const html = this.generateUniqueHTML(customVariant);
+        const html = this.buildHTML(customVariant);
         
-        const stats = this.getGenerationStats();
-        console.log(`✅ Generated custom website #${stats.totalGenerated}: Layout=${customVariant.layout}, Colors=${customVariant.colorScheme.name}, Components=${customVariant.components}`);
+        console.log(`✅ Generated custom website: Layout=${customVariant.layout}, Colors=${customVariant.colors.name}, Components=${customVariant.componentStyle}`);
         console.log(`📊 Custom variations applied: ${Object.values(customVariations).filter(v => v !== null).length}`);
         
         return html;
     }
 
-    createUniqueVariant(formData) {
-        // Use current timestamp for true randomness
-        const seed = Date.now() + Math.random() * 1000;
-        
-        // Select random elements for uniqueness
-        const layout = this.layoutTypes[Math.floor(Math.random() * this.layoutTypes.length)];
-        const colorScheme = this.colorSchemes[Math.floor(Math.random() * this.colorSchemes.length)];
-        const components = this.componentStyles[Math.floor(Math.random() * this.componentStyles.length)];
-        const typography = this.typography[Math.floor(Math.random() * this.typography.length)];
-        
-        // Get industry-specific content
-        const industryData = this.industryContent[formData.serviceType] || this.industryContent.contractor;
-        
-        // Track unique variants
-        this.generationStats.uniqueVariants.add(`${layout}|${colorScheme.name}|${components}|${typography.heading}`);
-        this.generationStats.totalGenerated++;
-        
-        return {
-            ...formData,
-            layout,
-            colorScheme,
-            components,
-            typography,
-            industryData,
-            uniqueId: `variant-${seed}`,
-            timestamp: new Date().toISOString()
-        };
-    }
-
     createCustomVariant(formData, customVariations) {
         // Use current timestamp for true randomness
-        const seed = Date.now() + Math.random() * 1000;
+        const timestamp = Date.now() + Math.random() * 1000;
         
         // Apply custom selections or use random
-        const layout = customVariations.layout || this.layoutTypes[Math.floor(Math.random() * this.layoutTypes.length)];
+        const layout = customVariations.layout || this.getRandomItem(this.layouts);
         
-        let colorScheme;
+        let colors;
         if (customVariations.colorScheme) {
-            colorScheme = this.colorSchemes.find(c => c.name === customVariations.colorScheme) || 
-                         this.colorSchemes[Math.floor(Math.random() * this.colorSchemes.length)];
+            colors = this.colorSchemes.find(c => c.name === customVariations.colorScheme) || 
+                     this.getRandomItem(this.colorSchemes);
         } else {
-            colorScheme = this.colorSchemes[Math.floor(Math.random() * this.colorSchemes.length)];
+            colors = this.getRandomItem(this.colorSchemes);
         }
         
-        const components = customVariations.components || this.componentStyles[Math.floor(Math.random() * this.componentStyles.length)];
+        const componentStyle = customVariations.components || this.getRandomItem(this.components);
         
-        let typography;
+        let font;
         if (customVariations.typography) {
             const typoMap = {
                 'Modern': { heading: 'Poppins', body: 'Open Sans' },
@@ -208,44 +207,40 @@ class WebsiteGenerator {
                 'Minimal': { heading: 'Inter', body: 'Inter' },
                 'Creative': { heading: 'Nunito', body: 'Nunito Sans' }
             };
-            typography = typoMap[customVariations.typography] || this.typography[Math.floor(Math.random() * this.typography.length)];
+            font = typoMap[customVariations.typography] || this.getRandomItem(this.fonts);
         } else {
-            typography = this.typography[Math.floor(Math.random() * this.typography.length)];
+            font = this.getRandomItem(this.fonts);
         }
         
         // Get industry-specific content
-        const industryData = this.industryContent[formData.serviceType] || this.industryContent.contractor;
+        const industryData = this.industries[formData.serviceType] || this.industries.contractor;
         
         return {
             ...formData,
             layout,
-            colorScheme,
-            components,
-            typography,
+            colors,
+            componentStyle,
+            font,
             industryData,
-            uniqueId: `custom-variant-${seed}`,
+            uniqueId: `custom-variant-${timestamp}`,
             timestamp: new Date().toISOString(),
             customizations: customVariations
         };
     }
 
-    generateUniqueHTML(variant) {
-        const { colorScheme, typography, industryData, layout } = variant;
+    buildHTML(variant) {
+        const fontUrl = `https://fonts.googleapis.com/css2?family=${variant.font.heading.replace(' ', '+')}:wght@300;400;600;700&family=${variant.font.body.replace(' ', '+')}:wght@300;400;500;600&display=swap`;
         
-        // Generate unique Google Fonts URL
-        const fontUrl = `https://fonts.googleapis.com/css2?family=${typography.heading.replace(' ', '+')}:wght@300;400;600;700&family=${typography.body.replace(' ', '+')}:wght@300;400;500;600&display=swap`;
-        
-        // Create background style based on type
-        const backgroundStyle = colorScheme.type === 'gradient' 
-            ? `background: ${colorScheme.bg};`
-            : `background-color: ${colorScheme.bg};`;
-        
+        const backgroundCSS = variant.colors.type === 'gradient' 
+            ? `background: ${variant.colors.bg};`
+            : `background-color: ${variant.colors.bg};`;
+
         return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${variant.companyName} - Professional ${this.getServiceName(variant.serviceType)}</title>
+    <title>${variant.companyName} - Professional ${this.getServiceDisplayName(variant.serviceType)}</title>
     <link href="${fontUrl}" rel="stylesheet">
     <style>
         * {
@@ -255,10 +250,10 @@ class WebsiteGenerator {
         }
         
         body {
-            font-family: '${typography.body}', sans-serif;
+            font-family: '${variant.font.body}', sans-serif;
             line-height: 1.6;
             color: #333;
-            ${backgroundStyle}
+            ${backgroundCSS}
             min-height: 100vh;
         }
         
@@ -269,7 +264,7 @@ class WebsiteGenerator {
         }
         
         .header {
-            background: ${colorScheme.type === 'gradient' ? colorScheme.bg : colorScheme.primary};
+            background: ${variant.colors.type === 'gradient' ? variant.colors.bg : variant.colors.primary};
             color: white;
             padding: 1rem 0;
             position: fixed;
@@ -287,7 +282,7 @@ class WebsiteGenerator {
         }
         
         .logo {
-            font-family: '${typography.heading}', serif;
+            font-family: '${variant.font.heading}', serif;
             font-size: 1.8rem;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -314,7 +309,7 @@ class WebsiteGenerator {
         }
         
         .hero {
-            ${this.getHeroLayout(layout, colorScheme)}
+            ${this.getHeroLayoutCSS(variant.layout, variant.colors)}
             padding: 120px 0 80px;
             margin-top: 70px;
             color: white;
@@ -329,21 +324,21 @@ class WebsiteGenerator {
             left: 0;
             right: 0;
             bottom: 0;
-            background: ${colorScheme.type === 'gradient' 
-                ? `linear-gradient(45deg, ${colorScheme.primary}aa, ${colorScheme.secondary}aa)`
-                : `linear-gradient(135deg, ${colorScheme.primary}, ${colorScheme.secondary})`
+            background: ${variant.colors.type === 'gradient' 
+                ? `linear-gradient(45deg, ${variant.colors.primary}aa, ${variant.colors.secondary}aa)`
+                : `linear-gradient(135deg, ${variant.colors.primary}, ${variant.colors.secondary})`
             };
             z-index: -1;
         }
         
         .hero-content {
-            ${this.getHeroContentLayout(layout)}
+            ${this.getHeroContentCSS(variant.layout)}
             position: relative;
             z-index: 2;
         }
         
         .hero h1 {
-            font-family: '${typography.heading}', serif;
+            font-family: '${variant.font.heading}', serif;
             font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 700;
             margin-bottom: 1.5rem;
@@ -361,7 +356,7 @@ class WebsiteGenerator {
         .cta-button {
             display: inline-block;
             background: white;
-            color: ${colorScheme.primary};
+            color: ${variant.colors.primary};
             padding: 1rem 2.5rem;
             border-radius: 50px;
             text-decoration: none;
@@ -382,16 +377,16 @@ class WebsiteGenerator {
         
         .services {
             padding: 80px 0;
-            background: ${colorScheme.type === 'solid' ? 'white' : 'rgba(255,255,255,0.95)'};
+            background: ${variant.colors.type === 'solid' ? 'white' : 'rgba(255,255,255,0.95)'};
             position: relative;
         }
         
         .section-title {
-            font-family: '${typography.heading}', serif;
+            font-family: '${variant.font.heading}', serif;
             font-size: clamp(2rem, 4vw, 3rem);
             text-align: center;
             margin-bottom: 3rem;
-            color: ${colorScheme.primary};
+            color: ${variant.colors.primary};
             position: relative;
         }
         
@@ -403,17 +398,17 @@ class WebsiteGenerator {
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: ${colorScheme.type === 'gradient' ? colorScheme.bg : colorScheme.secondary};
+            background: ${variant.colors.type === 'gradient' ? variant.colors.bg : variant.colors.secondary};
             border-radius: 2px;
         }
         
         .services-grid {
-            ${this.getServicesLayout(variant.components)}
+            ${this.getServicesGridCSS(variant.componentStyle)}
             gap: 2rem;
         }
         
         .service-card {
-            ${this.getServiceCardStyle(variant.components, colorScheme)}
+            ${this.getServiceCardCSS(variant.componentStyle, variant.colors)}
             padding: 2.5rem 2rem;
             border-radius: 15px;
             text-align: center;
@@ -429,7 +424,7 @@ class WebsiteGenerator {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: ${colorScheme.type === 'gradient' ? colorScheme.bg : `linear-gradient(45deg, ${colorScheme.primary}, ${colorScheme.secondary})`};
+            background: ${variant.colors.type === 'gradient' ? variant.colors.bg : `linear-gradient(45deg, ${variant.colors.primary}, ${variant.colors.secondary})`};
             opacity: 0;
             transition: all 0.3s ease;
             z-index: 1;
@@ -453,10 +448,10 @@ class WebsiteGenerator {
         }
         
         .service-card h3 {
-            font-family: '${typography.heading}', serif;
+            font-family: '${variant.font.heading}', serif;
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: ${colorScheme.primary};
+            color: ${variant.colors.primary};
             position: relative;
             z-index: 2;
         }
@@ -469,13 +464,13 @@ class WebsiteGenerator {
         
         .contact {
             padding: 80px 0;
-            background: ${colorScheme.type === 'gradient' ? colorScheme.bg : colorScheme.primary};
+            background: ${variant.colors.type === 'gradient' ? variant.colors.bg : variant.colors.primary};
             color: white;
             text-align: center;
         }
         
         .contact h2 {
-            font-family: '${typography.heading}', serif;
+            font-family: '${variant.font.heading}', serif;
             font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 2rem;
         }
@@ -522,9 +517,9 @@ class WebsiteGenerator {
         }
         
         .footer-section h3 {
-            font-family: '${typography.heading}', serif;
+            font-family: '${variant.font.heading}', serif;
             margin-bottom: 1rem;
-            color: ${colorScheme.secondary};
+            color: ${variant.colors.secondary};
         }
         
         .footer-bottom {
@@ -575,16 +570,6 @@ class WebsiteGenerator {
         .service-card:nth-child(4) { animation-delay: 0.4s; }
         .service-card:nth-child(5) { animation-delay: 0.5s; }
     </style>
-    
-    <!-- Forte Web Designs - Unique Website Variation -->
-    <meta name="generator" content="Forte Web Designs Enhanced Generator">
-    <meta name="variation-id" content="${variant.uniqueId}">
-    <meta name="variation-layout" content="${variant.layout}">
-    <meta name="variation-colors" content="${variant.colorScheme.name}">
-    <meta name="variation-components" content="${variant.components}">
-    <meta name="variation-typography" content="${variant.typography.heading} + ${variant.typography.body}">
-    <meta name="generation-timestamp" content="${variant.timestamp}">
-    <meta name="total-combinations" content="${this.getTotalCombinations()}">
 </head>
 <body>
     <header class="header">
@@ -604,8 +589,8 @@ class WebsiteGenerator {
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1>${this.getRandomTagline(industryData.taglines)}</h1>
-                <p>With ${variant.yearsExp} years of experience serving ${variant.cityName}, we provide top-quality ${this.getServiceName(variant.serviceType).toLowerCase()} services you can trust.</p>
+                <h1>${this.getRandomTagline(variant.industry.taglines)}</h1>
+                <p>With ${variant.yearsExp} years of experience serving ${variant.cityName}, we provide top-quality ${this.getServiceDisplayName(variant.serviceType).toLowerCase()} services you can trust.</p>
                 <a href="tel:${variant.phoneNumber}" class="cta-button">📞 Call ${variant.phoneNumber}</a>
             </div>
         </div>
@@ -613,11 +598,11 @@ class WebsiteGenerator {
 
     <section class="services" id="services">
         <div class="container">
-            <h2 class="section-title">Our ${this.getServiceName(variant.serviceType)} Services</h2>
+            <h2 class="section-title">Our ${this.getServiceDisplayName(variant.serviceType)} Services</h2>
             <div class="services-grid">
-                ${industryData.services.map((service, index) => `
+                ${variant.industry.services.map((service, index) => `
                     <div class="service-card fade-in">
-                        <div class="service-icon">${industryData.icons[index] || '⭐'}</div>
+                        <div class="service-icon">${variant.industry.icons[index] || '⭐'}</div>
                         <h3>${service}</h3>
                         <p>Professional ${service.toLowerCase()} services with guaranteed satisfaction and quality workmanship.</p>
                     </div>
@@ -652,12 +637,12 @@ class WebsiteGenerator {
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>${variant.companyName}</h3>
-                    <p>Your trusted ${this.getServiceName(variant.serviceType).toLowerCase()} professionals in ${variant.cityName}.</p>
+                    <p>Your trusted ${this.getServiceDisplayName(variant.serviceType).toLowerCase()} professionals in ${variant.cityName}.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Services</h3>
                     <ul style="list-style: none; padding: 0;">
-                        ${industryData.services.slice(0, 3).map(service => `<li style="margin: 0.5rem 0;">${service}</li>`).join('')}
+                        ${variant.industry.services.slice(0, 3).map(service => `<li style="margin: 0.5rem 0;">${service}</li>`).join('')}
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -670,7 +655,7 @@ class WebsiteGenerator {
             <div class="footer-bottom">
                 <p>&copy; 2024 ${variant.companyName}. All rights reserved. | Generated by Forte Studio</p>
                 <p style="opacity: 0.6; font-size: 0.9rem; margin-top: 0.5rem;">
-                    Variant ID: ${variant.uniqueId} | Layout: ${variant.layout} | Colors: ${variant.colorScheme.name} | Components: ${variant.components}
+                    Variant ID: ${variant.uniqueId} | Layout: ${variant.layout} | Colors: ${variant.colors.name} | Components: ${variant.componentStyle}
                 </p>
             </div>
         </div>
@@ -713,72 +698,18 @@ class WebsiteGenerator {
 </html>`;
     }
 
-    getHeroLayout(layout, colorScheme) {
-        const layouts = {
-            'hero-split': `background: linear-gradient(45deg, ${colorScheme.primary}, ${colorScheme.secondary});`,
-            'centered': `background: ${colorScheme.type === 'gradient' ? colorScheme.bg : `linear-gradient(135deg, ${colorScheme.primary}, ${colorScheme.secondary})`}; text-align: center;`,
-            'asymmetric': `background: linear-gradient(120deg, ${colorScheme.primary} 60%, ${colorScheme.secondary} 60%);`,
-            'fullwidth': `background: ${colorScheme.bg}; width: 100vw; margin-left: calc(50% - 50vw);`,
-            'boxed': `background: white; color: ${colorScheme.primary}; border: 5px solid ${colorScheme.primary};`,
-            'minimal': `background: ${colorScheme.bg}; padding: 60px 0;`,
-            'magazine': `background: linear-gradient(45deg, ${colorScheme.primary}f0, ${colorScheme.secondary}f0);`,
-            'corporate': `background: linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary});`,
-            'creative': `background: radial-gradient(circle at 30% 40%, ${colorScheme.primary}, ${colorScheme.secondary});`,
-            'modern': `background: linear-gradient(135deg, ${colorScheme.primary}ee, ${colorScheme.secondary}ee);`,
-            'classic': `background: ${colorScheme.primary}; color: white;`,
-            'bold': `background: linear-gradient(90deg, ${colorScheme.primary}, ${colorScheme.secondary}, ${colorScheme.primary});`,
-            'elegant': `background: linear-gradient(to bottom, ${colorScheme.primary}f8, ${colorScheme.secondary}f8);`,
-            'tech': `background: linear-gradient(45deg, ${colorScheme.primary}dd, ${colorScheme.secondary}dd);`,
-            'artistic': `background: conic-gradient(from 45deg, ${colorScheme.primary}, ${colorScheme.secondary}, ${colorScheme.primary});`
-        };
-        return layouts[layout] || layouts['centered'];
+    getRandomItem(array) {
+        return array[Math.floor(Math.random() * array.length)];
     }
 
-    getHeroContentLayout(layout) {
-        const layouts = {
-            'hero-split': 'display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;',
-            'centered': 'text-align: center; max-width: 800px; margin: 0 auto;',
-            'asymmetric': 'display: flex; align-items: center; justify-content: flex-start;',
-            'boxed': 'max-width: 600px; margin: 0 auto; text-align: center;',
-            'minimal': 'text-align: left; max-width: 600px;',
-            'magazine': 'display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;',
-            'corporate': 'text-align: center; max-width: 700px; margin: 0 auto;',
-            'fullwidth': 'text-align: center; max-width: 900px; margin: 0 auto;',
-            'modern': 'display: flex; flex-direction: column; align-items: flex-start; max-width: 600px;'
-        };
-        return layouts[layout] || 'text-align: center; max-width: 700px; margin: 0 auto;';
+    getRandomTagline(taglines) {
+        return taglines[Math.floor(Math.random() * taglines.length)];
     }
 
-    getServicesLayout(component) {
-        const layouts = {
-            'grid-tiles': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));',
-            'masonry': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); grid-auto-rows: min-content;',
-            'carousel': 'display: flex; overflow-x: auto; gap: 2rem; padding: 1rem 0;',
-            'accordion': 'display: flex; flex-direction: column;',
-            'feature-boxes': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));',
-            'service-list': 'display: grid; grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;',
-            'portfolio-grid': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));',
-            'icon-boxes': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));'
-        };
-        return layouts[component] || layouts['grid-tiles'];
-    }
-
-    getServiceCardStyle(component, colorScheme) {
-        const styles = {
-            'grid-tiles': `background: white; border: 2px solid ${colorScheme.primary}20; box-shadow: 0 10px 30px rgba(0,0,0,0.1);`,
-            'masonry': `background: linear-gradient(145deg, white, ${colorScheme.bg}20); box-shadow: 0 8px 25px rgba(0,0,0,0.1);`,
-            'feature-boxes': `background: ${colorScheme.bg}10; border-left: 5px solid ${colorScheme.primary}; box-shadow: 0 5px 20px rgba(0,0,0,0.08);`,
-            'icon-boxes': `background: white; border-radius: 50% 10px 50% 10px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);`,
-            'service-list': `background: white; border: 1px solid ${colorScheme.primary}30; margin-bottom: 1rem;`,
-            'portfolio-grid': `background: linear-gradient(135deg, white, ${colorScheme.bg}15); box-shadow: 0 12px 35px rgba(0,0,0,0.12);`
-        };
-        return styles[component] || `background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.1);`;
-    }
-
-    getServiceName(serviceType) {
+    getServiceDisplayName(serviceType) {
         const names = {
             plumbing: 'Plumbing Services',
-            hvac: 'HVAC Services', 
+            hvac: 'HVAC Services',
             electrical: 'Electrical Services',
             landscaping: 'Landscaping Services',
             contractor: 'General Contracting',
@@ -789,45 +720,63 @@ class WebsiteGenerator {
         return names[serviceType] || 'Professional Services';
     }
 
-    getRandomTagline(taglines) {
-        return taglines[Math.floor(Math.random() * taglines.length)];
-    }
-
-    getTotalCombinations() {
-        return this.layoutTypes.length * 
-               this.colorSchemes.length * 
-               this.componentStyles.length * 
-               this.typography.length;
-    }
-
-    getGenerationStats() {
-        const sessionTime = Math.round((Date.now() - this.generationStats.sessionStartTime) / 1000);
-        return {
-            totalGenerated: this.generationStats.totalGenerated,
-            uniqueVariants: this.generationStats.uniqueVariants.size,
-            totalPossibleCombinations: this.getTotalCombinations(),
-            uniquenessPercentage: ((this.generationStats.uniqueVariants.size / this.getTotalCombinations()) * 100).toFixed(4),
-            sessionDuration: sessionTime
+    getHeroLayoutCSS(layout, colors) {
+        const styles = {
+            'hero-split': `background: linear-gradient(45deg, ${colors.primary}, ${colors.secondary});`,
+            'centered': `background: ${colors.type === 'gradient' ? colors.bg : `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`}; text-align: center;`,
+            'asymmetric': `background: linear-gradient(120deg, ${colors.primary} 60%, ${colors.secondary} 60%);`,
+            'fullwidth': `background: ${colors.bg}; width: 100vw; margin-left: calc(50% - 50vw);`,
+            'minimal': `background: ${colors.bg}; padding: 60px 0;`,
+            'corporate': `background: linear-gradient(to right, ${colors.primary}, ${colors.secondary});`,
+            'creative': `background: radial-gradient(circle at 30% 40%, ${colors.primary}, ${colors.secondary});`,
+            'modern': `background: linear-gradient(135deg, ${colors.primary}ee, ${colors.secondary}ee);`,
+            'classic': `background: ${colors.primary}; color: white;`,
+            'elegant': `background: linear-gradient(to bottom, ${colors.primary}f8, ${colors.secondary}f8);`
         };
+        return styles[layout] || styles['centered'];
+    }
+
+    getHeroContentCSS(layout) {
+        const styles = {
+            'hero-split': 'display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;',
+            'centered': 'text-align: center; max-width: 800px; margin: 0 auto;',
+            'asymmetric': 'display: flex; align-items: center; justify-content: flex-start;',
+            'minimal': 'text-align: left; max-width: 600px;',
+            'corporate': 'text-align: center; max-width: 700px; margin: 0 auto;',
+            'fullwidth': 'text-align: center; max-width: 900px; margin: 0 auto;',
+            'modern': 'display: flex; flex-direction: column; align-items: flex-start; max-width: 600px;'
+        };
+        return styles[layout] || 'text-align: center; max-width: 700px; margin: 0 auto;';
+    }
+
+    getServicesGridCSS(component) {
+        const styles = {
+            'grid-tiles': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));',
+            'masonry': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); grid-auto-rows: min-content;',
+            'carousel': 'display: flex; overflow-x: auto; gap: 2rem; padding: 1rem 0;',
+            'feature-boxes': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));',
+            'service-list': 'display: grid; grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;',
+            'portfolio-grid': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));',
+            'icon-boxes': 'display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));'
+        };
+        return styles[component] || styles['grid-tiles'];
+    }
+
+    getServiceCardCSS(component, colors) {
+        const styles = {
+            'grid-tiles': `background: white; border: 2px solid ${colors.primary}20; box-shadow: 0 10px 30px rgba(0,0,0,0.1);`,
+            'masonry': `background: linear-gradient(145deg, white, ${colors.bg}20); box-shadow: 0 8px 25px rgba(0,0,0,0.1);`,
+            'feature-boxes': `background: ${colors.bg}10; border-left: 5px solid ${colors.primary}; box-shadow: 0 5px 20px rgba(0,0,0,0.08);`,
+            'icon-boxes': `background: white; border-radius: 50% 10px 50% 10px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);`,
+            'service-list': `background: white; border: 1px solid ${colors.primary}30; margin-bottom: 1rem;`,
+            'portfolio-grid': `background: linear-gradient(135deg, white, ${colors.bg}15); box-shadow: 0 12px 35px rgba(0,0,0,0.12);`
+        };
+        return styles[component] || `background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.1);`;
     }
 }
 
-// Legacy MockupGenerator class for compatibility
-class MockupGenerator extends WebsiteGenerator {
-    constructor() {
-        super();
-        console.log('🔄 MockupGenerator initialized with WebsiteGenerator features');
-    }
+// Initialize for immediate use
+if (typeof window !== 'undefined') {
+    window.WebsiteGenerator = WebsiteGenerator;
+    console.log('✅ WebsiteGenerator class available globally');
 }
-
-// Initialize the generator when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Page loaded, initializing generators...');
-    
-    // Initialize both generators for compatibility
-    if (typeof window !== 'undefined') {
-        window.websiteGenerator = new WebsiteGenerator();
-        window.mockupGenerator = new MockupGenerator();
-        console.log('✅ Both generators ready!');
-    }
-});
