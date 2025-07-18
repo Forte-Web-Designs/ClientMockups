@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Industry Buttons</title>
+    <style>
+        body { font-family: system-ui; padding: 2rem; background: #f5f5f5; }
+        .debug-container { max-width: 800px; margin: 0 auto; }
+        .industry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        
+        .industry-btn {
+            background: linear-gradient(135deg, #f8f9ff, #e8ecff);
+            color: #667eea;
+            border: 2px solid #e1e5e9;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .industry-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .industry-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .industry-btn.active::before {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .debug-log { background: #000; color: #0f0; padding: 1rem; border-radius: 8px; font-family: monospace; height: 200px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔧 Industry Button Debug Test</h1>
+        <p>Click industry buttons to test highlighting functionality:</p>
+        
+        <div class="industry-grid">
+            <button type="button" class="industry-btn" data-industry="plumbing">🔧 Plumbing Services</button>
+            <button type="button" class="industry-btn" data-industry="hvac">🌡️ HVAC Services</button>
+            <button type="button" class="industry-btn" data-industry="electrical">⚡ Electrical Services</button>
+            <button type="button" class="industry-btn" data-industry="landscaping">🌿 Landscaping</button>
+        </div>
+        
+        <div class="debug-log" id="debugLog"></div>
+        
+        <div style="margin-top: 1rem;">
+            <strong>Selected Industry:</strong> <span id="selectedDisplay">None</span>
+        </div>
+    </div>
+
+    <script>
+        let selectedIndustry = '';
+        const debugLog = document.getElementById('debugLog');
+        const selectedDisplay = document.getElementById('selectedDisplay');
+        
+        function log(message) {
+            const time = new Date().toLocaleTimeString();
+            debugLog.innerHTML += `[${time}] ${message}\n`;
+            debugLog.scrollTop = debugLog.scrollHeight;
+            console.log(message);
+        }
+        
+        log('🚀 Industry button debug test initialized');
+        
+        const industryButtons = document.querySelectorAll('.industry-btn');
+        log(`📊 Found ${industryButtons.length} industry buttons`);
+        
+        industryButtons.forEach((btn, index) => {
+            log(`🔗 Setting up listener for button ${index + 1}: ${btn.dataset.industry}`);
+            
+            btn.addEventListener('click', function() {
+                log(`🎯 Button clicked: ${this.dataset.industry}`);
+                
+                // Remove active class from all buttons
+                industryButtons.forEach(b => {
+                    b.classList.remove('active');
+                    b.style.background = 'linear-gradient(135deg, #f8f9ff, #e8ecff)';
+                    b.style.color = '#667eea';
+                    b.style.border = '2px solid #e1e5e9';
+                    b.style.transform = '';
+                    b.style.boxShadow = '';
+                });
+                log(`🧹 Cleared active state from all buttons`);
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                this.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                this.style.color = 'white';
+                this.style.border = '2px solid #667eea';
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 10px 30px rgba(102, 126, 234, 0.4)';
+                log(`✅ Applied active state to: ${this.dataset.industry}`);
+                
+                selectedIndustry = this.dataset.industry;
+                selectedDisplay.textContent = selectedIndustry;
+                log(`💾 Selected industry updated: ${selectedIndustry}`);
+            });
+        });
+        
+        log('✨ All event listeners attached successfully');
+    </script>
+</body>
+</html>

@@ -166,9 +166,9 @@
         }
 
         .industry-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
+            background: linear-gradient(135deg, #f8f9ff, #e8ecff);
+            color: #667eea;
+            border: 2px solid #e1e5e9;
             padding: 1rem 1.5rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -180,11 +180,38 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .industry-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .industry-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            border: 2px solid #667eea !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+        }
+
+        .industry-btn.active::before {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         .generate-section {
@@ -378,11 +405,11 @@
         }
 
         .variation-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3), 0 4px 6px -1px rgba(102, 126, 234, 0.2);
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            border-color: #667eea !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3), 0 4px 6px -1px rgba(102, 126, 234, 0.2) !important;
         }
 
         .variation-btn.active .preview-box {
@@ -793,11 +820,26 @@
                 document.getElementById('cityName').value = randomDemo.city;
                 document.getElementById('yearsExp').value = Math.floor(Math.random() * 20) + 5;
                 
-                // Select industry
+                // Select industry with proper active state
                 industryButtons.forEach(btn => {
-                    btn.style.opacity = '0.7';
+                    btn.classList.remove('active');
+                    btn.style.cssText = `
+                        background: linear-gradient(135deg, #f8f9ff, #e8ecff) !important;
+                        color: #667eea !important;
+                        border: 2px solid #e1e5e9 !important;
+                        transform: none !important;
+                        box-shadow: none !important;
+                    `;
+                    
                     if (btn.dataset.industry === randomDemo.industry) {
-                        btn.style.opacity = '1';
+                        btn.classList.add('active');
+                        btn.style.cssText = `
+                            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+                            color: white !important;
+                            border: 2px solid #667eea !important;
+                            transform: translateY(-2px) !important;
+                            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+                        `;
                         selectedIndustry = randomDemo.industry;
                     }
                 });
@@ -959,15 +1001,24 @@
                 // Remove active class from siblings
                 button.parentElement.querySelectorAll('.variation-btn').forEach(btn => {
                     btn.classList.remove('active');
-                    btn.style.border = '2px solid #e1e5e9';
-                    btn.style.background = 'linear-gradient(135deg, #f8f9ff, #e8ecff)';
+                    btn.style.cssText = `
+                        background: white !important;
+                        color: #334155 !important;
+                        border: 2px solid #e2e8f0 !important;
+                        transform: none !important;
+                        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+                    `;
                 });
                 
                 // Add active class to selected button with enhanced styling
                 button.classList.add('active');
-                button.style.border = '2px solid #667eea';
-                button.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
-                button.style.color = 'white';
+                button.style.cssText = `
+                    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+                    color: white !important;
+                    border: 2px solid #667eea !important;
+                    transform: translateY(-2px) !important;
+                    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3), 0 4px 6px -1px rgba(102, 126, 234, 0.2) !important;
+                `;
                 
                 // Store selection
                 selectedVariations[type] = value;
@@ -976,7 +1027,7 @@
                 setTimeout(() => {
                     button.style.transform = 'scale(1.05)';
                     setTimeout(() => {
-                        button.style.transform = '';
+                        button.style.transform = 'translateY(-2px)';
                         button.style.transition = 'all 0.3s ease';
                     }, 100);
                 }, 100);
@@ -1161,13 +1212,42 @@
                 mobileFrame.srcdoc = currentWebsiteHTML;
             }
 
-            // Industry button selection
+            // Industry button selection with enhanced highlighting
             industryButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    industryButtons.forEach(b => b.style.opacity = '0.7');
-                    this.style.opacity = '1';
+                    console.log('🎯 Industry button clicked:', this.dataset.industry);
+                    
+                    // Remove active class and reset styles from all buttons
+                    industryButtons.forEach(b => {
+                        b.classList.remove('active');
+                        b.style.cssText = `
+                            background: linear-gradient(135deg, #f8f9ff, #e8ecff) !important;
+                            color: #667eea !important;
+                            border: 2px solid #e1e5e9 !important;
+                            transform: none !important;
+                            box-shadow: none !important;
+                        `;
+                    });
+                    
+                    // Add active class and styling to clicked button
+                    this.classList.add('active');
+                    this.style.cssText = `
+                        background: linear-gradient(135deg, #667eea, #764ba2) !important;
+                        color: white !important;
+                        border: 2px solid #667eea !important;
+                        transform: translateY(-2px) !important;
+                        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+                    `;
+                    
+                    // Store selection and update UI
                     selectedIndustry = this.dataset.industry;
                     updateGenerateButton();
+                    
+                    // Show feedback toast
+                    const industryName = this.textContent.replace(/^[^\s]+\s/, ''); // Remove emoji
+                    showToast(`🏗️ Industry selected: ${industryName}`, 'success');
+                    
+                    console.log(`✅ Selected industry: ${selectedIndustry}`);
                 });
             });
 
@@ -1352,16 +1432,5 @@
             }, 500);
         });
     </script>
-</body>
-</html>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
-        <div class="loading-content">
-            <div class="spinner"></div>
-            <p>Generating your professional website...</p>
-        </div>
-    </div>
 </body>
 </html>

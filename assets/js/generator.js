@@ -343,7 +343,7 @@ class WebsiteGenerator {
         
         /* Premium Hero Section */
         .hero {
-            ${this.getHeroLayoutCSS(variant.layout, variant.colors)}
+            ${this.getHeroLayoutCSS(variant.layout, {...variant.colors, industry: variant.serviceType})}
             padding: 140px 0 100px;
             position: relative;
             overflow: hidden;
@@ -358,10 +358,25 @@ class WebsiteGenerator {
             right: 0;
             bottom: 0;
             background: 
-                linear-gradient(135deg, ${variant.colors.primary}ee, ${variant.colors.secondary}dd),
-                radial-gradient(circle at 20% 50%, ${variant.colors.primary}40 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, ${variant.colors.secondary}40 0%, transparent 50%);
+                linear-gradient(135deg, ${variant.colors.primary}dd, ${variant.colors.secondary}cc),
+                radial-gradient(circle at 20% 50%, ${variant.colors.primary}30 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, ${variant.colors.secondary}30 0%, transparent 50%);
             z-index: 1;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('${this.getIndustryHeroImage(variant.serviceType)}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.15;
+            z-index: 0;
         }
         
         .hero-content {
@@ -390,28 +405,52 @@ class WebsiteGenerator {
             line-height: 1.5;
         }
         
+        .hero-cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
         .hero-cta {
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
-            background: white;
-            color: var(--primary);
             padding: 1rem 2rem;
             border-radius: var(--radius-lg);
             text-decoration: none;
             font-weight: 700;
             font-size: 1.1rem;
-            box-shadow: var(--shadow-xl);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
         }
         
-        .hero-cta:hover {
+        .hero-cta.primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .hero-cta.primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 25px 50px rgba(0,0,0,0.25);
             background: transparent;
             color: white;
             border-color: white;
+        }
+        
+        .hero-cta.secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .hero-cta.secondary:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-2px);
         }
         
         
@@ -708,9 +747,12 @@ class WebsiteGenerator {
 
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>${this.getRandomTagline(variant.industry.taglines)}</h1>
-            <p>With ${variant.yearsExp} years of experience serving ${variant.cityName}, we provide top-quality ${this.getServiceDisplayName(variant.serviceType).toLowerCase()} services you can trust.</p>
-            <a href="tel:${variant.phoneNumber}" class="hero-cta">📞 Call ${variant.phoneNumber}</a>
+            <h1>${variant.industry.heroIcon} ${this.getRandomTagline(variant.industry.taglines)}</h1>
+            <p>Professional ${this.getServiceDisplayName(variant.serviceType).toLowerCase()} services in ${variant.cityName} with ${variant.yearsExp}+ years of trusted experience. ${variant.industry.specialtyFeatures.slice(0, 2).join(' • ')}</p>
+            <div class="hero-cta-group">
+                <a href="tel:${variant.phoneNumber}" class="hero-cta primary">📞 Call ${variant.phoneNumber}</a>
+                <a href="#services" class="hero-cta secondary">View Our Services</a>
+            </div>
         </div>
     </section>
 
@@ -1052,19 +1094,38 @@ class WebsiteGenerator {
     }
 
     getHeroLayoutCSS(layout, colors) {
+        // Get industry-specific hero image
+        const heroImage = this.getIndustryHeroImage(colors.industry || 'contractor');
+        
         const styles = {
-            'hero-split': `background: linear-gradient(45deg, ${colors.primary}, ${colors.secondary});`,
-            'centered': `background: ${colors.type === 'gradient' ? colors.bg : `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`}; text-align: center;`,
-            'asymmetric': `background: linear-gradient(120deg, ${colors.primary} 60%, ${colors.secondary} 60%);`,
-            'fullwidth': `background: ${colors.bg}; width: 100vw; margin-left: calc(50% - 50vw);`,
-            'minimal': `background: ${colors.bg}; padding: 60px 0;`,
-            'corporate': `background: linear-gradient(to right, ${colors.primary}, ${colors.secondary});`,
-            'creative': `background: radial-gradient(circle at 30% 40%, ${colors.primary}, ${colors.secondary});`,
-            'modern': `background: linear-gradient(135deg, ${colors.primary}ee, ${colors.secondary}ee);`,
-            'classic': `background: ${colors.primary}; color: white;`,
-            'elegant': `background: linear-gradient(to bottom, ${colors.primary}f8, ${colors.secondary}f8);`
+            'hero-split': `background: linear-gradient(45deg, ${colors.primary}ee, ${colors.secondary}ee), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay;`,
+            'centered': `background: ${colors.type === 'gradient' ? `linear-gradient(135deg, ${colors.primary}dd, ${colors.secondary}dd), url('${heroImage}')` : `linear-gradient(135deg, ${colors.primary}dd, ${colors.secondary}dd), url('${heroImage}')`}; background-size: cover; background-position: center; background-blend-mode: overlay; text-align: center;`,
+            'asymmetric': `background: linear-gradient(120deg, ${colors.primary}cc 60%, ${colors.secondary}cc 60%), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay;`,
+            'fullwidth': `background: linear-gradient(135deg, ${colors.primary}dd, ${colors.secondary}dd), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay; width: 100vw; margin-left: calc(50% - 50vw);`,
+            'minimal': `background: linear-gradient(135deg, ${colors.primary}aa, ${colors.secondary}aa), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay; padding: 60px 0;`,
+            'corporate': `background: linear-gradient(to right, ${colors.primary}dd, ${colors.secondary}dd), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay;`,
+            'creative': `background: radial-gradient(circle at 30% 40%, ${colors.primary}cc, ${colors.secondary}cc), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay;`,
+            'modern': `background: linear-gradient(135deg, ${colors.primary}ee, ${colors.secondary}ee), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay;`,
+            'classic': `background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('${heroImage}'); background-size: cover; background-position: center; color: white;`,
+            'elegant': `background: linear-gradient(to bottom, ${colors.primary}f0, ${colors.secondary}f0), url('${heroImage}'); background-size: cover; background-position: center; background-blend-mode: overlay;`
         };
         return styles[layout] || styles['centered'];
+    }
+
+    getIndustryHeroImage(industry) {
+        // High-quality, professional hero images for each industry
+        const heroImages = {
+            plumbing: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80', // Professional plumber working
+            hvac: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80', // HVAC system installation
+            electrical: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80', // Electrical work
+            landscaping: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80', // Beautiful landscaped garden
+            contractor: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80', // Construction site
+            roofing: 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80', // Roof work
+            flooring: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80', // Beautiful hardwood flooring
+            painting: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'  // House painting
+        };
+        
+        return heroImages[industry] || heroImages['contractor'];
     }
 
     getHeroContentCSS(layout) {

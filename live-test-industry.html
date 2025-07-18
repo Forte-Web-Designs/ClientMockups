@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Test - Industry Button Fix</title>
+    <style>
+        body { font-family: system-ui; padding: 2rem; background: #f5f5f5; }
+        .test-container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; }
+        
+        .industry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        
+        .industry-btn {
+            background: linear-gradient(135deg, #f8f9ff, #e8ecff);
+            color: #667eea;
+            border: 2px solid #e1e5e9;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .industry-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .industry-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            border-color: #667eea !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+        }
+
+        .industry-btn.active::before {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status { padding: 1rem; background: #f0f9ff; border-radius: 8px; margin: 1rem 0; border-left: 4px solid #0ea5e9; }
+        .toast { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 10000; font-weight: 600; transform: translateX(100%); transition: transform 0.3s ease; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Industry Button Live Test</h1>
+        <p>This tests the exact same code that should work in the main index.html file:</p>
+        
+        <div class="status" id="status">
+            <strong>Status:</strong> <span id="statusText">Ready to test</span><br>
+            <strong>Selected:</strong> <span id="selectedIndustry">None</span>
+        </div>
+        
+        <div class="industry-grid">
+            <button type="button" class="industry-btn" data-industry="plumbing">🔧 Plumbing Services</button>
+            <button type="button" class="industry-btn" data-industry="hvac">🌡️ HVAC Services</button>
+            <button type="button" class="industry-btn" data-industry="electrical">⚡ Electrical Services</button>
+            <button type="button" class="industry-btn" data-industry="landscaping">🌿 Landscaping</button>
+            <button type="button" class="industry-btn" data-industry="contractor">🏗️ General Contractor</button>
+            <button type="button" class="industry-btn" data-industry="roofing">🏠 Roofing Services</button>
+            <button type="button" class="industry-btn" data-industry="flooring">🪵 Flooring Services</button>
+            <button type="button" class="industry-btn" data-industry="painting">🎨 Painting Services</button>
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <button onclick="testGeneration()" id="generateBtn" disabled style="background: #ccc; color: #666; padding: 1rem 2rem; border: none; border-radius: 8px; font-weight: 600;">
+                ⚡ Please select an industry first
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let selectedIndustry = '';
+        const statusText = document.getElementById('statusText');
+        const selectedIndustrySpan = document.getElementById('selectedIndustry');
+        const generateBtn = document.getElementById('generateBtn');
+        
+        function showToast(message, type = 'success') {
+            const existingToasts = document.querySelectorAll('.toast');
+            existingToasts.forEach(toast => toast.remove());
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.background = type === 'success' ? '#10b981' : '#ef4444';
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+        
+        function updateGenerateButton() {
+            if (selectedIndustry) {
+                generateBtn.disabled = false;
+                generateBtn.textContent = `⚡ Generate ${selectedIndustry.charAt(0).toUpperCase() + selectedIndustry.slice(1)} Website`;
+                generateBtn.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a24)';
+                generateBtn.style.color = 'white';
+                generateBtn.style.cursor = 'pointer';
+            } else {
+                generateBtn.disabled = true;
+                generateBtn.textContent = '⚡ Please select an industry first';
+                generateBtn.style.background = '#ccc';
+                generateBtn.style.color = '#666';
+                generateBtn.style.cursor = 'not-allowed';
+            }
+        }
+        
+        function testGeneration() {
+            if (selectedIndustry) {
+                showToast(`🎉 Would generate ${selectedIndustry} website!`, 'success');
+                statusText.textContent = `Generation triggered for ${selectedIndustry}`;
+            }
+        }
+        
+        // Initialize industry button functionality - EXACT SAME CODE AS MAIN FILE
+        document.addEventListener('DOMContentLoaded', function() {
+            const industryButtons = document.querySelectorAll('.industry-btn');
+            
+            console.log(`🔍 Found ${industryButtons.length} industry buttons`);
+            statusText.textContent = `Found ${industryButtons.length} industry buttons`;
+            
+            // Industry button selection with enhanced highlighting
+            industryButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    console.log(`🎯 Button clicked: ${this.dataset.industry}`);
+                    
+                    // Remove active class and reset styles from all buttons
+                    industryButtons.forEach(b => {
+                        b.classList.remove('active');
+                        b.style.background = 'linear-gradient(135deg, #f8f9ff, #e8ecff)';
+                        b.style.color = '#667eea';
+                        b.style.border = '2px solid #e1e5e9';
+                        b.style.transform = '';
+                        b.style.boxShadow = '';
+                    });
+                    
+                    // Add active class and styling to clicked button
+                    this.classList.add('active');
+                    this.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                    this.style.color = 'white';
+                    this.style.border = '2px solid #667eea';
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 10px 30px rgba(102, 126, 234, 0.4)';
+                    
+                    // Store selection and update UI
+                    selectedIndustry = this.dataset.industry;
+                    updateGenerateButton();
+                    
+                    // Show feedback toast
+                    const industryName = this.textContent.replace(/^[^\s]+\s/, ''); // Remove emoji
+                    showToast(`🏗️ Industry selected: ${industryName}`, 'success');
+                    
+                    statusText.textContent = `Selected: ${selectedIndustry}`;
+                    selectedIndustrySpan.textContent = selectedIndustry;
+                    
+                    console.log(`🏗️ Selected industry: ${selectedIndustry}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

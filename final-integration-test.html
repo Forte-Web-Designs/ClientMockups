@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Premium Integration Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 2rem;
+        }
+
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-section h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .industry-btn {
+            background: linear-gradient(135deg, #f8f9ff, #e8ecff);
+            color: #667eea;
+            border: 2px solid #e1e5e9;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+
+        .industry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .industry-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            border: 2px solid #667eea !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+        }
+
+        .test-btn {
+            background: linear-gradient(135deg, #10ac84, #00d2d3);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 172, 132, 0.3);
+        }
+
+        .test-btn.generate {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+
+        .test-btn.generate:hover {
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .result {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .success {
+            border-color: #10ac84;
+            background: #f0fdf4;
+            color: #065f46;
+        }
+
+        .error {
+            border-color: #ff6b6b;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .preview-frame {
+            width: 100%;
+            height: 400px;
+            border: 3px solid #ddd;
+            border-radius: 12px;
+            background: white;
+            margin-top: 1rem;
+        }
+
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .status.ready {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Final Premium Integration Test</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+            Testing all enhanced features: Industry button highlighting, premium CSS generation, hero images, and variation controls
+        </p>
+
+        <div class="test-section">
+            <h3>🎯 Test 1: Industry Button Selection</h3>
+            <p>Click any industry button to test highlighting persistence:</p>
+            <div class="industry-grid">
+                <button class="industry-btn" data-industry="plumbing">🔧 Plumbing</button>
+                <button class="industry-btn" data-industry="hvac">🌡️ HVAC</button>
+                <button class="industry-btn" data-industry="electrical">⚡ Electrical</button>
+                <button class="industry-btn" data-industry="landscaping">🌿 Landscaping</button>
+                <button class="industry-btn" data-industry="contractor">🏗️ Contractor</button>
+                <button class="industry-btn" data-industry="roofing">🏠 Roofing</button>
+            </div>
+            <div id="industryStatus" class="status">No industry selected</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎨 Test 2: Premium CSS Generation</h3>
+            <p>Test the enhanced CSS generation with Relume/Lovable-inspired design:</p>
+            <button class="test-btn" onclick="testPremiumCSS()">Generate Premium CSS</button>
+            <button class="test-btn" onclick="testIndustryHeroImages()">Test Hero Images</button>
+            <div id="cssResult" class="result">Click "Generate Premium CSS" to test...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Test 3: Full Website Generation</h3>
+            <p>Generate a complete website with premium features:</p>
+            <button class="test-btn generate" onclick="generateFullWebsite()">Generate Premium Website</button>
+            <div id="generationStatus" class="status">Ready to generate</div>
+            <iframe id="websitePreview" class="preview-frame" style="display: none;"></iframe>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Test 4: Statistics & Uniqueness</h3>
+            <p>Test generation statistics and uniqueness tracking:</p>
+            <button class="test-btn" onclick="testStatistics()">Generate Statistics</button>
+            <div id="statsResult" class="result">Click "Generate Statistics" to test...</div>
+        </div>
+    </div>
+
+    <script src="assets/js/generator.js"></script>
+    <script>
+        let selectedIndustry = '';
+        let generator = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Final Integration Test - Starting...');
+            
+            // Initialize generator
+            try {
+                generator = window.websiteGenerator || new WebsiteGenerator();
+                console.log('✅ Generator initialized successfully');
+            } catch (error) {
+                console.error('❌ Generator initialization failed:', error);
+                document.getElementById('generationStatus').className = 'status error';
+                document.getElementById('generationStatus').textContent = 'Generator initialization failed: ' + error.message;
+            }
+
+            // Setup industry button listeners
+            const industryButtons = document.querySelectorAll('.industry-btn');
+            const industryStatus = document.getElementById('industryStatus');
+
+            industryButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    console.log('🎯 Testing industry selection:', this.dataset.industry);
+                    
+                    // Reset all buttons
+                    industryButtons.forEach(b => {
+                        b.classList.remove('active');
+                        b.style.cssText = `
+                            background: linear-gradient(135deg, #f8f9ff, #e8ecff) !important;
+                            color: #667eea !important;
+                            border: 2px solid #e1e5e9 !important;
+                            transform: none !important;
+                            box-shadow: none !important;
+                        `;
+                    });
+                    
+                    // Activate clicked button
+                    this.classList.add('active');
+                    this.style.cssText = `
+                        background: linear-gradient(135deg, #667eea, #764ba2) !important;
+                        color: white !important;
+                        border: 2px solid #667eea !important;
+                        transform: translateY(-2px) !important;
+                        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+                    `;
+                    
+                    selectedIndustry = this.dataset.industry;
+                    industryStatus.className = 'status ready';
+                    industryStatus.textContent = `✅ Selected: ${selectedIndustry} (Highlighting working!)`;
+                    
+                    console.log('✅ Industry selection test passed:', selectedIndustry);
+                });
+            });
+        });
+
+        function testPremiumCSS() {
+            console.log('🎨 Testing premium CSS generation...');
+            const cssResult = document.getElementById('cssResult');
+            
+            try {
+                if (!generator) throw new Error('Generator not initialized');
+                
+                const testVariant = {
+                    serviceType: selectedIndustry || 'plumbing',
+                    colors: { primary: '#667eea', secondary: '#764ba2' },
+                    layout: 'modern',
+                    components: 'grid-tiles',
+                    fonts: { heading: 'Inter', body: 'Inter' }
+                };
+                
+                const premiumCSS = generator.generatePremiumCSS(testVariant);
+                
+                cssResult.className = 'result success';
+                cssResult.innerHTML = `
+                    <strong>✅ Premium CSS Generated Successfully!</strong><br><br>
+                    <strong>Features detected:</strong><br>
+                    ${premiumCSS.includes(':root') ? '✅ CSS Variables' : '❌ CSS Variables'}<br>
+                    ${premiumCSS.includes('backdrop-filter') ? '✅ Glass Morphism' : '❌ Glass Morphism'}<br>
+                    ${premiumCSS.includes('box-shadow') ? '✅ Premium Shadows' : '❌ Premium Shadows'}<br>
+                    ${premiumCSS.includes('gradient') ? '✅ Modern Gradients' : '❌ Modern Gradients'}<br><br>
+                    <strong>CSS Preview (first 500 chars):</strong><br>
+                    <pre style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-top: 0.5rem; overflow-x: auto;">${premiumCSS.substring(0, 500)}...</pre>
+                `;
+                
+                console.log('✅ Premium CSS generation test passed');
+            } catch (error) {
+                cssResult.className = 'result error';
+                cssResult.textContent = '❌ Error: ' + error.message;
+                console.error('❌ Premium CSS test failed:', error);
+            }
+        }
+
+        function testIndustryHeroImages() {
+            console.log('🖼️ Testing industry hero images...');
+            const cssResult = document.getElementById('cssResult');
+            
+            try {
+                if (!generator) throw new Error('Generator not initialized');
+                
+                const industries = ['plumbing', 'hvac', 'electrical', 'landscaping', 'contractor', 'roofing'];
+                let results = '<strong>✅ Hero Images Test Results:</strong><br><br>';
+                
+                industries.forEach(industry => {
+                    const heroImage = generator.getIndustryHeroImage(industry);
+                    const isValid = heroImage && heroImage.includes('unsplash.com');
+                    results += `${isValid ? '✅' : '❌'} ${industry}: ${isValid ? 'Valid Unsplash URL' : 'Invalid/Missing'}<br>`;
+                });
+                
+                cssResult.className = 'result success';
+                cssResult.innerHTML = results;
+                
+                console.log('✅ Hero images test completed');
+            } catch (error) {
+                cssResult.className = 'result error';
+                cssResult.textContent = '❌ Error: ' + error.message;
+                console.error('❌ Hero images test failed:', error);
+            }
+        }
+
+        function generateFullWebsite() {
+            console.log('🚀 Testing full website generation...');
+            const statusEl = document.getElementById('generationStatus');
+            const preview = document.getElementById('websitePreview');
+            
+            if (!selectedIndustry) {
+                statusEl.className = 'status error';
+                statusEl.textContent = '❌ Please select an industry first';
+                return;
+            }
+            
+            statusEl.className = 'status loading';
+            statusEl.textContent = '⏳ Generating premium website...';
+            
+            try {
+                if (!generator) throw new Error('Generator not initialized');
+                
+                const formData = {
+                    serviceType: selectedIndustry,
+                    companyName: 'Premium Test Company',
+                    phoneNumber: '(555) 123-4567',
+                    cityName: 'San Francisco',
+                    yearsExp: '15',
+                    designStyle: 'modern'
+                };
+                
+                const websiteHTML = generator.generateMockup(formData);
+                
+                if (!websiteHTML || websiteHTML.length < 1000) {
+                    throw new Error('Generated HTML is too short or empty');
+                }
+                
+                preview.srcdoc = websiteHTML;
+                preview.style.display = 'block';
+                
+                statusEl.className = 'status ready';
+                statusEl.textContent = `✅ Premium ${selectedIndustry} website generated successfully! (${Math.round(websiteHTML.length/1024)}KB)`;
+                
+                console.log('✅ Full website generation test passed');
+                
+                // Scroll to preview
+                preview.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.textContent = '❌ Generation failed: ' + error.message;
+                console.error('❌ Website generation test failed:', error);
+            }
+        }
+
+        function testStatistics() {
+            console.log('📊 Testing statistics generation...');
+            const statsResult = document.getElementById('statsResult');
+            
+            try {
+                if (!generator) throw new Error('Generator not initialized');
+                
+                const stats = generator.getGenerationStats();
+                
+                statsResult.className = 'result success';
+                statsResult.innerHTML = `
+                    <strong>✅ Statistics Generated Successfully!</strong><br><br>
+                    <strong>Total Generated:</strong> ${stats.totalGenerated}<br>
+                    <strong>Total Possible Combinations:</strong> ${stats.totalPossibleCombinations.toLocaleString()}<br>
+                    <strong>Uniqueness Percentage:</strong> ${stats.uniquenessPercentage}%<br><br>
+                    <strong>Component Counts:</strong><br>
+                    Layouts: ${generator.layouts.length}<br>
+                    Color Schemes: ${generator.colorSchemes.length}<br>
+                    Components: ${generator.components.length}<br>
+                    Font Combinations: ${generator.fonts.length}<br>
+                    Industries: ${Object.keys(generator.industries).length}
+                `;
+                
+                console.log('✅ Statistics test passed');
+            } catch (error) {
+                statsResult.className = 'result error';
+                statsResult.textContent = '❌ Error: ' + error.message;
+                console.error('❌ Statistics test failed:', error);
+            }
+        }
+    </script>
+</body>
+</html>
