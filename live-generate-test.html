@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Live Generate Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .test-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .test-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .results {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .log-success { color: #10b981; }
+        .log-error { color: #ef4444; }
+        .log-info { color: #3b82f6; }
+        .log-warning { color: #f59e0b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Live Generate Website Test</h1>
+            <p>Test the enhanced Generate Website functionality with different layouts and preview modes</p>
+        </div>
+        
+        <div class="test-section">
+            <h3>🧪 Test Different Design Styles</h3>
+            <p>Each style should generate a different layout, components, and colors:</p>
+            <br>
+            <button class="test-button" onclick="testFormGeneration('modern')">Test Modern (Hero-split + Carousel)</button>
+            <button class="test-button" onclick="testFormGeneration('minimal')">Test Minimal (Centered + Grid-tiles)</button>
+            <button class="test-button" onclick="testFormGeneration('professional')">Test Professional (Traditional + Accordion)</button>
+            <button class="test-button" onclick="testFormGeneration('creative')">Test Creative (Asymmetric + Masonry)</button>
+            <button class="test-button" onclick="testFormGeneration('classic')">Test Classic (Stacked + Service-list)</button>
+            <button class="test-button" onclick="testFormGeneration('bold')">Test Bold (Fullwidth + Feature-boxes)</button>
+            
+            <div class="results" id="testResults">
+                <div class="log-info">[READY] Click any style above to test form-based generation...</div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📱🖥️ Preview Test</h3>
+            <p>Test the enhanced preview system:</p>
+            <br>
+            <button class="test-button" onclick="openMainInterface()">Open Main Interface</button>
+            <button class="test-button" onclick="testQuickDemo()">Test Quick Demo</button>
+            <button class="test-button" onclick="checkPreviewSystem()">Check Preview System</button>
+        </div>
+    </div>
+    
+    <script src="assets/js/generator.js"></script>
+    <script>
+        let generator;
+        
+        function log(message, type = 'info') {
+            const results = document.getElementById('testResults');
+            const timestamp = new Date().toLocaleTimeString();
+            const logClass = `log-${type}`;
+            results.innerHTML += `<div class="${logClass}">[${timestamp}] ${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+            console.log(message);
+        }
+        
+        function testFormGeneration(designStyle) {
+            log(`🎯 Testing ${designStyle} style generation...`, 'info');
+            
+            try {
+                // Initialize generator if needed
+                if (!generator) {
+                    generator = new MockupGenerator();
+                    log('✅ Generator initialized', 'success');
+                }
+                
+                // Create form data
+                const formData = {
+                    serviceType: 'plumbing',
+                    companyName: `${designStyle.charAt(0).toUpperCase() + designStyle.slice(1)} Pro Services`,
+                    phoneNumber: '(555) 123-4567',
+                    cityName: 'Test City',
+                    yearsExp: '15',
+                    designStyle: designStyle
+                };
+                
+                log(`📝 Company: ${formData.companyName}`, 'info');
+                log(`🎨 Style: ${designStyle}`, 'info');
+                
+                // Get the layout mapping
+                const layoutType = generator.getLayoutForDesignStyle(designStyle);
+                const componentStyle = generator.getComponentForDesignStyle(designStyle);
+                const colorScheme = generator.getColorSchemeForDesignStyle(designStyle);
+                
+                log(`📐 Layout: ${layoutType}`, 'info');
+                log(`🧩 Components: ${componentStyle}`, 'info');
+                log(`🌈 Colors: ${colorScheme}`, 'info');
+                
+                // Generate the website
+                generator.generateMockup(formData);
+                
+                log(`✅ ${designStyle} website generated successfully!`, 'success');
+                log(`🚀 Preview should show desktop + mobile views`, 'success');
+                
+            } catch (error) {
+                log(`❌ Error testing ${designStyle}: ${error.message}`, 'error');
+                console.error('Generation error:', error);
+            }
+        }
+        
+        function openMainInterface() {
+            log('🚀 Opening main interface...', 'info');
+            window.open('index.html', '_blank');
+            log('✅ Main interface opened in new tab', 'success');
+        }
+        
+        function testQuickDemo() {
+            log('🎯 Testing Quick Demo...', 'info');
+            try {
+                if (!generator) {
+                    generator = new MockupGenerator();
+                }
+                generator.fillDemoData();
+                log('✅ Quick Demo executed successfully', 'success');
+            } catch (error) {
+                log(`❌ Quick Demo error: ${error.message}`, 'error');
+            }
+        }
+        
+        function checkPreviewSystem() {
+            log('🔍 Checking preview system capabilities...', 'info');
+            
+            try {
+                if (!generator) {
+                    generator = new MockupGenerator();
+                }
+                
+                // Check if all required methods exist
+                const methods = [
+                    'generateMockup',
+                    'displayPreview', 
+                    'createEnhancedPreview',
+                    'getLayoutForDesignStyle',
+                    'getComponentForDesignStyle',
+                    'getColorSchemeForDesignStyle',
+                    'generateUniqueVariantHTML'
+                ];
+                
+                let allMethodsExist = true;
+                methods.forEach(method => {
+                    if (typeof generator[method] === 'function') {
+                        log(`✅ ${method} method exists`, 'success');
+                    } else {
+                        log(`❌ ${method} method missing`, 'error');
+                        allMethodsExist = false;
+                    }
+                });
+                
+                if (allMethodsExist) {
+                    log('🎉 All preview system methods available!', 'success');
+                    log('📱🖥️ Desktop + Mobile preview system ready', 'success');
+                } else {
+                    log('⚠️ Some methods are missing', 'warning');
+                }
+                
+            } catch (error) {
+                log(`❌ Preview system check error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 Live test page loaded', 'success');
+            log('💡 Click buttons above to test enhanced functionality', 'info');
+        });
+    </script>
+</body>
+</html>

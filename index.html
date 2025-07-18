@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forte Studio - Client Pitch Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header img {
+            height: 80px;
+            width: auto;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pitch-intro {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .pitch-intro h2 {
+            color: #667eea;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .pitch-intro p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .quick-form {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input.valid {
+            border-color: #10ac84;
+            box-shadow: 0 0 0 3px rgba(16, 172, 132, 0.1);
+        }
+
+        .form-group input.invalid {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .input-feedback {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .input-feedback.show {
+            opacity: 1;
+        }
+
+        .input-feedback.success {
+            color: #10ac84;
+        }
+
+        .input-feedback.error {
+            color: #ff6b6b;
+        }
+
+        .industry-buttons {
+            margin-bottom: 2rem;
+        }
+
+        .industry-buttons h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .industry-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .industry-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .generate-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .preview-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .preview-header h3 {
+            color: #667eea;
+            font-size: 1.8rem;
+        }
+
+        .preview-info {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .uniqueness-stats {
+            font-size: 0.85rem;
+            color: #4ade80;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.8rem;
+            background: rgba(74, 222, 128, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            display: inline-block;
+        }
+
+        .uniqueness-stats strong {
+            color: #16a34a;
+        }
+
+        .auto-fill-btn {
+            background: linear-gradient(135deg, #10ac84, #00d2d3);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .auto-fill-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 172, 132, 0.3);
+        }
+
+        .variation-controls {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .variation-controls h4 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .variation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .variation-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .variation-section:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .variation-section label {
+            display: block;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .variation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .variation-btn {
+            background: linear-gradient(135deg, #f8f9ff, #e8ecff);
+            color: #667eea;
+            border: 2px solid #e1e5e9;
+            padding: 0.8rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .variation-btn .icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .variation-btn .preview-box {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+            margin-bottom: 0.3rem;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .variation-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .variation-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .variation-btn.active .preview-box {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .regenerate-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .regenerate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-btn {
+            padding: 0.7rem 1.2rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .view-btn.active,
+        .view-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .preview-container {
+            display: flex;
+            gap: 2rem;
+            min-height: 600px;
+        }
+
+        .desktop-preview {
+            flex: 2;
+        }
+
+        .mobile-preview {
+            flex: 1;
+            max-width: 375px;
+        }
+
+        .preview-frame {
+            width: 100%;
+            height: 600px;
+            border: 3px solid #ddd;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .mobile-frame {
+            background: #333;
+            border-radius: 25px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .mobile-frame::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #666;
+            border-radius: 2px;
+        }
+
+        .mobile-frame .preview-frame {
+            height: 600px;
+            border-radius: 15px;
+            border: none;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #10ac84, #00d2d3);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 172, 132, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 3rem;
+        }
+
+        .footer img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .industry-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-container {
+                flex-direction: column;
+            }
+            
+            .mobile-preview {
+                max-width: none;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="assets/images/forte-logo.svg" alt="Forte Web Designs">
+            <h1>Forte Studio</h1>
+            <p>Professional Website Generator • <strong>52,800+</strong> Unique Combinations Available</p>
+        </header>
+
+        <div class="pitch-intro">
+            <h2>🎯 Advanced Client Pitch Generator</h2>
+            <p>Generate truly unique, professional websites instantly for any industry. Our enhanced system combines <strong>22 layouts</strong>, <strong>20 color schemes</strong>, <strong>20 component styles</strong>, and <strong>6 typography combinations</strong> to create websites that are perfect for client presentations and proposals.</p>
+        </div>
+
+        <div class="quick-form">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <button type="button" class="auto-fill-btn" id="autoFillBtn">
+                    ⚡ Quick Fill Demo Data
+                </button>
+            </div>
+            
+            <form id="pitchForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" name="companyName" placeholder="Elite Pro Services" required>
+                        <div class="input-feedback" id="companyNameFeedback"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="(555) 123-4567" required>
+                        <div class="input-feedback" id="phoneNumberFeedback"></div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cityName">City</label>
+                        <input type="text" id="cityName" name="cityName" placeholder="Your City" required>
+                        <div class="input-feedback" id="cityNameFeedback"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsExp">Years of Experience</label>
+                        <input type="number" id="yearsExp" name="yearsExp" value="15" min="1" max="50">
+                        <div class="input-feedback" id="yearsExpFeedback"></div>
+                    </div>
+                </div>
+
+                <div class="industry-buttons">
+                    <h3>Quick Industry Selection</h3>
+                    <div class="industry-grid">
+                        <button type="button" class="industry-btn" data-industry="plumbing">
+                            🔧 Plumbing Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="hvac">
+                            🌡️ HVAC Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="electrical">
+                            ⚡ Electrical Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="landscaping">
+                            🌿 Landscaping
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="contractor">
+                            🏗️ General Contractor
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="roofing">
+                            🏠 Roofing Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="flooring">
+                            🪵 Flooring Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="painting">
+                            🎨 Painting Services
+                        </button>
+                    </div>
+                </div>
+
+                <div class="generate-section">
+                    <button type="submit" class="generate-btn" id="generateBtn">
+                        ⚡ Generate Unique Website
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="loading" id="loadingSection">
+            <div class="spinner"></div>
+            <p>Generating your unique website mockup...</p>
+        </div>
+
+        <div id="previewSection" class="preview-section">
+            <div class="preview-header">
+                <div>
+                    <h3>🎉 Your Generated Website</h3>
+                    <div class="preview-info" id="previewInfo"></div>
+                    <div class="uniqueness-stats" id="uniquenessStats"></div>
+                </div>
+                <button id="downloadBtn" class="download-btn">📥 Download HTML</button>
+            </div>
+
+            <div class="variation-controls" id="variationControls">
+                <h4>🎨 Customize Your Design Live</h4>
+                <div class="variation-grid">
+                    <div class="variation-section">
+                        <label>🏗️ Layout Style</label>
+                        <div class="variation-options" id="layoutButtons"></div>
+                    </div>
+                    <div class="variation-section">
+                        <label>🎨 Color Scheme</label>
+                        <div class="variation-options" id="colorButtons"></div>
+                    </div>
+                    <div class="variation-section">
+                        <label>📱 Components</label>
+                        <div class="variation-options" id="componentButtons"></div>
+                    </div>
+                    <div class="variation-section">
+                        <label>✍️ Typography</label>
+                        <div class="variation-options" id="typographyButtons"></div>
+                    </div>
+                </div>
+                <button class="regenerate-btn" id="regenerateBtn">🔄 Apply Changes & Regenerate</button>
+            </div>
+            
+            <div class="view-controls">
+                <button class="view-btn active" data-view="both">Both Views</button>
+                <button class="view-btn" data-view="desktop">Desktop Only</button>
+                <button class="view-btn" data-view="mobile">Mobile Only</button>
+            </div>
+
+            <div class="preview-container" id="previewContainer">
+                <div class="desktop-preview" id="desktopPreview">
+                    <iframe id="desktopFrame" class="preview-frame"></iframe>
+                </div>
+                <div class="mobile-preview" id="mobilePreview">
+                    <div class="mobile-frame">
+                        <iframe id="mobileFrame" class="preview-frame"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <img src="assets/images/forte-logo.svg" alt="Forte Web Designs">
+            <p>Powered by <strong>Forte Web Designs</strong> - Professional Web Solutions</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/generator.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('pitchForm');
+            const generateBtn = document.getElementById('generateBtn');
+            const loadingSection = document.getElementById('loadingSection');
+            const previewSection = document.getElementById('previewSection');
+            const industryButtons = document.querySelectorAll('.industry-btn');
+            const viewButtons = document.querySelectorAll('.view-btn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const autoFillBtn = document.getElementById('autoFillBtn');
+            const variationControls = document.getElementById('variationControls');
+            const regenerateBtn = document.getElementById('regenerateBtn');
+            
+            let selectedIndustry = '';
+            let currentWebsiteHTML = '';
+            let currentFormData = null;
+            let selectedVariations = {
+                layout: null,
+                colorScheme: null,
+                components: null,
+                typography: null
+            };
+
+            // Auto-fill demo data
+            autoFillBtn.addEventListener('click', function() {
+                const demoData = [
+                    {
+                        company: 'Elite Plumbing Pro',
+                        phone: '5551234567',
+                        city: 'San Francisco',
+                        industry: 'plumbing'
+                    },
+                    {
+                        company: 'Premium HVAC Solutions',
+                        phone: '5559876543',
+                        city: 'Los Angeles',
+                        industry: 'hvac'
+                    },
+                    {
+                        company: 'PowerLine Electrical',
+                        phone: '5555551234',
+                        city: 'Miami',
+                        industry: 'electrical'
+                    },
+                    {
+                        company: 'GreenScape Landscaping',
+                        phone: '5557778888',
+                        city: 'Austin',
+                        industry: 'landscaping'
+                    }
+                ];
+                
+                const randomDemo = demoData[Math.floor(Math.random() * demoData.length)];
+                
+                document.getElementById('companyName').value = randomDemo.company;
+                document.getElementById('phoneNumber').value = formatPhoneNumber(randomDemo.phone);
+                document.getElementById('cityName').value = randomDemo.city;
+                document.getElementById('yearsExp').value = Math.floor(Math.random() * 20) + 5;
+                
+                // Select industry
+                industryButtons.forEach(btn => {
+                    btn.style.opacity = '0.7';
+                    if (btn.dataset.industry === randomDemo.industry) {
+                        btn.style.opacity = '1';
+                        selectedIndustry = randomDemo.industry;
+                    }
+                });
+                
+                updateGenerateButton();
+                
+                // Add visual feedback
+                autoFillBtn.textContent = '✅ Demo Data Loaded!';
+                setTimeout(() => {
+                    autoFillBtn.textContent = '⚡ Quick Fill Demo Data';
+                }, 2000);
+            });
+
+            // Phone number formatting and validation
+            document.getElementById('phoneNumber').addEventListener('input', function(e) {
+                const value = e.target.value.replace(/\D/g, '');
+                const formatted = formatPhoneNumber(value);
+                e.target.value = formatted;
+                
+                // Validate phone number
+                validateField('phoneNumber', value.length === 10, 'Valid phone number ✓', 'Please enter a 10-digit phone number');
+            });
+
+            // Company name validation
+            document.getElementById('companyName').addEventListener('input', function(e) {
+                const value = e.target.value.trim();
+                validateField('companyName', value.length >= 2, 'Company name looks good ✓', 'Company name must be at least 2 characters');
+            });
+
+            // City name validation
+            document.getElementById('cityName').addEventListener('input', function(e) {
+                const value = e.target.value.trim();
+                validateField('cityName', value.length >= 2, 'City name looks good ✓', 'City name must be at least 2 characters');
+            });
+
+            // Years experience validation
+            document.getElementById('yearsExp').addEventListener('input', function(e) {
+                const value = parseInt(e.target.value);
+                validateField('yearsExp', value >= 1 && value <= 50, `${value} years of experience ✓`, 'Please enter 1-50 years');
+            });
+
+            function validateField(fieldId, isValid, successMessage, errorMessage) {
+                const field = document.getElementById(fieldId);
+                const feedback = document.getElementById(fieldId + 'Feedback');
+                
+                if (isValid) {
+                    field.classList.remove('invalid');
+                    field.classList.add('valid');
+                    feedback.textContent = successMessage;
+                    feedback.className = 'input-feedback show success';
+                } else {
+                    field.classList.remove('valid');
+                    field.classList.add('invalid');
+                    feedback.textContent = errorMessage;
+                    feedback.className = 'input-feedback show error';
+                }
+                
+                updateGenerateButton();
+            }
+
+            function formatPhoneNumber(phoneNumberString) {
+                const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+                const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+                if (match) {
+                    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+                }
+                return phoneNumberString;
+            }
+
+            // Initialize variation controls with visual previews
+            function initializeVariationControls() {
+                const generator = window.websiteGenerator;
+                if (!generator) return;
+
+                // Layout buttons with icons
+                const layoutContainer = document.getElementById('layoutButtons');
+                const layouts = [
+                    { name: 'hero-split', icon: '🏢', label: 'Split Hero' },
+                    { name: 'centered', icon: '🎯', label: 'Centered' },
+                    { name: 'asymmetric', icon: '📐', label: 'Asymmetric' },
+                    { name: 'minimal', icon: '✨', label: 'Minimal' },
+                    { name: 'modern', icon: '🚀', label: 'Modern' },
+                    { name: 'creative', icon: '🎨', label: 'Creative' }
+                ];
+                layouts.forEach(layout => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'variation-btn';
+                    btn.innerHTML = `<div class="icon">${layout.icon}</div><div>${layout.label}</div>`;
+                    btn.onclick = () => selectVariation('layout', layout.name, btn);
+                    layoutContainer.appendChild(btn);
+                });
+
+                // Color scheme buttons with preview boxes
+                const colorContainer = document.getElementById('colorButtons');
+                const colors = [
+                    { name: 'ocean', bg: 'linear-gradient(135deg, #667eea, #764ba2)', label: 'Ocean' },
+                    { name: 'sunset', bg: 'linear-gradient(135deg, #ff6b6b, #ee5a24)', label: 'Sunset' },
+                    { name: 'forest', bg: 'linear-gradient(135deg, #10ac84, #00d2d3)', label: 'Forest' },
+                    { name: 'royal', bg: 'linear-gradient(135deg, #5f27cd, #341f97)', label: 'Royal' },
+                    { name: 'emerald', bg: 'linear-gradient(135deg, #00b894, #00cec9)', label: 'Emerald' },
+                    { name: 'violet', bg: 'linear-gradient(135deg, #6c5ce7, #a29bfe)', label: 'Violet' }
+                ];
+                colors.forEach(color => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'variation-btn';
+                    btn.innerHTML = `<div class="preview-box" style="background: ${color.bg}"></div><div>${color.label}</div>`;
+                    btn.onclick = () => selectVariation('colorScheme', color.name, btn);
+                    colorContainer.appendChild(btn);
+                });
+
+                // Component buttons with icons
+                const componentContainer = document.getElementById('componentButtons');
+                const components = [
+                    { name: 'carousel', icon: '🎠', label: 'Carousel' },
+                    { name: 'grid-tiles', icon: '⊞', label: 'Grid' },
+                    { name: 'masonry', icon: '🧱', label: 'Masonry' },
+                    { name: 'timeline', icon: '📅', label: 'Timeline' },
+                    { name: 'accordion', icon: '📋', label: 'Accordion' },
+                    { name: 'cards-flip', icon: '🃏', label: 'Cards' }
+                ];
+                components.forEach(component => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'variation-btn';
+                    btn.innerHTML = `<div class="icon">${component.icon}</div><div>${component.label}</div>`;
+                    btn.onclick = () => selectVariation('components', component.name, btn);
+                    componentContainer.appendChild(btn);
+                });
+
+                // Typography buttons with font previews
+                const typographyContainer = document.getElementById('typographyButtons');
+                const typography = [
+                    { name: 'Modern', style: 'font-family: system-ui; font-weight: 600;' },
+                    { name: 'Classic', style: 'font-family: serif; font-style: italic;' },
+                    { name: 'Elegant', style: 'font-family: Georgia; font-weight: 300;' },
+                    { name: 'Bold', style: 'font-family: Impact; font-weight: 900;' },
+                    { name: 'Minimal', style: 'font-family: Helvetica; font-weight: 100;' },
+                    { name: 'Creative', style: 'font-family: cursive; font-weight: 500;' }
+                ];
+                typography.forEach(typo => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'variation-btn';
+                    btn.innerHTML = `<div style="${typo.style}">Aa</div><div>${typo.name}</div>`;
+                    btn.onclick = () => selectVariation('typography', typo.name, btn);
+                    typographyContainer.appendChild(btn);
+                });
+            }
+
+            function selectVariation(type, value, button) {
+                // Remove active class from siblings
+                button.parentElement.querySelectorAll('.variation-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to selected button
+                button.classList.add('active');
+                
+                // Store selection
+                selectedVariations[type] = value;
+                
+                // Update regenerate button text
+                const activeSelections = Object.values(selectedVariations).filter(v => v !== null).length;
+                regenerateBtn.textContent = `🔄 Apply Changes${activeSelections > 0 ? ` (${activeSelections} customized)` : ''} & Regenerate`;
+            }
+
+            // Regenerate with custom variations
+            regenerateBtn.addEventListener('click', function() {
+                if (!currentFormData) return;
+                
+                regenerateBtn.disabled = true;
+                regenerateBtn.textContent = '🔄 Regenerating...';
+                
+                setTimeout(() => {
+                    try {
+                        const generator = window.websiteGenerator || new WebsiteGenerator();
+                        
+                        // Apply custom variations if selected
+                        if (Object.values(selectedVariations).some(v => v !== null)) {
+                            currentWebsiteHTML = generator.generateCustomMockup(currentFormData, selectedVariations);
+                        } else {
+                            currentWebsiteHTML = generator.generateMockup(currentFormData);
+                        }
+                        
+                        console.log('✅ Website regenerated with custom variations!');
+                        updatePreview();
+                    } catch (error) {
+                        console.error('❌ Regeneration error:', error);
+                        alert('Error regenerating website: ' + error.message);
+                    } finally {
+                        regenerateBtn.disabled = false;
+                        regenerateBtn.textContent = '🔄 Apply Changes & Regenerate';
+                    }
+                }, 800);
+            });
+
+            function updatePreview() {
+                // Update uniqueness statistics
+                const uniquenessStats = document.getElementById('uniquenessStats');
+                const generator = window.websiteGenerator;
+                if (generator && generator.getGenerationStats) {
+                    const stats = generator.getGenerationStats();
+                    uniquenessStats.innerHTML = `✨ <strong>Unique Design #${stats.totalGenerated}</strong> • One of <strong>${stats.totalPossibleCombinations.toLocaleString()}</strong> possible combinations`;
+                }
+
+                // Reload content into both frames
+                const desktopFrame = document.getElementById('desktopFrame');
+                const mobileFrame = document.getElementById('mobileFrame');
+                
+                desktopFrame.srcdoc = currentWebsiteHTML;
+                mobileFrame.srcdoc = currentWebsiteHTML;
+            }
+
+            // Industry button selection
+            industryButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    industryButtons.forEach(b => b.style.opacity = '0.7');
+                    this.style.opacity = '1';
+                    selectedIndustry = this.dataset.industry;
+                    updateGenerateButton();
+                });
+            });
+
+            // Update generate button state with enhanced validation
+            function updateGenerateButton() {
+                const companyName = document.getElementById('companyName').value.trim();
+                const phoneNumber = document.getElementById('phoneNumber').value.replace(/\D/g, '');
+                const cityName = document.getElementById('cityName').value.trim();
+                const yearsExp = parseInt(document.getElementById('yearsExp').value);
+                
+                const validCompany = companyName.length >= 2;
+                const validPhone = phoneNumber.length === 10;
+                const validCity = cityName.length >= 2;
+                const validYears = yearsExp >= 1 && yearsExp <= 50;
+                const hasIndustry = selectedIndustry !== '';
+                
+                const allValid = validCompany && validPhone && validCity && validYears && hasIndustry;
+                
+                if (allValid) {
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = `⚡ Generate ${selectedIndustry.charAt(0).toUpperCase() + selectedIndustry.slice(1)} Website`;
+                    generateBtn.style.opacity = '1';
+                } else {
+                    generateBtn.disabled = true;
+                    
+                    // Show helpful message about what's missing
+                    let missing = [];
+                    if (!validCompany) missing.push('company name');
+                    if (!validPhone) missing.push('phone number');
+                    if (!validCity) missing.push('city');
+                    if (!validYears) missing.push('years of experience');
+                    if (!hasIndustry) missing.push('industry selection');
+                    
+                    if (missing.length === 1) {
+                        generateBtn.textContent = `Please add ${missing[0]}`;
+                    } else if (missing.length <= 3) {
+                        generateBtn.textContent = `Please add ${missing.join(' & ')}`;
+                    } else {
+                        generateBtn.textContent = '⚡ Complete the form to generate';
+                    }
+                    
+                    generateBtn.style.opacity = '0.6';
+                }
+            }
+
+            // Form input listeners
+            ['companyName', 'phoneNumber', 'cityName'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateGenerateButton);
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!selectedIndustry) {
+                    alert('Please select an industry first!');
+                    return;
+                }
+
+                const formData = {
+                    serviceType: selectedIndustry,
+                    companyName: document.getElementById('companyName').value,
+                    phoneNumber: document.getElementById('phoneNumber').value,
+                    cityName: document.getElementById('cityName').value,
+                    yearsExp: document.getElementById('yearsExp').value,
+                    designStyle: getRandomDesignStyle()
+                };
+
+                generateWebsite(formData);
+            });
+
+            // Generate website with loading
+            function generateWebsite(formData) {
+                // Show loading
+                loadingSection.style.display = 'block';
+                previewSection.style.display = 'none';
+                generateBtn.disabled = true;
+
+                // Simulate generation time for better UX
+                setTimeout(() => {
+                    try {
+                        // Use global generator instance or create new one if needed
+                        const websiteGenerator = window.websiteGenerator || new WebsiteGenerator();
+                        console.log('🎯 Generating website with data:', formData);
+                        currentWebsiteHTML = websiteGenerator.generateMockup(formData);
+                        console.log('✅ Website generated successfully!');
+                        showPreview(formData);
+                    } catch (error) {
+                        console.error('❌ Generation error:', error);
+                        alert('Error generating website: ' + error.message);
+                    } finally {
+                        loadingSection.style.display = 'none';
+                        generateBtn.disabled = false;
+                    }
+                }, 1500);
+            }
+
+            // Show preview
+            function showPreview(formData) {
+                currentFormData = formData; // Store for regeneration
+                
+                const previewInfo = document.getElementById('previewInfo');
+                previewInfo.textContent = `${formData.designStyle.charAt(0).toUpperCase() + formData.designStyle.slice(1)} style • ${formData.serviceType.charAt(0).toUpperCase() + formData.serviceType.slice(1)} industry`;
+
+                // Show uniqueness statistics
+                const uniquenessStats = document.getElementById('uniquenessStats');
+                const generator = window.websiteGenerator;
+                if (generator && generator.getGenerationStats) {
+                    const stats = generator.getGenerationStats();
+                    uniquenessStats.innerHTML = `✨ <strong>Unique Design #${stats.totalGenerated}</strong> • One of <strong>${stats.totalPossibleCombinations.toLocaleString()}</strong> possible combinations`;
+                }
+
+                // Load content into both frames
+                const desktopFrame = document.getElementById('desktopFrame');
+                const mobileFrame = document.getElementById('mobileFrame');
+                
+                desktopFrame.srcdoc = currentWebsiteHTML;
+                mobileFrame.srcdoc = currentWebsiteHTML;
+
+                // Show variation controls
+                variationControls.style.display = 'block';
+                
+                previewSection.style.display = 'block';
+                previewSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // View controls
+            viewButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    viewButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const view = this.dataset.view;
+                    const desktopPreview = document.getElementById('desktopPreview');
+                    const mobilePreview = document.getElementById('mobilePreview');
+                    
+                    switch(view) {
+                        case 'desktop':
+                            desktopPreview.style.display = 'block';
+                            mobilePreview.style.display = 'none';
+                            break;
+                        case 'mobile':
+                            desktopPreview.style.display = 'none';
+                            mobilePreview.style.display = 'block';
+                            break;
+                        case 'both':
+                        default:
+                            desktopPreview.style.display = 'block';
+                            mobilePreview.style.display = 'block';
+                            break;
+                    }
+                });
+            });
+
+            // Download functionality
+            downloadBtn.addEventListener('click', function() {
+                if (currentWebsiteHTML) {
+                    const blob = new Blob([currentWebsiteHTML], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'generated-website.html';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+            });
+
+            // Get random design style for variety
+            function getRandomDesignStyle() {
+                const styles = ['modern', 'minimal', 'professional', 'creative', 'classic', 'bold'];
+                return styles[Math.floor(Math.random() * styles.length)];
+            }
+
+            // Initialize
+            updateGenerateButton();
+            
+            // Initialize variation controls when generator is ready
+            setTimeout(() => {
+                initializeVariationControls();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Generating your professional website...</p>
+        </div>
+    </div>
+</body>
+</html>

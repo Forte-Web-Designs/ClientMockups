@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Test - Quick Validation</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .test-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .results {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+        .info { color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Website Generator Test Suite</h1>
+        <p>Testing the enhanced website generator with unique variations and download functionality.</p>
+        
+        <div class="test-controls">
+            <button class="test-btn" onclick="testBasicGeneration()">🎯 Test Basic Generation</button>
+            <button class="test-btn" onclick="testUniqueVariations()">🔄 Test Unique Variations</button>
+            <button class="test-btn" onclick="testAllIndustries()">🏢 Test All Industries</button>
+            <button class="test-btn" onclick="testDownload()">📥 Test Download</button>
+            <button class="test-btn" onclick="clearResults()">🧹 Clear Results</button>
+        </div>
+        
+        <div id="results" class="results"></div>
+    </div>
+
+    <script src="assets/js/generator.js"></script>
+    <script>
+        let generator;
+        let testResults = [];
+
+        // Initialize generator
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                generator = window.websiteGenerator || new WebsiteGenerator();
+                log('✅ Generator initialized successfully', 'success');
+            }, 100);
+        });
+
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type;
+            results.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+        }
+
+        function testBasicGeneration() {
+            try {
+                log('🧪 Testing basic website generation...', 'info');
+                
+                const testData = {
+                    companyName: 'Test Plumbing Co',
+                    serviceType: 'plumbing',
+                    designStyle: 'modern',
+                    cityName: 'San Francisco',
+                    yearsExp: '15'
+                };
+
+                const html = generator.generateMockup(testData);
+                
+                if (html && html.includes('<!DOCTYPE html>') && html.includes('Test Plumbing Co')) {
+                    log('✅ Basic generation successful - HTML created with correct content', 'success');
+                    log(`📊 Generated HTML size: ${html.length} characters`, 'info');
+                } else {
+                    log('❌ Basic generation failed - Invalid HTML or missing content', 'error');
+                }
+            } catch (error) {
+                log(`❌ Basic generation error: ${error.message}`, 'error');
+            }
+        }
+
+        function testUniqueVariations() {
+            try {
+                log('🔄 Testing unique variations generation...', 'info');
+                
+                const testData = {
+                    companyName: 'Variation Test Co',
+                    serviceType: 'hvac', 
+                    designStyle: 'professional',
+                    cityName: 'Los Angeles',
+                    yearsExp: '10'
+                };
+
+                const websites = [];
+                const uniqueIds = new Set();
+                
+                // Generate 5 websites
+                for (let i = 0; i < 5; i++) {
+                    const html = generator.generateMockup(testData);
+                    websites.push(html);
+                    
+                    // Extract unique ID from HTML
+                    const uniqueIdMatch = html.match(/variant-[\d.]+/);
+                    if (uniqueIdMatch) {
+                        uniqueIds.add(uniqueIdMatch[0]);
+                    }
+                }
+                
+                log(`✅ Generated ${websites.length} websites`, 'success');
+                log(`🔢 Unique IDs found: ${uniqueIds.size}`, uniqueIds.size === websites.length ? 'success' : 'error');
+                
+                // Check for content differences
+                const firstWebsite = websites[0];
+                let variationsFound = 0;
+                
+                for (let i = 1; i < websites.length; i++) {
+                    if (websites[i] !== firstWebsite) {
+                        variationsFound++;
+                    }
+                }
+                
+                log(`🎨 Content variations: ${variationsFound}/${websites.length - 1}`, variationsFound > 0 ? 'success' : 'error');
+                
+            } catch (error) {
+                log(`❌ Variation testing error: ${error.message}`, 'error');
+            }
+        }
+
+        function testAllIndustries() {
+            try {
+                log('🏢 Testing all industry types...', 'info');
+                
+                const industries = ['plumbing', 'hvac', 'electrical', 'landscaping', 'contractor', 'roofing', 'flooring', 'painting'];
+                let successCount = 0;
+                
+                industries.forEach((industry, index) => {
+                    try {
+                        const testData = {
+                            companyName: `Test ${industry.charAt(0).toUpperCase() + industry.slice(1)} Co`,
+                            serviceType: industry,
+                            designStyle: 'modern',
+                            cityName: 'Test City',
+                            yearsExp: '12'
+                        };
+                        
+                        const html = generator.generateMockup(testData);
+                        
+                        if (html && html.includes(testData.companyName)) {
+                            successCount++;
+                            log(`✅ ${industry.charAt(0).toUpperCase() + industry.slice(1)} industry: Success`, 'success');
+                        } else {
+                            log(`❌ ${industry.charAt(0).toUpperCase() + industry.slice(1)} industry: Failed`, 'error');
+                        }
+                    } catch (error) {
+                        log(`❌ ${industry.charAt(0).toUpperCase() + industry.slice(1)} industry: Error - ${error.message}`, 'error');
+                    }
+                });
+                
+                log(`📊 Industry test results: ${successCount}/${industries.length} successful`, successCount === industries.length ? 'success' : 'error');
+                
+            } catch (error) {
+                log(`❌ Industry testing error: ${error.message}`, 'error');
+            }
+        }
+
+        function testDownload() {
+            try {
+                log('📥 Testing download functionality...', 'info');
+                
+                const testData = {
+                    companyName: 'Download Test Co',
+                    serviceType: 'electrical',
+                    designStyle: 'creative', 
+                    cityName: 'Miami',
+                    yearsExp: '8'
+                };
+
+                const html = generator.generateMockup(testData);
+                
+                if (html) {
+                    // Create blob and test download capability
+                    const blob = new Blob([html], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Create temporary download link
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'test-website.html';
+                    
+                    log('✅ Download blob created successfully', 'success');
+                    log('📋 Click here to download test website:', 'info');
+                    
+                    // Add clickable download link to results
+                    const results = document.getElementById('results');
+                    const downloadDiv = document.createElement('div');
+                    downloadDiv.innerHTML = `<a href="${url}" download="test-website.html" style="color: #60a5fa; text-decoration: underline; cursor: pointer;">🔗 Download Test Website</a>`;
+                    results.appendChild(downloadDiv);
+                    
+                    log(`📊 Download file size: ${blob.size} bytes`, 'success');
+                } else {
+                    log('❌ Download test failed - No HTML generated', 'error');
+                }
+                
+            } catch (error) {
+                log(`❌ Download testing error: ${error.message}`, 'error');
+            }
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            log('🧹 Results cleared', 'info');
+        }
+    </script>
+</body>
+</html>

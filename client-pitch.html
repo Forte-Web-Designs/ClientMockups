@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forte Studio - Client Pitch Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header img {
+            height: 80px;
+            width: auto;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pitch-intro {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .pitch-intro h2 {
+            color: #667eea;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .pitch-intro p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .quick-form {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .industry-buttons {
+            margin-bottom: 2rem;
+        }
+
+        .industry-buttons h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .industry-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .industry-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .generate-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .preview-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .preview-header h3 {
+            color: #667eea;
+            font-size: 1.8rem;
+        }
+
+        .preview-info {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-btn {
+            padding: 0.7rem 1.2rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .view-btn.active,
+        .view-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .preview-container {
+            display: flex;
+            gap: 2rem;
+            min-height: 600px;
+        }
+
+        .desktop-preview {
+            flex: 2;
+        }
+
+        .mobile-preview {
+            flex: 1;
+            max-width: 375px;
+        }
+
+        .preview-frame {
+            width: 100%;
+            height: 600px;
+            border: 3px solid #ddd;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .mobile-frame {
+            background: #333;
+            border-radius: 25px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .mobile-frame::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #666;
+            border-radius: 2px;
+        }
+
+        .mobile-frame .preview-frame {
+            height: 600px;
+            border-radius: 15px;
+            border: none;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #10ac84, #00d2d3);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 172, 132, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 3rem;
+        }
+
+        .footer img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .industry-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-container {
+                flex-direction: column;
+            }
+            
+            .mobile-preview {
+                max-width: none;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="assets/images/forte-logo.svg" alt="Forte Web Designs">
+            <h1>Forte Studio</h1>
+            <p>I've already developed a free home page mockup for your business</p>
+        </header>
+
+        <div class="pitch-intro">
+            <h2>🎯 Client Pitch Generator</h2>
+            <p>Generate unique, professional websites instantly for any industry. Perfect for client presentations and proposals. Each generation creates a completely unique design with different layouts, colors, and components.</p>
+        </div>
+
+        <div class="quick-form">
+            <form id="pitchForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" name="companyName" placeholder="Elite Pro Services" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="(555) 123-4567" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cityName">City</label>
+                        <input type="text" id="cityName" name="cityName" placeholder="Your City" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsExp">Years of Experience</label>
+                        <input type="number" id="yearsExp" name="yearsExp" value="15" min="1" max="50">
+                    </div>
+                </div>
+
+                <div class="industry-buttons">
+                    <h3>Quick Industry Selection</h3>
+                    <div class="industry-grid">
+                        <button type="button" class="industry-btn" data-industry="plumbing">
+                            🔧 Plumbing Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="hvac">
+                            🌡️ HVAC Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="electrical">
+                            ⚡ Electrical Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="landscaping">
+                            🌿 Landscaping
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="contractor">
+                            🏗️ General Contractor
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="roofing">
+                            🏠 Roofing Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="flooring">
+                            🪵 Flooring Services
+                        </button>
+                        <button type="button" class="industry-btn" data-industry="painting">
+                            🎨 Painting Services
+                        </button>
+                    </div>
+                </div>
+
+                <div class="generate-section">
+                    <button type="submit" class="generate-btn" id="generateBtn">
+                        ⚡ Generate Unique Website
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="loading" id="loadingSection">
+            <div class="spinner"></div>
+            <p>Generating your unique website mockup...</p>
+        </div>
+
+        <div id="previewSection" class="preview-section">
+            <div class="preview-header">
+                <div>
+                    <h3>🎉 Your Generated Website</h3>
+                    <div class="preview-info" id="previewInfo"></div>
+                </div>
+                <button id="downloadBtn" class="download-btn">📥 Download HTML</button>
+            </div>
+            
+            <div class="view-controls">
+                <button class="view-btn active" data-view="both">Both Views</button>
+                <button class="view-btn" data-view="desktop">Desktop Only</button>
+                <button class="view-btn" data-view="mobile">Mobile Only</button>
+            </div>
+
+            <div class="preview-container" id="previewContainer">
+                <div class="desktop-preview" id="desktopPreview">
+                    <iframe id="desktopFrame" class="preview-frame"></iframe>
+                </div>
+                <div class="mobile-preview" id="mobilePreview">
+                    <div class="mobile-frame">
+                        <iframe id="mobileFrame" class="preview-frame"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <img src="assets/images/forte-logo.svg" alt="Forte Web Designs">
+            <p>Powered by <strong>Forte Web Designs</strong> - Professional Web Solutions</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/generator.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('pitchForm');
+            const generateBtn = document.getElementById('generateBtn');
+            const loadingSection = document.getElementById('loadingSection');
+            const previewSection = document.getElementById('previewSection');
+            const industryButtons = document.querySelectorAll('.industry-btn');
+            const viewButtons = document.querySelectorAll('.view-btn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            let selectedIndustry = '';
+            let currentWebsiteHTML = '';
+
+            // Industry button selection
+            industryButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    industryButtons.forEach(b => b.style.opacity = '0.7');
+                    this.style.opacity = '1';
+                    selectedIndustry = this.dataset.industry;
+                    updateGenerateButton();
+                });
+            });
+
+            // Update generate button state
+            function updateGenerateButton() {
+                const companyName = document.getElementById('companyName').value.trim();
+                const phoneNumber = document.getElementById('phoneNumber').value.trim();
+                const cityName = document.getElementById('cityName').value.trim();
+                
+                if (companyName && phoneNumber && cityName && selectedIndustry) {
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = `⚡ Generate ${selectedIndustry.charAt(0).toUpperCase() + selectedIndustry.slice(1)} Website`;
+                } else {
+                    generateBtn.disabled = true;
+                    generateBtn.textContent = '⚡ Generate Unique Website';
+                }
+            }
+
+            // Form input listeners
+            ['companyName', 'phoneNumber', 'cityName'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateGenerateButton);
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!selectedIndustry) {
+                    alert('Please select an industry first!');
+                    return;
+                }
+
+                const formData = {
+                    serviceType: selectedIndustry,
+                    companyName: document.getElementById('companyName').value,
+                    phoneNumber: document.getElementById('phoneNumber').value,
+                    cityName: document.getElementById('cityName').value,
+                    yearsExp: document.getElementById('yearsExp').value,
+                    designStyle: getRandomDesignStyle()
+                };
+
+                generateWebsite(formData);
+            });
+
+            // Generate website with loading
+            function generateWebsite(formData) {
+                // Show loading
+                loadingSection.style.display = 'block';
+                previewSection.style.display = 'none';
+                generateBtn.disabled = true;
+
+                // Simulate generation time for better UX
+                setTimeout(() => {
+                    try {
+                        const websiteGenerator = new WebsiteGenerator();
+                        currentWebsiteHTML = websiteGenerator.generateMockup(formData);
+                        showPreview(formData);
+                    } catch (error) {
+                        console.error('Generation error:', error);
+                        alert('Error generating website. Please try again.');
+                    } finally {
+                        loadingSection.style.display = 'none';
+                        generateBtn.disabled = false;
+                    }
+                }, 1500);
+            }
+
+            // Show preview
+            function showPreview(formData) {
+                const previewInfo = document.getElementById('previewInfo');
+                previewInfo.textContent = `${formData.designStyle.charAt(0).toUpperCase() + formData.designStyle.slice(1)} style • ${formData.serviceType.charAt(0).toUpperCase() + formData.serviceType.slice(1)} industry`;
+
+                // Load content into both frames
+                const desktopFrame = document.getElementById('desktopFrame');
+                const mobileFrame = document.getElementById('mobileFrame');
+                
+                desktopFrame.srcdoc = currentWebsiteHTML;
+                mobileFrame.srcdoc = currentWebsiteHTML;
+
+                previewSection.style.display = 'block';
+                previewSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // View controls
+            viewButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    viewButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const view = this.dataset.view;
+                    const desktopPreview = document.getElementById('desktopPreview');
+                    const mobilePreview = document.getElementById('mobilePreview');
+                    
+                    switch(view) {
+                        case 'desktop':
+                            desktopPreview.style.display = 'block';
+                            mobilePreview.style.display = 'none';
+                            break;
+                        case 'mobile':
+                            desktopPreview.style.display = 'none';
+                            mobilePreview.style.display = 'block';
+                            break;
+                        case 'both':
+                        default:
+                            desktopPreview.style.display = 'block';
+                            mobilePreview.style.display = 'block';
+                            break;
+                    }
+                });
+            });
+
+            // Download functionality
+            downloadBtn.addEventListener('click', function() {
+                if (currentWebsiteHTML) {
+                    const blob = new Blob([currentWebsiteHTML], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'generated-website.html';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+            });
+
+            // Get random design style for variety
+            function getRandomDesignStyle() {
+                const styles = ['modern', 'minimal', 'professional', 'creative', 'classic', 'bold'];
+                return styles[Math.floor(Math.random() * styles.length)];
+            }
+
+            // Initialize
+            updateGenerateButton();
+        });
+    </script>
+</body>
+</html>

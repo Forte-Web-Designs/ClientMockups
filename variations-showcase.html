@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forte Studio - 20+ Design Variations Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --forte-blue: #2563eb;
+            --forte-blue-light: #60a5fa;
+            --forte-blue-dark: #1d4ed8;
+            --background-color: #f8fafc;
+            --white: #ffffff;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--background-color);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .branding {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .brand-text h1 {
+            font-size: 2.5rem;
+            color: var(--forte-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .showcase-nav {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 1rem 0;
+        }
+
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: var(--gray-700);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--forte-blue);
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--gray-700);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: var(--forte-blue);
+        }
+
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .variations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .variation-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .variation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .variation-header {
+            padding: 1rem;
+            background: var(--gray-100);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .variation-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 0.25rem;
+        }
+
+        .variation-subtitle {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .variation-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.2rem 0.5rem;
+            background: var(--forte-blue);
+            color: var(--white);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .preview-container {
+            position: relative;
+            background: #f0f0f0;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .device-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .desktop-frame {
+            width: 90%;
+            height: 80%;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .mobile-frame {
+            width: 60px;
+            height: 90%;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 2px solid var(--gray-800);
+        }
+
+        .preview-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transform-origin: top left;
+        }
+
+        .mobile-view .preview-iframe {
+            transform: scale(0.25);
+            width: 400%;
+            height: 400%;
+        }
+
+        .variation-actions {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .preview-btn {
+            background: var(--forte-blue);
+            color: var(--white);
+        }
+
+        .preview-btn:hover {
+            background: var(--forte-blue-dark);
+        }
+
+        .generate-btn {
+            background: var(--gray-100);
+            color: var(--gray-800);
+            border: 1px solid var(--gray-200);
+        }
+
+        .generate-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .stats-bar {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--forte-blue);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--white);
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-600);
+        }
+
+        .modal-close:hover {
+            color: var(--gray-800);
+        }
+
+        .modal-iframe {
+            width: 100%;
+            height: 70vh;
+            border: none;
+            border-radius: var(--border-radius);
+        }
+
+        @media (max-width: 768px) {
+            .variations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Hide elements based on view mode */
+        .mobile-view .desktop-frame {
+            display: none;
+        }
+
+        .desktop-view .mobile-frame {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="branding">
+                <img src="assets/images/forte-logo.svg" alt="Forte Web Designs" class="brand-logo">
+                <div class="brand-text">
+                    <h1>Forte Studio</h1>
+                    <p class="tagline">20+ Professional Website Design Variations</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="showcase-nav">
+        <div class="container">
+            <div class="nav-controls">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Styles</button>
+                    <button class="filter-btn" data-filter="modern">Modern</button>
+                    <button class="filter-btn" data-filter="minimal">Minimal</button>
+                    <button class="filter-btn" data-filter="professional">Professional</button>
+                    <button class="filter-btn" data-filter="creative">Creative</button>
+                    <button class="filter-btn" data-filter="classic">Classic</button>
+                    <button class="filter-btn" data-filter="bold">Bold</button>
+                </div>
+                <div class="view-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="desktop">🖥️ Desktop</button>
+                        <button class="view-btn" data-view="mobile">📱 Mobile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Design Variations</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Style Categories</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Service Types</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Customizations</div>
+                </div>
+            </div>
+
+            <div class="variations-grid" id="variationsGrid">
+                <!-- Variations will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Preview Modal -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle">Preview</h2>
+            <iframe class="modal-iframe" id="modalIframe"></iframe>
+        </div>
+    </div>
+
+    <script src="assets/js/generator.js"></script>
+    <script src="assets/js/variation-generator.js"></script>
+    <script>
+        // Design variations data - Now generated dynamically
+        let variations = [];
+        let variationGenerator;
+
+        // Initialize the showcase
+        document.addEventListener('DOMContentLoaded', function() {
+            variationGenerator = new VariationGenerator();
+            generateVariationsData();
+            renderVariations();
+            setupEventListeners();
+        });
+
+        function generateVariationsData() {
+            const sampleData = {
+                serviceType: 'plumbing',
+                companyName: 'Elite Pro Services',
+                phoneNumber: '(555) 123-4567',
+                cityName: 'Metro City',
+                yearsExp: '15'
+            };
+
+            // Generate 24 unique variations
+            const layouts = ['classic', 'modern', 'minimal', 'creative', 'professional', 'bold'];
+            const colorSchemes = ['ocean', 'forest', 'sunset', 'royal'];
+            const typographyStyles = ['modern', 'classic', 'minimal', 'creative'];
+
+            let variationId = 1;
+            layouts.forEach((layout, layoutIndex) => {
+                colorSchemes.forEach((colorScheme, colorIndex) => {
+                    if (variationId <= 24) {
+                        const typography = typographyStyles[layoutIndex % typographyStyles.length];
+                        
+                        variations.push({
+                            id: `variation-${variationId}`,
+                            style: layout,
+                            name: `${layout.charAt(0).toUpperCase() + layout.slice(1)} ${colorScheme.charAt(0).toUpperCase() + colorScheme.slice(1)}`,
+                            description: `${variationGenerator.variations.layouts[layout].description} with ${colorScheme} color scheme`,
+                            tags: [layout, colorScheme, typography],
+                            colors: [
+                                variationGenerator.variations.colorSchemes[colorScheme].primary,
+                                variationGenerator.variations.colorSchemes[colorScheme].secondary
+                            ],
+                            metadata: {
+                                layout,
+                                colorScheme,
+                                typography,
+                                sampleData
+                            }
+                        });
+                        variationId++;
+                    }
+                });
+            });
+
+            console.log(`Generated ${variations.length} variations`);
+        }
+
+        function setupEventListeners() {
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    renderVariations();
+                });
+            });
+
+            // View toggle buttons
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentView = this.dataset.view;
+                    updateViewMode();
+                });
+            });
+        }
+
+        function renderVariations() {
+            const grid = document.getElementById('variationsGrid');
+            const filteredVariations = currentFilter === 'all' ? 
+                variations : 
+                variations.filter(v => v.style === currentFilter);
+
+            grid.innerHTML = filteredVariations.map(variation => `
+                <div class="variation-card" data-style="${variation.style}">
+                    <div class="variation-header">
+                        <div class="variation-title">${variation.name}</div>
+                        <div class="variation-subtitle">${variation.description}</div>
+                        <div class="variation-tags">
+                            ${variation.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="preview-container">
+                        <div class="device-frame desktop-frame">
+                            <div class="loading">
+                                <span class="spinner"></span>
+                                Generating preview...
+                            </div>
+                        </div>
+                        <div class="device-frame mobile-frame">
+                            <div class="loading">
+                                <span class="spinner"></span>
+                                Generating preview...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="variation-actions">
+                        <button class="action-btn preview-btn" onclick="previewVariation('${variation.id}')">
+                            👁️ Full Preview
+                        </button>
+                        <button class="action-btn generate-btn" onclick="generateVariation('${variation.id}')">
+                            ⚡ Generate
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            updateViewMode();
+            generatePreviews();
+        }
+
+        function updateViewMode() {
+            const container = document.querySelector('.main-content');
+            container.className = `main-content ${currentView}-view`;
+        }
+
+        function generatePreviews() {
+            // Simulate generating previews with different styles
+            const cards = document.querySelectorAll('.variation-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    const loadingElement = card.querySelector('.loading');
+                    if (loadingElement) {
+                        loadingElement.style.display = 'block';
+                        
+                        setTimeout(() => {
+                            loadingElement.style.display = 'none';
+                            // Here you would normally load the actual preview
+                            // For now, we'll show a placeholder
+                            const previewContainer = card.querySelector('.preview-container');
+                            const iframe = document.createElement('iframe');
+                            iframe.className = 'preview-iframe';
+                            iframe.srcdoc = generateVariationHTML(variations[index % variations.length]);
+                            
+                            const desktopFrame = card.querySelector('.desktop-frame');
+                            const mobileFrame = card.querySelector('.mobile-frame');
+                            
+                            if (desktopFrame) {
+                                desktopFrame.innerHTML = '';
+                                desktopFrame.appendChild(iframe.cloneNode());
+                                desktopFrame.lastChild.srcdoc = iframe.srcdoc;
+                            }
+                            
+                            if (mobileFrame) {
+                                mobileFrame.innerHTML = '';
+                                mobileFrame.appendChild(iframe.cloneNode());
+                                mobileFrame.lastChild.srcdoc = iframe.srcdoc;
+                            }
+                        }, 1000 + Math.random() * 2000);
+                    }
+                }, index * 200);
+            });
+        }
+
+        function generateVariationHTML(variation) {
+            if (!variationGenerator || !variation.metadata) {
+                return generateSimpleVariationHTML(variation);
+            }
+
+            const { layout, colorScheme, typography, sampleData } = variation.metadata;
+            
+            return variationGenerator.generateVariation(sampleData, layout, {
+                layout,
+                colorScheme,
+                typography,
+                buttonStyle: layout === 'minimal' ? 'soft' : layout === 'bold' ? 'sharp' : 'rounded',
+                cardStyle: layout === 'minimal' ? 'flat' : layout === 'creative' ? 'rounded' : 'elevated'
+            });
+        }
+
+        function generateSimpleVariationHTML(variation) {
+            // Fallback for simple variations
+            const sampleData = {
+                serviceType: 'plumbing',
+                companyName: 'Elite Pro Services',
+                phoneNumber: '(555) 123-4567',
+                cityName: 'Metro City',
+                yearsExp: '15'
+            };
+
+            return `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>${sampleData.companyName}</title>
+                    <style>
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            background: ${variation.colors[1]}; 
+                            color: #333;
+                        }
+                        .header { 
+                            background: ${variation.colors[0]}; 
+                            color: white; 
+                            padding: 1rem; 
+                            text-align: center; 
+                        }
+                        .hero { 
+                            padding: 2rem; 
+                            text-align: center; 
+                            background: linear-gradient(135deg, ${variation.colors[0]}, ${variation.colors[1]});
+                            color: white;
+                        }
+                        .services { 
+                            padding: 2rem; 
+                            display: grid; 
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+                            gap: 1rem; 
+                        }
+                        .service { 
+                            background: white; 
+                            padding: 1rem; 
+                            border-radius: 8px; 
+                            text-align: center; 
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        }
+                        .contact { 
+                            background: ${variation.colors[0]}; 
+                            color: white; 
+                            padding: 2rem; 
+                            text-align: center; 
+                        }
+                    </style>
+                </head>
+                <body>
+                    <header class="header">
+                        <h1>${sampleData.companyName}</h1>
+                    </header>
+                    <section class="hero">
+                        <h2>Professional Services</h2>
+                        <p>${variation.description}</p>
+                    </section>
+                    <section class="services">
+                        <div class="service">
+                            <h3>🔧 Service 1</h3>
+                            <p>Professional quality work</p>
+                        </div>
+                        <div class="service">
+                            <h3>⚡ Service 2</h3>
+                            <p>Fast and reliable</p>
+                        </div>
+                        <div class="service">
+                            <h3>🏆 Service 3</h3>
+                            <p>Award winning team</p>
+                        </div>
+                    </section>
+                    <footer class="contact">
+                        <h3>Contact Us</h3>
+                        <p>${sampleData.phoneNumber}</p>
+                        <p>${sampleData.cityName}</p>
+                    </footer>
+                </body>
+                </html>
+            `;
+        }
+
+        function previewVariation(variationId) {
+            const variation = variations.find(v => v.id === variationId);
+            const modal = document.getElementById('previewModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalIframe = document.getElementById('modalIframe');
+
+            modalTitle.textContent = `${variation.name} - Full Preview`;
+            modalIframe.srcdoc = generateVariationHTML(variation);
+            modal.style.display = 'block';
+        }
+
+        function generateVariation(variationId) {
+            const variation = variations.find(v => v.id === variationId);
+            
+            // Generate the variation using the advanced generator
+            if (variation.metadata) {
+                const { layout, colorScheme, typography, sampleData } = variation.metadata;
+                
+                const generatedHTML = variationGenerator.generateVariation(sampleData, layout, {
+                    layout,
+                    colorScheme,
+                    typography,
+                    buttonStyle: layout === 'minimal' ? 'soft' : layout === 'bold' ? 'sharp' : 'rounded',
+                    cardStyle: layout === 'minimal' ? 'flat' : layout === 'creative' ? 'rounded' : 'elevated'
+                });
+
+                // Create a downloadable file
+                const blob = new Blob([generatedHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${variation.name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-website.html`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                console.log(`Generated and downloaded ${variation.name} variation`);
+            } else {
+                alert(`Generating ${variation.name} variation!\n\nThis would redirect to the main generator with the ${variation.style} style pre-selected.`);
+                window.location.href = `index.html?style=${variation.style}&variation=${variationId}`;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('previewModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

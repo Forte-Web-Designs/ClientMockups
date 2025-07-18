@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forte Studio - Complete System Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header img {
+            height: 80px;
+            width: auto;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .demo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .demo-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .demo-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .demo-card p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .demo-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .demo-features li {
+            color: #555;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .demo-features li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+        }
+
+        .demo-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .stats {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .cta-section {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary:hover,
+        .cta-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="assets/images/forte-logo.svg" alt="Forte Web Designs">
+            <h1>Forte Studio</h1>
+            <p>Professional Website Generator with 24+ Design Variations</p>
+            <p>Create stunning websites in seconds with our advanced variation system</p>
+        </header>
+
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">24+</div>
+                    <div class="stat-label">Design Variations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Layout Styles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Color Schemes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Customizations</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-grid">
+            <div class="demo-card">
+                <span class="demo-icon">🎨</span>
+                <h3>Main Generator</h3>
+                <p>The primary tool for creating professional websites with customizable design styles.</p>
+                <ul class="demo-features">
+                    <li>5 service types supported</li>
+                    <li>6 design style options</li>
+                    <li>Real-time preview</li>
+                    <li>Instant download</li>
+                </ul>
+                <a href="index.html" class="demo-btn">🚀 Open Generator</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="demo-icon">🖼️</span>
+                <h3>Variations Showcase</h3>
+                <p>Browse 24+ unique design variations with desktop and mobile previews.</p>
+                <ul class="demo-features">
+                    <li>24+ unique variations</li>
+                    <li>Desktop & mobile views</li>
+                    <li>Live preview system</li>
+                    <li>Instant generation</li>
+                </ul>
+                <a href="variations-showcase.html" class="demo-btn">👁️ View Showcase</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="demo-icon">🧪</span>
+                <h3>Live Testing</h3>
+                <p>Test the complete system functionality with real examples.</p>
+                <ul class="demo-features">
+                    <li>Working examples</li>
+                    <li>All service types</li>
+                    <li>Download capability</li>
+                    <li>Quality validation</li>
+                </ul>
+                <a href="final-test.html" class="demo-btn">🔬 Run Tests</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="demo-icon">🏆</span>
+                <h3>Example Output</h3>
+                <p>See a complete example of a generated professional plumber website.</p>
+                <ul class="demo-features">
+                    <li>Professional design</li>
+                    <li>Mobile responsive</li>
+                    <li>Complete functionality</li>
+                    <li>Production ready</li>
+                </ul>
+                <a href="example-plumber-website.html" class="demo-btn">📄 View Example</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="demo-icon">📊</span>
+                <h3>Complete Demo</h3>
+                <p>Experience the full system with all service types and variations.</p>
+                <ul class="demo-features">
+                    <li>All 5 service types</li>
+                    <li>Multiple examples</li>
+                    <li>Interactive preview</li>
+                    <li>Download samples</li>
+                </ul>
+                <a href="showcase-demo.html" class="demo-btn">🎯 Full Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="demo-icon">📚</span>
+                <h3>Documentation</h3>
+                <p>Complete system documentation and usage instructions.</p>
+                <ul class="demo-features">
+                    <li>Setup instructions</li>
+                    <li>Feature overview</li>
+                    <li>Customization guide</li>
+                    <li>Technical details</li>
+                </ul>
+                <a href="README.md" class="demo-btn">📖 Read Docs</a>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Create Amazing Websites?</h2>
+            <p>Start generating professional websites in seconds with Forte Studio's advanced variation system.</p>
+            <div class="cta-buttons">
+                <a href="index.html" class="cta-primary">🚀 Start Creating</a>
+                <a href="variations-showcase.html" class="cta-secondary">🎨 Browse Variations</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on scroll
+            const stats = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        if (finalValue !== '∞') {
+                            animateNumber(target, parseInt(finalValue));
+                        }
+                    }
+                });
+            });
+
+            stats.forEach(stat => observer.observe(stat));
+
+            function animateNumber(element, target) {
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.textContent = target + '+';
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current);
+                    }
+                }, 30);
+            }
+
+            // Add hover effects to demo cards
+            const demoCards = document.querySelectorAll('.demo-card');
+            demoCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

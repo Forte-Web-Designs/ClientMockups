@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 FINAL TEST - Generate Plumber Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-header {
+            text-align: center;
+            background: #2563eb;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .test-button {
+            background: #10b981;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #059669;
+        }
+        .result-frame {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        #console {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            height: 200px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>🎯 FINAL PROOF TEST</h1>
+        <h2>Generate a Complete Plumber Website</h2>
+        <p>Click the button below to prove the system works!</p>
+    </div>
+
+    <div style="text-align: center;">
+        <button class="test-button" onclick="generatePlumberSite()">
+            🔧 Generate Elite Pro Plumbing Website
+        </button>
+        <button class="test-button" onclick="generateElectricalSite()">
+            ⚡ Generate Electrical Company Website
+        </button>
+        <button class="test-button" onclick="generateHVACSite()">
+            ❄️ Generate HVAC Company Website
+        </button>
+    </div>
+
+    <div id="console"></div>
+    <iframe id="resultFrame" class="result-frame" style="display: none;"></iframe>
+
+    <script src="assets/js/generator.js"></script>
+    <script>
+        const console_div = document.getElementById('console');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            console_div.innerHTML += `[${timestamp}] ${message}<br>`;
+            console_div.scrollTop = console_div.scrollHeight;
+            console.log(message);
+        }
+
+        function generatePlumberSite() {
+            log('🚀 Starting Elite Pro Plumbing website generation...');
+            
+            if (!window.generator) {
+                log('❌ Generator not found! Creating new instance...');
+                window.generator = new MockupGenerator();
+            }
+            
+            // Create plumber data
+            const plumberData = {
+                serviceType: 'plumbing',
+                companyName: 'Elite Pro Plumbing',
+                phoneNumber: '(555) 123-4567',
+                cityName: 'Downtown Metro',
+                yearsExp: '15'
+            };
+            
+            log('📝 Generating with data: ' + JSON.stringify(plumberData, null, 2));
+            
+            try {
+                const html = window.generator.createMockupHTML(plumberData);
+                
+                log('✅ HTML generated successfully! Length: ' + html.length + ' characters');
+                log('🎨 Displaying website...');
+                
+                const frame = document.getElementById('resultFrame');
+                frame.style.display = 'block';
+                frame.srcdoc = html;
+                
+                log('🎉 COMPLETE! Elite Pro Plumbing website is ready!');
+                
+                // Scroll to show the result
+                frame.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                log('❌ Error generating website: ' + error.message);
+                log('❌ Stack: ' + error.stack);
+            }
+        }
+
+        function generateElectricalSite() {
+            log('⚡ Starting electrical company website generation...');
+            
+            const electricalData = {
+                serviceType: 'electrical',
+                companyName: 'Spark Pro Electric',
+                phoneNumber: '(555) 987-6543',
+                cityName: 'Metro City',
+                yearsExp: '12'
+            };
+            
+            log('📝 Generating electrical site...');
+            
+            try {
+                const html = window.generator.createMockupHTML(electricalData);
+                log('✅ Electrical website generated!');
+                
+                const frame = document.getElementById('resultFrame');
+                frame.style.display = 'block';
+                frame.srcdoc = html;
+                frame.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                log('❌ Error: ' + error.message);
+            }
+        }
+
+        function generateHVACSite() {
+            log('❄️ Starting HVAC company website generation...');
+            
+            const hvacData = {
+                serviceType: 'hvac',
+                companyName: 'CoolAir HVAC Solutions',
+                phoneNumber: '(555) 456-7890',
+                cityName: 'Suburban Heights',
+                yearsExp: '20'
+            };
+            
+            log('📝 Generating HVAC site...');
+            
+            try {
+                const html = window.generator.createMockupHTML(hvacData);
+                log('✅ HVAC website generated!');
+                
+                const frame = document.getElementById('resultFrame');
+                frame.style.display = 'block';
+                frame.srcdoc = html;
+                frame.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                log('❌ Error: ' + error.message);
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 Final test page loaded');
+            log('⏳ Waiting for generator to initialize...');
+            
+            setTimeout(() => {
+                if (window.generator) {
+                    log('✅ Generator ready! Click buttons above to test.');
+                } else {
+                    log('⚠️ Generator not found, but will create on demand.');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

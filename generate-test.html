@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Quick Generate Website Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .test-header {
+            margin-bottom: 3rem;
+        }
+        
+        .test-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .test-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .test-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .test-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .results {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+        
+        .results h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .log-item {
+            background: rgba(0,0,0,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .status-success { border-left: 4px solid #10b981; }
+        .status-error { border-left: 4px solid #ef4444; }
+        .status-info { border-left: 4px solid #3b82f6; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1 class="test-title">🧪 Generate Website Test</h1>
+            <p>Test the enhanced Generate Website functionality with different layouts and desktop + mobile views</p>
+        </div>
+        
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>🎨 Modern Design</h3>
+                <p>Hero-split layout with carousel components</p>
+                <button class="test-btn" onclick="testStyle('modern')">Test Modern</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>✨ Minimal Design</h3>
+                <p>Centered layout with grid-tiles</p>
+                <button class="test-btn" onclick="testStyle('minimal')">Test Minimal</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>🏢 Professional</h3>
+                <p>Traditional layout with accordion</p>
+                <button class="test-btn" onclick="testStyle('professional')">Test Professional</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>🎯 Creative Design</h3>
+                <p>Asymmetric layout with masonry</p>
+                <button class="test-btn" onclick="testStyle('creative')">Test Creative</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>📚 Classic Design</h3>
+                <p>Stacked layout with service list</p>
+                <button class="test-btn" onclick="testStyle('classic')">Test Classic</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>⚡ Bold Design</h3>
+                <p>Fullwidth layout with feature boxes</p>
+                <button class="test-btn" onclick="testStyle('bold')">Test Bold</button>
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <h3>🔍 Test Results</h3>
+            <div id="logContainer">
+                <div class="log-item status-info">Ready to test different design styles...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="assets/js/generator.js"></script>
+    <script>
+        let generator;
+        
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            const logItem = document.createElement('div');
+            logItem.className = `log-item status-${type}`;
+            logItem.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            console.log(message);
+        }
+        
+        function testStyle(designStyle) {
+            log(`🎯 Testing ${designStyle} design style...`, 'info');
+            
+            try {
+                // Initialize generator if needed
+                if (!generator) {
+                    generator = new MockupGenerator();
+                    log('✅ Generator initialized', 'success');
+                }
+                
+                // Create test form data
+                const testData = {
+                    serviceType: 'plumbing',
+                    companyName: `Elite ${designStyle.charAt(0).toUpperCase() + designStyle.slice(1)} Plumbing`,
+                    phoneNumber: '(555) 123-4567',
+                    cityName: 'Test City',
+                    yearsExp: '15',
+                    designStyle: designStyle
+                };
+                
+                log(`📝 Using company: ${testData.companyName}`, 'info');
+                log(`🎨 Design style: ${designStyle}`, 'info');
+                
+                // Generate the mockup
+                const variantData = {
+                    ...testData,
+                    layoutType: generator.getLayoutForDesignStyle(designStyle),
+                    componentStyle: generator.getComponentForDesignStyle(designStyle),
+                    colorScheme: generator.getColorSchemeForDesignStyle(designStyle),
+                    uniqueId: `test-${designStyle}-${Date.now()}`
+                };
+                
+                log(`📐 Layout: ${variantData.layoutType}`, 'info');
+                log(`🧩 Components: ${variantData.componentStyle}`, 'info');
+                log(`🌈 Colors: ${variantData.colorScheme}`, 'info');
+                
+                // Generate HTML
+                const html = generator.generateUniqueVariantHTML(variantData);
+                
+                if (html && html.length > 0) {
+                    log(`✅ HTML generated successfully (${html.length} chars)`, 'success');
+                    
+                    // Open in new window for testing
+                    const testWindow = window.open('', '_blank');
+                    testWindow.document.write(html);
+                    testWindow.document.close();
+                    
+                    log(`🚀 ${designStyle} website opened in new window`, 'success');
+                    log(`🎉 Test completed successfully!`, 'success');
+                } else {
+                    log('❌ Failed to generate HTML', 'error');
+                }
+                
+            } catch (error) {
+                log(`❌ Error testing ${designStyle}: ${error.message}`, 'error');
+                console.error('Test error:', error);
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 Test page loaded successfully', 'success');
+            log('💡 Click any design style above to test generation', 'info');
+        });
+    </script>
+</body>
+</html>
