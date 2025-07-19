@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{COMPANY_NAME}} - Professional HVAC Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/hvac-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <img src="{{LOGO_URL}}" alt="{{COMPANY_NAME}} Logo" class="logo">
+                    <h1 class="company-name">{{COMPANY_NAME}}</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="#services">Services</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                    <a href="tel:{{PHONE_NUMBER}}" class="cta-button">{{PHONE_NUMBER}}</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    {{CITY_NAME}}'s Premier HVAC Specialists
+                </h1>
+                <p class="hero-subtitle">
+                    🌡️ Heating • ❄️ Cooling • 🔧 Installation • 🛠️ Emergency Repair
+                </p>
+                <p class="hero-description">
+                    Stay comfortable year-round with {{COMPANY_NAME}}'s expert HVAC services. {{YEARS_EXPERIENCE}}+ years of keeping {{CITY_NAME}} families and businesses at the perfect temperature.
+                </p>
+                <div class="hero-cta">
+                    <a href="tel:{{PHONE_NUMBER}}" class="primary-button">
+                        🚨 Emergency Service: {{PHONE_NUMBER}}
+                    </a>
+                    <a href="#contact" class="secondary-button">
+                        Get Free Estimate
+                    </a>
+                </div>
+                <div class="trust-badges">
+                    <div class="badge">
+                        <span class="badge-icon">✓</span>
+                        <span>Licensed & Insured</span>
+                    </div>
+                    <div class="badge">
+                        <span class="badge-icon">✓</span>
+                        <span>24/7 Emergency Service</span>
+                    </div>
+                    <div class="badge">
+                        <span class="badge-icon">✓</span>
+                        <span>Same-Day Service</span>
+                    </div>
+                    <div class="badge">
+                        <span class="badge-icon">✓</span>
+                        <span>100% Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="../assets/images/hvac-technician.jpg" alt="Professional HVAC Technician">
+                <div class="hero-overlay-text">
+                    <div class="temp-display">
+                        <span class="temp">72°F</span>
+                        <span class="temp-label">Perfect Comfort</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Banner -->
+    <section class="emergency-banner">
+        <div class="container">
+            <div class="emergency-content">
+                <div class="emergency-icon">🚨</div>
+                <div class="emergency-text">
+                    <h3>HVAC Emergency? We're Here 24/7!</h3>
+                    <p>No heat? AC down? Don't sweat it - we'll restore your comfort fast.</p>
+                </div>
+                <a href="tel:{{PHONE_NUMBER}}" class="emergency-btn">{{PHONE_NUMBER}}</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Complete HVAC Solutions</h2>
+            <div class="services-grid">
+                <div class="service-card heating">
+                    <div class="service-icon">🔥</div>
+                    <h3>Heating Services</h3>
+                    <p>Keep your family warm with our expert heating solutions.</p>
+                    <ul>
+                        <li>Furnace Repair & Installation</li>
+                        <li>Heat Pump Services</li>
+                        <li>Boiler Maintenance</li>
+                        <li>Thermostat Installation</li>
+                        <li>Ductwork Repair</li>
+                    </ul>
+                    <div class="service-price">Starting at $89</div>
+                </div>
+                
+                <div class="service-card cooling">
+                    <div class="service-icon">❄️</div>
+                    <h3>Air Conditioning</h3>
+                    <p>Stay cool and comfortable with reliable AC services.</p>
+                    <ul>
+                        <li>AC Repair & Installation</li>
+                        <li>Central Air Systems</li>
+                        <li>Ductless Mini-Splits</li>
+                        <li>Refrigerant Service</li>
+                        <li>Energy Efficiency Upgrades</li>
+                    </ul>
+                    <div class="service-price">Starting at $129</div>
+                </div>
+                
+                <div class="service-card maintenance">
+                    <div class="service-icon">🔧</div>
+                    <h3>Maintenance Plans</h3>
+                    <p>Prevent breakdowns and save money with regular tune-ups.</p>
+                    <ul>
+                        <li>Seasonal System Tune-ups</li>
+                        <li>Filter Replacement</li>
+                        <li>Preventive Maintenance</li>
+                        <li>Energy Efficiency Checks</li>
+                        <li>Priority Emergency Service</li>
+                    </ul>
+                    <div class="service-price">Plans from $149/year</div>
+                </div>
+                
+                <div class="service-card commercial">
+                    <div class="service-icon">🏢</div>
+                    <h3>Commercial HVAC</h3>
+                    <p>Professional climate control solutions for businesses.</p>
+                    <ul>
+                        <li>Commercial Installation</li>
+                        <li>Rooftop Unit Service</li>
+                        <li>Building Automation</li>
+                        <li>Energy Management</li>
+                        <li>24/7 Commercial Support</li>
+                    </ul>
+                    <div class="service-price">Free Consultation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seasonal Focus Section -->
+    <section class="seasonal-focus">
+        <div class="container">
+            <h2 class="section-title">Year-Round Comfort Solutions</h2>
+            <div class="seasonal-grid">
+                <div class="season-card winter">
+                    <div class="season-icon">🌨️</div>
+                    <h3>Winter Ready</h3>
+                    <p>Don't let the cold catch you off guard. Our heating experts ensure your family stays warm all winter long.</p>
+                    <div class="season-features">
+                        <span>Furnace Tune-ups</span>
+                        <span>Emergency Heat Repair</span>
+                        <span>Energy Efficiency</span>
+                    </div>
+                </div>
+                <div class="season-card summer">
+                    <div class="season-icon">☀️</div>
+                    <h3>Summer Cool</h3>
+                    <p>Beat the {{CITY_NAME}} heat with reliable AC service. We keep your home comfortable when it matters most.</p>
+                    <div class="season-features">
+                        <span>AC Installation</span>
+                        <span>Cooling Repair</span>
+                        <span>Energy Savings</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <h2 class="section-title">Why {{CITY_NAME}} Trusts {{COMPANY_NAME}}</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Same-Day Service</h3>
+                    <p>HVAC emergency? We respond fast with same-day service for urgent heating and cooling issues.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Upfront Pricing</h3>
+                    <p>No surprises. We provide clear, written estimates before starting any work on your HVAC system.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Expert Technicians</h3>
+                    <p>Our NATE-certified technicians have {{YEARS_EXPERIENCE}}+ years of experience with all HVAC brands.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Warranty Protection</h3>
+                    <p>All installations and repairs come with comprehensive warranties for your peace of mind.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💡</div>
+                    <h3>Energy Efficiency</h3>
+                    <p>Save money on utility bills with our energy-efficient HVAC solutions and smart thermostats.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📞</div>
+                    <h3>24/7 Emergency</h3>
+                    <p>HVAC problems don't wait for business hours. Neither do we. Call anytime for emergency service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars">★★★★★</div>
+                    <p>"{{COMPANY_NAME}} saved us during the heat wave! Fast service, fair pricing, and excellent work. Our AC is running better than ever."</p>
+                    <cite>- Jennifer M., {{CITY_NAME}}</cite>
+                    <div class="testimonial-tag">AC Repair</div>
+                </div>
+                <div class="testimonial">
+                    <div class="stars">★★★★★</div>
+                    <p>"Professional installation of our new furnace. Clean work, explained everything clearly, and finished on schedule. Highly recommend!"</p>
+                    <cite>- Robert K., {{CITY_NAME}}</cite>
+                    <div class="testimonial-tag">Furnace Installation</div>
+                </div>
+                <div class="testimonial">
+                    <div class="stars">★★★★★</div>
+                    <p>"The maintenance plan has saved us money and prevented breakdowns. Great preventive service and friendly technicians."</p>
+                    <cite>- Maria S., {{CITY_NAME}}</cite>
+                    <div class="testimonial-tag">Maintenance Plan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get Your Free HVAC Estimate</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Ready for Perfect Climate Control?</h3>
+                    <p>Don't let HVAC problems disrupt your comfort. Call {{COMPANY_NAME}} for expert heating and cooling solutions.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <div>
+                                <h4>Call Now</h4>
+                                <a href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a>
+                                <p>24/7 Emergency Service</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <h4>Service Area</h4>
+                                <p>{{CITY_NAME}} & Surrounding Areas</p>
+                                <p>Usually arrive within 2 hours</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">⏰</span>
+                            <div>
+                                <h4>Business Hours</h4>
+                                <p>Mon-Fri: 7AM-8PM<br>Weekends: 8AM-6PM<br><strong>24/7 Emergency</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certifications">
+                        <h4>Licensed & Certified</h4>
+                        <div class="cert-badges">
+                            <span class="cert-badge">NATE Certified</span>
+                            <span class="cert-badge">EPA Certified</span>
+                            <span class="cert-badge">Licensed & Insured</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form>
+                        <h3>Request Free Estimate</h3>
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="tel" placeholder="Phone Number" required>
+                        <input type="email" placeholder="Email Address" required>
+                        <input type="text" placeholder="Service Address">
+                        <select required>
+                            <option value="">What do you need?</option>
+                            <option value="heating-repair">Heating Repair</option>
+                            <option value="ac-repair">AC Repair</option>
+                            <option value="installation">New Installation</option>
+                            <option value="maintenance">Maintenance Plan</option>
+                            <option value="emergency">Emergency Service</option>
+                            <option value="estimate">Free Estimate</option>
+                        </select>
+                        <textarea placeholder="Describe the issue or project" rows="4"></textarea>
+                        <button type="submit" class="primary-button">Get Free Estimate</button>
+                        <p class="form-note">We'll contact you within 1 hour during business hours</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="{{LOGO_URL}}" alt="{{COMPANY_NAME}} Logo" class="footer-logo">
+                    <h3>{{COMPANY_NAME}}</h3>
+                    <p>Your trusted HVAC experts in {{CITY_NAME}}. Keeping families and businesses comfortable for {{YEARS_EXPERIENCE}}+ years.</p>
+                    <div class="footer-contact">
+                        <a href="tel:{{PHONE_NUMBER}}" class="footer-phone">{{PHONE_NUMBER}}</a>
+                        <p>{{CITY_NAME}}, {{STATE}} • Licensed & Insured</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>HVAC Services</h4>
+                    <ul>
+                        <li>Air Conditioning Repair</li>
+                        <li>Furnace Installation</li>
+                        <li>Heat Pump Service</li>
+                        <li>Ductwork Repair</li>
+                        <li>Thermostat Installation</li>
+                        <li>Maintenance Plans</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency Service</h4>
+                    <ul>
+                        <li>24/7 Availability</li>
+                        <li>Same-Day Service</li>
+                        <li>Weekend & Holiday Service</li>
+                        <li>Priority Response</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 {{COMPANY_NAME}}. All rights reserved. | NATE Certified • EPA Licensed • Fully Insured</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

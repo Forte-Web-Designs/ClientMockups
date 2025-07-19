@@ -1,0 +1,23 @@
+{
+  "name": "hvac-template-generator",
+  "version": "1.0.0",
+  "description": "Professional HVAC website template generator for sales presentations",
+  "main": "generate-mockup.js",
+  "scripts": {
+    "generate": "node generate-mockup.js",
+    "batch": "node batch-generate.js",
+    "test": "node generate-mockup.js \"Test HVAC Co\" \"(555) 123-4567\" \"Test City\""
+  },
+  "keywords": [
+    "hvac",
+    "website",
+    "template",
+    "generator",
+    "mockup",
+    "sales"
+  ],
+  "author": "Forte Design Studio",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {}
+}

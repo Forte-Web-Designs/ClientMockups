@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{COMPANY_NAME}} - Licensed Electrical Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/electrician-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <img src="{{LOGO_URL}}" alt="{{COMPANY_NAME}} Logo" class="logo">
+                    <h1 class="company-name">{{COMPANY_NAME}}</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="#services">Services</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                    <a href="tel:{{PHONE_NUMBER}}" class="cta-button">{{PHONE_NUMBER}}</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    ⚡ Licensed Electricians Serving {{CITY_NAME}}
+                </h1>
+                <p class="hero-subtitle">
+                    🔌 Wiring • 💡 Lighting • 🏠 Panel Upgrades • 🚨 Emergency Service
+                </p>
+                <p class="hero-description">
+                    Power your home or business safely with {{COMPANY_NAME}}'s expert electrical services. {{YEARS_EXPERIENCE}}+ years of trusted electrical work in {{CITY_NAME}} and surrounding areas.
+                </p>
+                <div class="hero-cta">
+                    <a href="tel:{{PHONE_NUMBER}}" class="primary-button">
+                        ⚡ Emergency Electrical: {{PHONE_NUMBER}}
+                    </a>
+                    <a href="#contact" class="secondary-button">
+                        Get Free Estimate
+                    </a>
+                </div>
+                <div class="trust-badges">
+                    <div class="badge">✓ Licensed & Insured</div>
+                    <div class="badge">✓ 24/7 Emergency Service</div>
+                    <div class="badge">✓ Satisfaction Guaranteed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-container">
+            <h2 class="section-title">Our Electrical Services</h2>
+            <p class="section-subtitle">From simple repairs to complex installations, we handle all your electrical needs safely and efficiently.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔌</div>
+                    <h3 class="service-title">Electrical Repairs</h3>
+                    <p class="service-description">Fast, reliable repairs for outlets, switches, and electrical issues.</p>
+                    <ul class="service-features">
+                        <li>Outlet & switch repair/replacement</li>
+                        <li>Circuit breaker troubleshooting</li>
+                        <li>Electrical fault diagnosis</li>
+                        <li>Code compliance fixes</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3 class="service-title">Lighting Installation</h3>
+                    <p class="service-description">Professional lighting design and installation for any space.</p>
+                    <ul class="service-features">
+                        <li>LED lighting upgrades</li>
+                        <li>Recessed lighting installation</li>
+                        <li>Landscape lighting</li>
+                        <li>Smart lighting systems</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3 class="service-title">Panel Upgrades</h3>
+                    <p class="service-description">Modernize your electrical system with safe, efficient panel upgrades.</p>
+                    <ul class="service-features">
+                        <li>Electrical panel replacement</li>
+                        <li>Circuit additions</li>
+                        <li>Code compliance updates</li>
+                        <li>Load calculations</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🚨</div>
+                    <h3 class="service-title">Emergency Service</h3>
+                    <p class="service-description">24/7 emergency electrical service when you need it most.</p>
+                    <ul class="service-features">
+                        <li>Power outage troubleshooting</li>
+                        <li>Electrical safety hazards</li>
+                        <li>Storm damage repairs</li>
+                        <li>Same-day service available</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏭</div>
+                    <h3 class="service-title">Commercial Electrical</h3>
+                    <p class="service-description">Professional electrical services for businesses and commercial properties.</p>
+                    <ul class="service-features">
+                        <li>Office electrical installations</li>
+                        <li>Warehouse lighting</li>
+                        <li>Commercial panel work</li>
+                        <li>Preventive maintenance</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏡</div>
+                    <h3 class="service-title">Home Rewiring</h3>
+                    <p class="service-description">Complete home rewiring for safety and modern electrical demands.</p>
+                    <ul class="service-features">
+                        <li>Whole house rewiring</li>
+                        <li>Aluminum wire replacement</li>
+                        <li>GFCI installations</li>
+                        <li>Electrical inspections</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Banner -->
+    <section class="emergency-banner">
+        <div class="section-container">
+            <div class="emergency-content">
+                <h2>⚡ Electrical Emergency?</h2>
+                <p>Don't wait - electrical issues can be dangerous. Call now for immediate service!</p>
+                <a href="tel:{{PHONE_NUMBER}}" class="emergency-button">
+                    Call {{PHONE_NUMBER}} Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Why Choose {{COMPANY_NAME}}?</h2>
+                    <p>With {{YEARS_EXPERIENCE}} years of experience serving {{CITY_NAME}}, we're your trusted local electrical experts. Our licensed electricians are committed to safety, quality, and customer satisfaction.</p>
+                    <p>We stay current with electrical codes and use only the highest quality materials. Whether it's a simple repair or a complex installation, we do the job right the first time.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-number">{{YEARS_EXPERIENCE}}+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Emergency Service</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Licensed & Insured</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Happy Customers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Get Your Free Electrical Estimate</h2>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📞</div>
+                        <div class="contact-item-content">
+                            <h3>Call or Text</h3>
+                            <p>{{PHONE_NUMBER}}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📍</div>
+                        <div class="contact-item-content">
+                            <h3>Service Area</h3>
+                            <p>{{CITY_NAME}} & Surrounding Areas</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">⏰</div>
+                        <div class="contact-item-content">
+                            <h3>Business Hours</h3>
+                            <p>Mon-Fri: 7AM-6PM<br>Emergency: 24/7</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Request Your Free Estimate</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Type of Service</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="repair">Electrical Repair</option>
+                                <option value="installation">New Installation</option>
+                                <option value="upgrade">Panel Upgrade</option>
+                                <option value="lighting">Lighting</option>
+                                <option value="emergency">Emergency Service</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Describe Your Electrical Needs</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Tell us about your electrical project or issue..."></textarea>
+                        </div>
+                        <button type="submit" class="form-button">Get Free Estimate</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>{{COMPANY_NAME}}</h3>
+                <p>Licensed Electrical Contractor</p>
+                <p>Serving {{CITY_NAME}} & Surrounding Areas</p>
+                <p>{{PHONE_NUMBER}}</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 {{COMPANY_NAME}}. All rights reserved. | Licensed & Insured | Emergency Service Available 24/7</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

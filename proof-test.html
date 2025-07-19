@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prove It Works - Live Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-console { 
+            background: #000; 
+            color: #00ff00; 
+            padding: 20px; 
+            border-radius: 8px; 
+            height: 300px; 
+            overflow-y: auto; 
+            font-family: monospace;
+            margin: 20px 0;
+        }
+        .test-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .test-buttons button {
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .test-buttons button:hover {
+            background: #0056b3;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 LIVE PROOF TEST: Does the Generator Actually Work?</h1>
+    
+    <div class="test-buttons">
+        <button onclick="testQuickDemo()">🎯 Test Quick Demo</button>
+        <button onclick="testGenerate()">⚡ Test Generate Mockup</button>
+        <button onclick="checkStatus()">🔍 Check System Status</button>
+    </div>
+    
+    <div class="test-console" id="console"></div>
+    
+    <h2>Main Page (Live):</h2>
+    <iframe id="mainPage" src="/index.html"></iframe>
+    
+    <script>
+        const console_el = document.getElementById('console');
+        
+        function log(message, color = '#00ff00') {
+            const time = new Date().toLocaleTimeString();
+            console_el.innerHTML += `<div style="color: ${color};">[${time}] ${message}</div>`;
+            console_el.scrollTop = console_el.scrollHeight;
+            console.log(message);
+        }
+        
+        function getMainPageWindow() {
+            const iframe = document.getElementById('mainPage');
+            return iframe.contentWindow;
+        }
+        
+        function getMainPageDoc() {
+            const iframe = document.getElementById('mainPage');
+            return iframe.contentDocument || iframe.contentWindow.document;
+        }
+        
+        window.onload = function() {
+            log('🚀 Starting live proof test...', '#ffff00');
+            log('📋 Loading main page and waiting for initialization...');
+            
+            setTimeout(() => {
+                checkStatus();
+            }, 3000);
+        };
+        
+        function checkStatus() {
+            log('🔍 CHECKING SYSTEM STATUS...', '#00ffff');
+            
+            try {
+                const mainWin = getMainPageWindow();
+                const mainDoc = getMainPageDoc();
+                
+                // Check if MockupGenerator class exists
+                if (typeof mainWin.MockupGenerator !== 'undefined') {
+                    log('✅ MockupGenerator class found', '#00ff00');
+                } else {
+                    log('❌ MockupGenerator class NOT found', '#ff4444');
+                    return;
+                }
+                
+                // Check if generator instance exists
+                if (mainWin.generator) {
+                    log('✅ Generator instance found', '#00ff00');
+                } else {
+                    log('❌ Generator instance NOT found', '#ff4444');
+                    return;
+                }
+                
+                // Check required methods
+                const methods = ['fillDemoData', 'generateMockup', 'displayPreview'];
+                methods.forEach(method => {
+                    if (typeof mainWin.generator[method] === 'function') {
+                        log(`✅ Method ${method} exists`, '#00ff00');
+                    } else {
+                        log(`❌ Method ${method} MISSING`, '#ff4444');
+                    }
+                });
+                
+                // Check buttons
+                const demoBtn = mainDoc.getElementById('demoBtn');
+                const form = mainDoc.getElementById('mockupForm');
+                
+                if (demoBtn) {
+                    log('✅ Quick Demo button found', '#00ff00');
+                } else {
+                    log('❌ Quick Demo button NOT found', '#ff4444');
+                }
+                
+                if (form) {
+                    log('✅ Mockup form found', '#00ff00');
+                } else {
+                    log('❌ Mockup form NOT found', '#ff4444');
+                }
+                
+                log('📊 System status check complete!', '#ffff00');
+                
+            } catch (error) {
+                log('❌ Error checking status: ' + error.message, '#ff4444');
+            }
+        }
+        
+        function testQuickDemo() {
+            log('🎯 TESTING QUICK DEMO...', '#ffff00');
+            
+            try {
+                const mainWin = getMainPageWindow();
+                const mainDoc = getMainPageDoc();
+                
+                if (!mainWin.generator) {
+                    log('❌ No generator instance found', '#ff4444');
+                    return;
+                }
+                
+                // Check form before
+                const companyName = mainDoc.getElementById('companyName');
+                const phoneNumber = mainDoc.getElementById('phoneNumber');
+                
+                if (companyName) {
+                    log(`📋 Before - Company: "${companyName.value}"`, '#888888');
+                } else {
+                    log('❌ Company name field not found', '#ff4444');
+                    return;
+                }
+                
+                // Click the actual button
+                const demoBtn = mainDoc.getElementById('demoBtn');
+                if (demoBtn) {
+                    log('🖱️ Clicking Quick Demo button...', '#00ffff');
+                    demoBtn.click();
+                    
+                    // Check form after
+                    setTimeout(() => {
+                        if (companyName.value) {
+                            log(`✅ SUCCESS! Company filled: "${companyName.value}"`, '#00ff00');
+                            if (phoneNumber && phoneNumber.value) {
+                                log(`✅ Phone filled: "${phoneNumber.value}"`, '#00ff00');
+                            }
+                            log('🎉 QUICK DEMO WORKS!', '#00ff88');
+                        } else {
+                            log('❌ FAILED! Form not filled', '#ff4444');
+                        }
+                    }, 1000);
+                    
+                } else {
+                    log('❌ Demo button not found', '#ff4444');
+                }
+                
+            } catch (error) {
+                log('❌ Error testing quick demo: ' + error.message, '#ff4444');
+            }
+        }
+        
+        function testGenerate() {
+            log('⚡ TESTING GENERATE MOCKUP...', '#ffff00');
+            
+            try {
+                const mainWin = getMainPageWindow();
+                const mainDoc = getMainPageDoc();
+                
+                if (!mainWin.generator) {
+                    log('❌ No generator instance found', '#ff4444');
+                    return;
+                }
+                
+                // Fill form with test data
+                const companyName = mainDoc.getElementById('companyName');
+                const phoneNumber = mainDoc.getElementById('phoneNumber');
+                const serviceType = mainDoc.getElementById('serviceType');
+                
+                if (companyName) companyName.value = 'LIVE TEST PLUMBING';
+                if (phoneNumber) phoneNumber.value = '555-WORKS';
+                if (serviceType) serviceType.value = 'plumbing';
+                
+                log('📝 Test data filled', '#00ffff');
+                
+                // Check preview section before
+                const previewSection = mainDoc.getElementById('previewSection');
+                if (previewSection) {
+                    log(`📋 Before - Preview visible: ${previewSection.style.display !== 'none'}`, '#888888');
+                } else {
+                    log('❌ Preview section not found', '#ff4444');
+                    return;
+                }
+                
+                // Submit the form (this should trigger generate)
+                const form = mainDoc.getElementById('mockupForm');
+                if (form) {
+                    log('🖱️ Submitting form to generate mockup...', '#00ffff');
+                    form.dispatchEvent(new Event('submit'));
+                    
+                    // Check if preview appears
+                    setTimeout(() => {
+                        if (previewSection.style.display !== 'none') {
+                            log('✅ SUCCESS! Preview section appeared!', '#00ff00');
+                            
+                            const previewFrame = mainDoc.getElementById('previewFrame');
+                            if (previewFrame && previewFrame.srcdoc) {
+                                log('✅ Preview content loaded!', '#00ff00');
+                                log('📄 Content preview: ' + previewFrame.srcdoc.substring(0, 100) + '...', '#888888');
+                                log('🎉 GENERATE MOCKUP WORKS!', '#00ff88');
+                            } else {
+                                log('⚠️ Preview visible but no content', '#ffaa00');
+                            }
+                        } else {
+                            log('❌ FAILED! Preview section did not appear', '#ff4444');
+                        }
+                    }, 2000);
+                    
+                } else {
+                    log('❌ Form not found', '#ff4444');
+                }
+                
+            } catch (error) {
+                log('❌ Error testing generate: ' + error.message, '#ff4444');
+            }
+        }
+    </script>
+</body>
+</html>

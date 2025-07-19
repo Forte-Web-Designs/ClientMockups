@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Test</title>
+    <script src="/assets/js/generator.js"></script>
+</head>
+<body>
+    <h1>Button Functionality Test</h1>
+    <div id="status"></div>
+    
+    <button id="testQuickDemo">Test Quick Demo</button>
+    <button id="testGenerate">Test Generate</button>
+    
+    <form id="mockupForm">
+        <input type="text" id="companyName" placeholder="Company Name" value="">
+        <input type="text" id="phoneNumber" placeholder="Phone" value="">
+        <input type="text" id="cityName" placeholder="City" value="">
+        <input type="text" id="yearsExp" placeholder="Years Experience" value="">
+        <select id="serviceType">
+            <option value="plumbing">Plumbing</option>
+            <option value="hvac">HVAC</option>
+            <option value="electrical">Electrical</option>
+        </select>
+    </form>
+    
+    <script>
+        const status = document.getElementById('status');
+        
+        function logStatus(message, color = 'black') {
+            status.innerHTML += `<div style="color: ${color};">${message}</div>`;
+            console.log(message);
+        }
+        
+        // Wait for DOM and test
+        document.addEventListener('DOMContentLoaded', function() {
+            logStatus('🔄 DOM loaded, testing...', 'blue');
+            
+            // Check if generator exists
+            if (window.generator) {
+                logStatus('✅ Generator instance found', 'green');
+                
+                // Test fillDemoData
+                document.getElementById('testQuickDemo').addEventListener('click', function() {
+                    logStatus('🎯 Testing fillDemoData...', 'blue');
+                    if (typeof window.generator.fillDemoData === 'function') {
+                        try {
+                            window.generator.fillDemoData();
+                            logStatus('✅ fillDemoData executed successfully', 'green');
+                        } catch (error) {
+                            logStatus('❌ fillDemoData error: ' + error.message, 'red');
+                        }
+                    } else {
+                        logStatus('❌ fillDemoData method not found', 'red');
+                    }
+                });
+                
+                // Test generateMockup
+                document.getElementById('testGenerate').addEventListener('click', function() {
+                    logStatus('🎯 Testing generateMockup...', 'blue');
+                    if (typeof window.generator.generateMockup === 'function') {
+                        try {
+                            window.generator.generateMockup();
+                            logStatus('✅ generateMockup executed successfully', 'green');
+                        } catch (error) {
+                            logStatus('❌ generateMockup error: ' + error.message, 'red');
+                        }
+                    } else {
+                        logStatus('❌ generateMockup method not found', 'red');
+                    }
+                });
+                
+            } else {
+                logStatus('❌ Generator instance not found', 'red');
+                
+                // Try to create one manually
+                if (typeof MockupGenerator !== 'undefined') {
+                    logStatus('🔧 MockupGenerator class found, creating instance...', 'blue');
+                    window.generator = new MockupGenerator();
+                    logStatus('✅ Generator instance created manually', 'green');
+                } else {
+                    logStatus('❌ MockupGenerator class not found', 'red');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

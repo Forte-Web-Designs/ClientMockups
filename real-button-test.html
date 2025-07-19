@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Button Test</title>
+</head>
+<body>
+    <h1>Testing Real Index.html Buttons</h1>
+    <div id="results" style="background: #f0f0f0; padding: 20px; font-family: monospace; white-space: pre-wrap;"></div>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            results.textContent += `[${timestamp}] ${message}\n`;
+            console.log(message);
+        }
+        
+        log('🔍 Starting real button test...');
+        
+        // Load the main page in an iframe to test it
+        const iframe = document.createElement('iframe');
+        iframe.src = '/index.html';
+        iframe.style.width = '100%';
+        iframe.style.height = '600px';
+        iframe.style.border = '1px solid #ccc';
+        iframe.style.marginTop = '20px';
+        
+        iframe.onload = function() {
+            log('✅ Main page loaded in iframe');
+            
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                const iframeWindow = iframe.contentWindow;
+                
+                // Wait a moment for scripts to initialize
+                setTimeout(() => {
+                    log('🔍 Checking if generator exists in main page...');
+                    
+                    if (iframeWindow.generator) {
+                        log('✅ Generator found!');
+                        
+                        // Test Quick Demo button
+                        const quickDemoBtn = iframeDoc.querySelector('button[onclick*="fillDemoData"], .cta-button, [id*="demo"], [class*="demo"]');
+                        if (quickDemoBtn) {
+                            log('✅ Found Quick Demo button: ' + quickDemoBtn.textContent.trim());
+                            
+                            // Click it programmatically
+                            log('🎯 Clicking Quick Demo button...');
+                            quickDemoBtn.click();
+                            
+                            // Check if form was filled
+                            setTimeout(() => {
+                                const companyName = iframeDoc.getElementById('companyName');
+                                if (companyName && companyName.value) {
+                                    log('✅ Form filled! Company: ' + companyName.value);
+                                } else {
+                                    log('❌ Form not filled');
+                                }
+                            }, 1000);
+                            
+                        } else {
+                            log('❌ Quick Demo button not found');
+                            log('Available buttons:');
+                            const buttons = iframeDoc.querySelectorAll('button');
+                            buttons.forEach((btn, i) => {
+                                log(`  ${i+1}. "${btn.textContent.trim()}" - ${btn.onclick ? 'has onclick' : 'no onclick'}`);
+                            });
+                        }
+                        
+                        // Test Generate button
+                        setTimeout(() => {
+                            const generateBtn = iframeDoc.querySelector('button[onclick*="generateMockup"], .generate-btn, [id*="generate"]');
+                            if (generateBtn) {
+                                log('✅ Found Generate button: ' + generateBtn.textContent.trim());
+                                
+                                // Fill form first
+                                const companyName = iframeDoc.getElementById('companyName');
+                                const phoneNumber = iframeDoc.getElementById('phoneNumber');
+                                const serviceType = iframeDoc.getElementById('serviceType');
+                                
+                                if (companyName) companyName.value = 'Test Plumbing Co';
+                                if (phoneNumber) phoneNumber.value = '555-0123';
+                                if (serviceType) serviceType.value = 'plumbing';
+                                
+                                log('📝 Form filled with test data');
+                                log('🎯 Clicking Generate button...');
+                                generateBtn.click();
+                                
+                                // Check if preview appears
+                                setTimeout(() => {
+                                    const previewSection = iframeDoc.getElementById('previewSection');
+                                    if (previewSection && previewSection.style.display !== 'none') {
+                                        log('✅ Preview section appeared!');
+                                        
+                                        const previewFrame = iframeDoc.getElementById('previewFrame');
+                                        if (previewFrame && previewFrame.srcdoc) {
+                                            log('✅ Preview content loaded');
+                                            log('Preview contains: ' + previewFrame.srcdoc.substring(0, 100) + '...');
+                                        } else {
+                                            log('❌ No preview content');
+                                        }
+                                    } else {
+                                        log('❌ Preview section did not appear');
+                                    }
+                                }, 2000);
+                                
+                            } else {
+                                log('❌ Generate button not found');
+                            }
+                        }, 2000);
+                        
+                    } else {
+                        log('❌ Generator not found in main page');
+                        
+                        // Check if MockupGenerator class exists
+                        if (iframeWindow.MockupGenerator) {
+                            log('⚠️ MockupGenerator class exists but no instance');
+                        } else {
+                            log('❌ MockupGenerator class not found');
+                        }
+                        
+                        // Check for script errors
+                        log('🔍 Checking for console errors...');
+                        // Note: Can't access console errors from iframe, but we can check basics
+                    }
+                }, 2000);
+                
+            } catch (error) {
+                log('❌ Error accessing iframe: ' + error.message);
+                log('This might be a CORS issue or script loading problem');
+            }
+        };
+        
+        document.body.appendChild(iframe);
+        
+        // Also test direct script loading
+        setTimeout(() => {
+            log('\n🔍 Testing direct script loading...');
+            
+            const script = document.createElement('script');
+            script.src = '/assets/js/generator.js';
+            script.onload = function() {
+                log('✅ Generator script loaded directly');
+                if (typeof MockupGenerator !== 'undefined') {
+                    log('✅ MockupGenerator class available');
+                    try {
+                        const testGenerator = new MockupGenerator();
+                        log('✅ Can create generator instance');
+                        
+                        if (typeof testGenerator.generateMockup === 'function') {
+                            log('✅ generateMockup method exists');
+                        } else {
+                            log('❌ generateMockup method missing');
+                        }
+                    } catch (error) {
+                        log('❌ Error creating generator: ' + error.message);
+                    }
+                } else {
+                    log('❌ MockupGenerator class not available');
+                }
+            };
+            script.onerror = function() {
+                log('❌ Failed to load generator script');
+            };
+            document.head.appendChild(script);
+        }, 5000);
+        
+    </script>
+</body>
+</html>

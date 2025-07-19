@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <button onclick="testGenerator()">Test Generator</button>
+    <div id="output"></div>
+
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/generator.js"></script>
+    
+    <script>
+        function log(message) {
+            const output = document.getElementById('output');
+            output.innerHTML += '<p>' + message + '</p>';
+            console.log(message);
+        }
+        
+        function testGenerator() {
+            log('🧪 Testing generator...');
+            
+            if (typeof MockupGenerator !== 'undefined') {
+                log('✅ MockupGenerator class found');
+                
+                try {
+                    const generator = new MockupGenerator();
+                    log('✅ Generator instance created');
+                    
+                    // Test if methods exist
+                    if (typeof generator.fillDemoData === 'function') {
+                        log('✅ fillDemoData method exists');
+                    } else {
+                        log('❌ fillDemoData method missing');
+                    }
+                    
+                    if (typeof generator.handleFormSubmit === 'function') {
+                        log('✅ handleFormSubmit method exists');
+                    } else {
+                        log('❌ handleFormSubmit method missing');
+                    }
+                    
+                } catch (error) {
+                    log('❌ Error creating generator: ' + error.message);
+                }
+            } else {
+                log('❌ MockupGenerator class not found');
+            }
+        }
+        
+        // Auto-test on load
+        setTimeout(testGenerator, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Functionality Test</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/generator.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Full System Test</h1>
+        <div id="testResults" style="background: #f0f0f0; padding: 20px; margin: 20px 0; border-radius: 8px; font-family: monospace;"></div>
+        
+        <!-- Test Form (simplified version of the real form) -->
+        <form id="mockupForm" style="display: none;">
+            <input type="text" id="companyName" placeholder="Company Name">
+            <input type="text" id="phoneNumber" placeholder="Phone Number">
+            <input type="text" id="cityName" placeholder="City">
+            <input type="text" id="yearsExp" placeholder="Years Experience">
+            <select id="serviceType">
+                <option value="plumbing">Plumbing</option>
+                <option value="hvac">HVAC</option>
+                <option value="electrical">Electrical</option>
+            </select>
+            <select id="stylePreference">
+                <option value="classic">Classic</option>
+                <option value="modern">Modern</option>
+                <option value="minimal">Minimal</option>
+            </select>
+        </form>
+        
+        <!-- Test Buttons -->
+        <div style="margin: 20px 0;">
+            <button id="runTest1" style="padding: 10px 20px; margin: 5px; background: #3b82f6; color: white; border: none; border-radius: 4px;">Test Quick Demo</button>
+            <button id="runTest2" style="padding: 10px 20px; margin: 5px; background: #10b981; color: white; border: none; border-radius: 4px;">Test Generate Mockup</button>
+            <button id="runTest3" style="padding: 10px 20px; margin: 5px; background: #f59e0b; color: white; border: none; border-radius: 4px;">Test Preview Display</button>
+        </div>
+        
+        <!-- Preview Section (mimics real one) -->
+        <div id="previewSection" class="preview-section" style="display: none; margin-top: 20px; padding: 20px; border: 1px solid #ccc;">
+            <iframe id="previewFrame" style="width: 100%; height: 400px; border: none;"></iframe>
+            <div id="filesList" style="margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const results = document.getElementById('testResults');
+        
+        function log(message, type = 'info') {
+            const colors = {
+                info: '#3b82f6',
+                success: '#10b981', 
+                error: '#ef4444',
+                warning: '#f59e0b'
+            };
+            const timestamp = new Date().toLocaleTimeString();
+            results.innerHTML += `<div style="color: ${colors[type]}; margin: 2px 0;">[${timestamp}] ${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+            console.log(message);
+        }
+        
+        // Wait for everything to load
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 Starting comprehensive system test...', 'info');
+            
+            // Test 1: Check if everything loaded
+            setTimeout(() => {
+                log('📋 Step 1: Checking system components...', 'info');
+                
+                if (typeof MockupGenerator !== 'undefined') {
+                    log('✅ MockupGenerator class loaded', 'success');
+                } else {
+                    log('❌ MockupGenerator class not found', 'error');
+                    return;
+                }
+                
+                if (window.generator) {
+                    log('✅ Generator instance found', 'success');
+                } else {
+                    log('⚠️ Creating generator instance...', 'warning');
+                    window.generator = new MockupGenerator();
+                    if (window.generator) {
+                        log('✅ Generator instance created successfully', 'success');
+                    } else {
+                        log('❌ Failed to create generator instance', 'error');
+                        return;
+                    }
+                }
+                
+                // Check for required methods
+                const requiredMethods = [
+                    'fillDemoData', 'generateMockup', 'displayPreview', 
+                    'downloadMockup', 'resetForm', 'showLoading', 'hideLoading'
+                ];
+                
+                let missingMethods = [];
+                requiredMethods.forEach(method => {
+                    if (typeof window.generator[method] === 'function') {
+                        log(`✅ Method ${method} exists`, 'success');
+                    } else {
+                        log(`❌ Method ${method} missing`, 'error');
+                        missingMethods.push(method);
+                    }
+                });
+                
+                if (missingMethods.length === 0) {
+                    log('🎉 All required methods found!', 'success');
+                    setupTests();
+                } else {
+                    log(`❌ Missing ${missingMethods.length} required methods`, 'error');
+                }
+                
+            }, 500); // Give time for scripts to load
+        });
+        
+        function setupTests() {
+            log('🛠️ Setting up test buttons...', 'info');
+            
+            // Test 1: Quick Demo
+            document.getElementById('runTest1').addEventListener('click', function() {
+                log('🎯 Testing Quick Demo (fillDemoData)...', 'info');
+                try {
+                    window.generator.fillDemoData();
+                    log('✅ fillDemoData completed successfully', 'success');
+                    
+                    // Check if form was filled
+                    const companyName = document.getElementById('companyName').value;
+                    if (companyName) {
+                        log(`✅ Form filled: Company = "${companyName}"`, 'success');
+                    } else {
+                        log('⚠️ Form fields not filled (might be using different IDs)', 'warning');
+                    }
+                } catch (error) {
+                    log(`❌ fillDemoData failed: ${error.message}`, 'error');
+                }
+            });
+            
+            // Test 2: Generate Mockup
+            document.getElementById('runTest2').addEventListener('click', function() {
+                log('🎯 Testing Generate Mockup...', 'info');
+                try {
+                    // First fill some data
+                    document.getElementById('companyName').value = 'Test Company';
+                    document.getElementById('phoneNumber').value = '555-0123';
+                    document.getElementById('cityName').value = 'Test City';
+                    document.getElementById('yearsExp').value = '5';
+                    
+                    window.generator.generateMockup();
+                    log('✅ generateMockup started successfully', 'success');
+                    
+                    // Check if preview section becomes visible
+                    setTimeout(() => {
+                        const previewSection = document.getElementById('previewSection');
+                        if (previewSection && previewSection.style.display !== 'none') {
+                            log('✅ Preview section is now visible', 'success');
+                        } else {
+                            log('⚠️ Preview section not visible yet', 'warning');
+                        }
+                    }, 2000);
+                    
+                } catch (error) {
+                    log(`❌ generateMockup failed: ${error.message}`, 'error');
+                }
+            });
+            
+            // Test 3: Display Preview
+            document.getElementById('runTest3').addEventListener('click', function() {
+                log('🎯 Testing Display Preview...', 'info');
+                try {
+                    const testHTML = '<h1>Test Preview Content</h1><p>This is a test preview.</p>';
+                    const testData = { companyName: 'Test Company' };
+                    const testVariations = [{ layout: 'modern', services: 'grid' }];
+                    
+                    window.generator.displayPreview(testHTML, testData, testVariations);
+                    log('✅ displayPreview completed successfully', 'success');
+                    
+                } catch (error) {
+                    log(`❌ displayPreview failed: ${error.message}`, 'error');
+                }
+            });
+            
+            log('✅ All tests ready! Click the buttons to test functionality.', 'success');
+        }
+    </script>
+</body>
+</html>

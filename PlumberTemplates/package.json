@@ -1,0 +1,21 @@
+{
+  "name": "plumber-mockup-generator",
+  "version": "1.0.0",
+  "description": "Generate professional plumber website mockups for sales presentations",
+  "main": "generate-mockup.js",
+  "scripts": {
+    "generate": "node generate-mockup.js",
+    "help": "node generate-mockup.js --help",
+    "demo": "node generate-mockup.js \"Demo Plumbing Co\" \"(817) 555-0123\" \"Fort Worth\" \"TX\" \"./assets/logos/demo-logo.png\" \"20\""
+  },
+  "keywords": [
+    "plumber",
+    "website",
+    "mockup",
+    "generator",
+    "sales",
+    "template"
+  ],
+  "author": "Forte Design Studio",
+  "license": "ISC"
+}

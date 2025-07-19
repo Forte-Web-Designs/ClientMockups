@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Test</title>
+</head>
+<body>
+    <h1>Testing Console Output</h1>
+    <div id="output"></div>
+    
+    <script>
+        // Capture console output
+        const output = document.getElementById('output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            output.innerHTML += '<div style="color: blue;">LOG: ' + args.join(' ') + '</div>';
+            originalLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            output.innerHTML += '<div style="color: red;">ERROR: ' + args.join(' ') + '</div>';
+            originalError.apply(console, args);
+        };
+        
+        // Load the generator script
+        const script = document.createElement('script');
+        script.src = '/assets/js/generator.js';
+        script.onload = function() {
+            output.innerHTML += '<div style="color: green;">Generator script loaded successfully</div>';
+            
+            // Test if MockupGenerator class exists
+            if (typeof MockupGenerator !== 'undefined') {
+                output.innerHTML += '<div style="color: green;">MockupGenerator class found</div>';
+                
+                // Test if generator instance exists
+                if (window.generator) {
+                    output.innerHTML += '<div style="color: green;">Generator instance found</div>';
+                    
+                    // Test if missing methods exist
+                    const methods = ['displayPreview', 'fillDemoData', 'downloadMockup', 'resetForm'];
+                    methods.forEach(method => {
+                        if (typeof window.generator[method] === 'function') {
+                            output.innerHTML += '<div style="color: green;">Method ' + method + ' exists</div>';
+                        } else {
+                            output.innerHTML += '<div style="color: red;">Method ' + method + ' missing</div>';
+                        }
+                    });
+                } else {
+                    output.innerHTML += '<div style="color: red;">Generator instance not found</div>';
+                }
+            } else {
+                output.innerHTML += '<div style="color: red;">MockupGenerator class not found</div>';
+            }
+        };
+        script.onerror = function() {
+            output.innerHTML += '<div style="color: red;">Failed to load generator script</div>';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

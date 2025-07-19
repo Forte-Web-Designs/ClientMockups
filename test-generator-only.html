@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Only Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .form-group { margin: 10px 0; }
+        label { display: block; margin-bottom: 5px; }
+        input, select { width: 200px; padding: 5px; }
+        button { padding: 10px 20px; margin: 10px 5px; }
+    </style>
+</head>
+<body>
+    <h1>Generator Only Test</h1>
+    
+    <form id="mockupForm">
+        <div class="form-group">
+            <label for="industry">Industry</label>
+            <select id="industry" required>
+                <option value="">Select Industry</option>
+                <option value="plumber">🔧 Plumber</option>
+                <option value="hvac">🌡️ HVAC</option>
+                <option value="electrician">⚡ Electrician</option>
+                <option value="landscaper">🌿 Landscaper</option>
+                <option value="contractor">🏗️ General Contractor</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" placeholder="e.g. Pro Plumbing Services" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" placeholder="(817) 555-0123" required>
+        </div>
+
+        <div class="form-group">
+            <label for="cityName">City</label>
+            <input type="text" id="cityName" placeholder="Fort Worth" required>
+        </div>
+
+        <div class="form-group">
+            <label for="yearsExp">Years Experience</label>
+            <input type="number" id="yearsExp" placeholder="15" min="1" max="100" value="15">
+        </div>
+
+        <div class="form-group">
+            <label for="logoUrl">Logo URL (Optional)</label>
+            <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
+        </div>
+
+        <div class="form-group">
+            <label for="variationCount">Number of Variations</label>
+            <select id="variationCount">
+                <option value="1">1 Variation</option>
+                <option value="3">3 Variations</option>
+                <option value="5" selected>5 Variations</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="stylePreference">Style Preference</label>
+            <select id="stylePreference">
+                <option value="mixed">Mixed Styles</option>
+                <option value="modern">Modern & Clean</option>
+                <option value="bold">Bold & Vibrant</option>
+            </select>
+        </div>
+
+        <button type="button" id="demoBtn">🎯 Quick Demo</button>
+        <button type="submit">⚡ Generate Mockup</button>
+    </form>
+
+    <div id="previewSection" style="display: none;">
+        <h2>Preview will appear here</h2>
+        <button id="downloadBtn">📥 Download HTML</button>
+        <button id="newMockupBtn">🔄 Generate New</button>
+    </div>
+
+    <!-- Only load generator.js, not animations.js -->
+    <script src="assets/js/generator.js"></script>
+</body>
+</html>

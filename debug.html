@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Mockup Generator</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <button onclick="testGenerator()">Test Generator Functions</button>
+    <div id="output"></div>
+
+    <script src="assets/js/generator.js"></script>
+    <script>
+        function testGenerator() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>Testing Generator...</h3>';
+            
+            try {
+                // Test if generator exists
+                if (typeof generator !== 'undefined') {
+                    output.innerHTML += '<p>✅ Generator object exists</p>';
+                    
+                    // Test form data validation
+                    const testData = {
+                        industry: 'plumber',
+                        companyName: 'Test Company',
+                        phoneNumber: '555-0123',
+                        cityName: 'Test City'
+                    };
+                    
+                    if (generator.validateFormData(testData)) {
+                        output.innerHTML += '<p>✅ Form validation works</p>';
+                    } else {
+                        output.innerHTML += '<p>❌ Form validation failed</p>';
+                    }
+                    
+                    // Test if templates exist
+                    if (generator.templates && generator.templates.plumber) {
+                        output.innerHTML += '<p>✅ Templates loaded</p>';
+                    } else {
+                        output.innerHTML += '<p>❌ Templates not loaded</p>';
+                    }
+                    
+                } else {
+                    output.innerHTML += '<p>❌ Generator object not found</p>';
+                }
+            } catch (error) {
+                output.innerHTML += '<p>❌ Error: ' + error.message + '</p>';
+            }
+        }
+        
+        // Wait for DOM content loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                if (typeof generator !== 'undefined') {
+                    document.getElementById('output').innerHTML += '<p>✅ Generator initialized on page load</p>';
+                } else {
+                    document.getElementById('output').innerHTML += '<p>❌ Generator not initialized</p>';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

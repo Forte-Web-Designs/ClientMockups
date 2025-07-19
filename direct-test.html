@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Generation Test - Prove It Works</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+</head>
+<body>
+    <div style="padding: 20px; font-family: Arial, sans-serif;">
+        <h1>🔥 DIRECT GENERATION TEST</h1>
+        <p><strong>GOAL:</strong> Generate a real plumber website and show the result</p>
+        
+        <button id="generateNow" style="background: #28a745; color: white; padding: 20px 40px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; margin: 20px 0;">
+            🚀 GENERATE PLUMBER WEBSITE NOW
+        </button>
+        
+        <div id="status" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; font-family: monospace; white-space: pre-wrap;"></div>
+        
+        <div id="result" style="margin-top: 30px;"></div>
+    </div>
+    
+    <script src="assets/js/generator.js"></script>
+    <script>
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+        
+        function log(message) {
+            const time = new Date().toLocaleTimeString();
+            status.textContent += `[${time}] ${message}\n`;
+            status.scrollTop = status.scrollHeight;
+            console.log(message);
+        }
+        
+        document.getElementById('generateNow').addEventListener('click', function() {
+            log('🚀 Starting direct generation test...');
+            
+            try {
+                // Create generator instance
+                if (typeof MockupGenerator === 'undefined') {
+                    log('❌ MockupGenerator class not found');
+                    return;
+                }
+                
+                const generator = new MockupGenerator();
+                log('✅ Generator instance created');
+                
+                // Test form data for a plumber
+                const testData = {
+                    companyName: 'Elite Plumbing Services',
+                    phoneNumber: '(555) 123-PIPE',
+                    cityName: 'Chicago',
+                    yearsExp: '15',
+                    serviceType: 'plumbing',
+                    stylePreference: 'modern'
+                };
+                
+                log('📋 Test data prepared: ' + JSON.stringify(testData, null, 2));
+                
+                // Check if generateTemplateHTML method exists
+                if (typeof generator.generateTemplateHTML === 'function') {
+                    log('✅ generateTemplateHTML method found');
+                    
+                    try {
+                        const html = generator.generateTemplateHTML(testData, { layout: 'modern', services: 'grid' });
+                        log('✅ HTML generated successfully');
+                        log('📄 HTML length: ' + html.length + ' characters');
+                        
+                        // Show the result
+                        const iframe = document.createElement('iframe');
+                        iframe.style.width = '100%';
+                        iframe.style.height = '600px';
+                        iframe.style.border = '2px solid #28a745';
+                        iframe.style.borderRadius = '8px';
+                        iframe.srcdoc = html;
+                        
+                        result.innerHTML = '<h2>🎉 GENERATED PLUMBER WEBSITE:</h2>';
+                        result.appendChild(iframe);
+                        
+                        log('🎉 SUCCESS! Plumber website generated and displayed!');
+                        
+                        // Also create a downloadable version
+                        const blob = new Blob([html], { type: 'text/html' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'elite-plumbing-services.html';
+                        link.textContent = '📥 Download Generated Website';
+                        link.style.display = 'block';
+                        link.style.margin = '20px 0';
+                        link.style.padding = '10px 20px';
+                        link.style.background = '#007bff';
+                        link.style.color = 'white';
+                        link.style.textDecoration = 'none';
+                        link.style.borderRadius = '4px';
+                        link.style.textAlign = 'center';
+                        
+                        result.appendChild(link);
+                        
+                        log('📥 Download link created');
+                        
+                    } catch (error) {
+                        log('❌ Error generating HTML: ' + error.message);
+                        log('Stack trace: ' + error.stack);
+                    }
+                    
+                } else {
+                    log('❌ generateTemplateHTML method not found');
+                    log('Available methods: ' + Object.getOwnPropertyNames(generator).filter(name => typeof generator[name] === 'function').join(', '));
+                }
+                
+            } catch (error) {
+                log('❌ Error: ' + error.message);
+                log('Stack trace: ' + error.stack);
+            }
+        });
+        
+        // Auto-run on load
+        window.addEventListener('load', function() {
+            log('🔄 Page loaded, ready to test...');
+            log('Click the green button to generate a plumber website!');
+        });
+    </script>
+</body>
+</html>
